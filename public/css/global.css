@@ -1,0 +1,31 @@
+:root {
+    --color1: rgba(5, 25, 35, 1);
+    --color2: rgba(0, 53, 84, 1);
+    --color3: rgba(47, 179, 230, 1);
+    --color4: rgba(222, 229, 229, 1);
+    --color5: rgba(230, 250, 252, 1);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.parallax-bg {
+    /*background: url("/img/largebg.jpg") no-repeat center center;*/
+    background-attachment: fixed;
+}
+
+.abstract-bg {
+    /*background: url("/img/largebg.jpg") no-repeat center center;*/
+    background: linear-gradient(to left, #436e97, #2464dc);
+    background-attachment: fixed;
+}
+
+.dark-bg {
+    background: #0F2027;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}

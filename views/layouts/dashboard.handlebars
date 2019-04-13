@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="/css/global.css">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/mdb.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+
+    <title>Admin</title>
+</head>
+
+<body>
+    <!--Begining of page-->
+
+    <!-- Sidebar -->
+    <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+        <a class="navbar-brand mr-1" href="/admin/">Dashboard</a>
+        <button class="btn btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <div class="d-flex">
+        <ul class="sidebar navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/admin/events">
+                    <i class="fas fa-project-diagram"></i>
+                    <span>Events</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Charts</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Back to home</span></a>
+            </li>
+        </ul>
+        <div class="w-100">
+            {{> _errors}}
+            {{> _msg}}
+
+            {{{body}}}
+        </div>
+
+    </div>
+
+    <script>
+        $("#sidebarToggle").on('click', () => {
+            $('.sidebar').toggleClass("toggled");
+        });
+    </script>
+    <!-- End of Sidebar -->
+
+
+
+    <!-- End of page -->
+
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/js/mdb.min.js"></script>
+</body>
+
+</html>
