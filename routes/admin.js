@@ -5,8 +5,20 @@ const passport = require('passport');
 
 const { ensureAuthenticated } = require("../helpers/auth");
 
-const upload = require("../app").upload;
+const ImageUploadMulter = require("../app").ImageUpload;
+const ImageUpload = ImageUploadMulter.fields([
+    {
+        name: 'background',
+        maxCount: 1
+    },
+    {
+        name: 'thumbnail',
+        maxCount: 1
+    }
+])
+
 const s3 = require("../app").s3;
+const upload = require("../app").upload;
 
 const path = require("path");
 var fs = require('fs');
@@ -34,7 +46,6 @@ router.get('/register', (req, res) => {
 
 // Login Form POST
 router.post('/login', (req, res, next) => {
-    console.log("someone is logging in!")
     passport.authenticate('local', {
         successRedirect: '/admin',
         failureRedirect: '/admin/login',
@@ -116,7 +127,7 @@ router.get('/events', ensureAuthenticated, (req, res) => {
         if (err) {
             req.flash('error_msg', err);
         } else {
-            //projects: [{ title: "Edinet- pol de crestere economica", description: "pretty good project!", key: "background-1554024904339.jpg" }]
+            //projects: [{ title: "Edinet- pol de crestere economica", description: "pretty good project!", key: "background-1554024904339.jpg" }]\
             res.render('admin/events', {
                 layout: 'dashboard',
                 events: result
@@ -125,14 +136,137 @@ router.get('/events', ensureAuthenticated, (req, res) => {
     });
 });
 
-//New Event form page
+// New Event form page
 router.get('/event/new', ensureAuthenticated, (req, res) => {
     res.render('admin/event-add-form', {
         layout: 'dashboard',
     });
 });
 
-//Submit Event
+// Edit Event page
+router.get("/event/edit/:id", ensureAuthenticated, (req, res) => {
+    Event.findById(req.params.id, (err, data) => {
+        if (err) console.log(err);
+        else {
+            res.render("admin/event-edit-form", {
+                layout: 'dashboard',
+                event: data
+            })
+        }
+    });
+});
+
+// Edit event PUT
+router.put('/event/edit', upload.fields([
+    {
+        name: 'background',
+        maxCount: 1
+    },
+    {
+        name: 'thumbnail',
+        maxCount: 1
+    }
+]), ensureAuthenticated, (req, res) => {
+    /*console.log("------------------------------------------------")
+    console.log(req.files.background[0]);
+    console.log("--------------------------------------------")
+    console.log(req.files.thumbnail[0]);*/
+
+
+    /*Thubnail image upload
+    let tnUpload = upload.single("thumbnail");
+    //Background image upload
+    let bgUpload = upload.single("background");*/
+
+
+
+    Event.findById(req.body.id, (err, result) => {
+        if (err) console.log(err);
+        else {
+            let newEvent = {
+                title: req.body.titleEn,
+                subTitle: req.body.subTitleEn,
+                descriptionEn: req.body.descriptionEn,
+                descriptionRo: req.body.descriptionRo,
+                descriptionRu: req.body.descriptionRu
+            }
+
+            // If background file has been sent through the form
+            if (req.files.background) {
+                newEvent.backgroundKey = req.files.background[0].key;
+                // Remove the existing background image
+                s3.deleteObjects({
+                    Bucket: "tohateenhub",
+                    Delete: {
+                        Objects: [
+                            {
+                                Key: ("images//" + result.backgroundKey).toString()
+                            }
+                        ],
+                    }
+                }, (err, data) => {
+                    if (err) {
+                        console.log(err);
+                        req.flash("error_msg", err.stack);
+                    }
+                });
+
+                // Add the new background image, situated in req.files
+                ImageUploadMulter.single("background")(req, res, (err) => {
+                    if (err) console.log(err);
+                })
+            }
+
+            // IF thumbnail has been sent through the form
+            if (req.files.thumbnail) {
+                newEvent.thumbnailKey = req.files.thumbnail[0].key;
+
+                // Remove existing thumbnail image
+                s3.deleteObjects({
+                    Bucket: "tohateenhub",
+                    Delete: {
+                        Objects: [
+                            {
+                                Key: ("images//" + result.thumbnailKey).toString()
+                            }
+                        ],
+                    }
+                }, (err, data) => {
+                    if (err) {
+                        console.log(err);
+                        req.flash("error_msg", err.stack);
+                    }
+                });
+
+                // Add the new thumbnail image, situated in req.files
+                ImageUploadMulter.single("thumbnail")(req, res, (err) => {
+                    if (err) console.log(err);
+                })
+
+            }
+
+            if (req.body.date) {
+                newEvent.date = req.body.date;
+            }
+
+
+            //result = newEvent;
+            Event.update({ _id: result._id }, newEvent, (err, raw) => {
+                if (err) console.log(err);
+                res.redirect('/admin/events');
+            })
+            //result.save();
+
+            //res.redirect('/admin/events');
+        }
+    });
+
+
+    //ingleUpload = upload.singe
+
+});
+
+// Submit new Event
 router.post('/event/upload', ensureAuthenticated, (req, res) => {
 
 	/* NOTE: The form has enctype="multipart/form-data" enabled
@@ -142,11 +276,12 @@ router.post('/event/upload', ensureAuthenticated, (req, res) => {
 	*/
 
     //Upload the images to s3 webserver
-    upload(req, res, (err) => {
+    ImageUpload(req, res, (err) => {
         if (err) {
             req.flash('error_msg', 'There has been an ' + err);
             res.redirect('/admin/events');
         } else {
+            console.log("Uploaded images!");
             let bgkey, thumbkey, date = Date.now();
             //Save the project data to mongoDB
             if (req.files.background) {
@@ -161,33 +296,51 @@ router.post('/event/upload', ensureAuthenticated, (req, res) => {
                 date = req.body.date;
             }
             let pathdir = path.resolve(process.cwd(), "./locales")
-            console.log(pathdir);
-            fs.readdir(pathdir, (err, files) => {
-                if (err) console.log(err);
-                else {
-                    let en = JSON.parse(files[0]);
-                    let ro = JSON.parse(files[1]);
-                    let ru = JSON.parse(files[2]);
 
+            // Edit En locale json file
+            fs.readFile(pathdir + "\\en.json", 'utf8', function readFileCallback(err, data) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    let en = JSON.parse(data);
                     en[req.body.titleEn] = req.body.titleEn;
-                    ro[req.body.titleEn] = req.body.titleRo;
-                    ru[req.body.titleEn] = req.body.titleRu;
-
                     en[req.body.subTitleEn] = req.body.subTitleEn;
-                    ro[req.body.subTitleEn] = req.body.subTitleRo;
-                    ru[req.body.subTitleEn] = req.body.subTitleRu;
-
                     fs.writeFile(pathdir + "\\en.json", JSON.stringify(en), 'utf8', (err) => {
                         if (err) console.log(err);
-                    });
-                    fs.writeFile(pathdir + '\\ro.json', JSON.stringify(ro), 'utf8', (err) => {
-                        if (err) console.log(err);
-                    });
-                    fs.writeFile(pathdir + '\\ru.json', JSON.stringify(ru), 'utf8', (err) => {
-                        if (err) console.log(err);
+
                     });
                 }
-            })
+            });
+
+            // Edit Ro locale json file
+            fs.readFile(pathdir + "\\ro.json", 'utf8', function readFileCallback(err, data) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    let ro = JSON.parse(data);
+                    ro[req.body.titleEn] = req.body.titleRo;
+                    ro[req.body.subTitleEn] = req.body.subTitleRo;
+                    fs.writeFile(pathdir + "\\ro.json", JSON.stringify(ro), 'utf8', (err) => {
+                        if (err) console.log(err);
+
+                    });
+                }
+            });
+
+            // Edit Ru locale json file
+            fs.readFile(pathdir + "\\ru.json", 'utf8', function readFileCallback(err, data) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    let ru = JSON.parse(data);
+                    ru[req.body.titleEn] = req.body.titleRu;
+                    ru[req.body.subTitleEn] = req.body.subTitleRu;
+                    fs.writeFile(pathdir + "\\ru.json", JSON.stringify(ru), 'utf8', (err) => {
+                        if (err) console.log(err);
+
+                    });
+                }
+            });
 
             // Upload to MongoDB
             new Event({
@@ -208,19 +361,18 @@ router.post('/event/upload', ensureAuthenticated, (req, res) => {
     });
 });
 
-// Delete project
+// Delete Event
 router.delete('/event/delete/:id', ensureAuthenticated, (req, res) => {
 
-    Project.findByIdAndDelete(req.params.id, (err, result) => {
+    Event.findByIdAndDelete(req.params.id, (err, result) => {
         if (err) {
             console.log(err);
             req.flash("error_msg", err);
         } else {
-            req.flash("success_msg", "Project from MongoDB.");
+            req.flash("success_msg", "Data removed from MongoDB.");
         }
-
         s3.deleteObjects({
-            Bucket: "cdci",
+            Bucket: "tohateenhub",
             Delete: {
                 Objects: [
                     {
@@ -236,10 +388,9 @@ router.delete('/event/delete/:id', ensureAuthenticated, (req, res) => {
                 console.log(err);
                 req.flash("error_msg", err.stack);
             } else {
-                req.flash("success_msg", "Project images deleted.");
-
+                req.flash("success_msg", "Images deleted from s3.");
             }
-            res.redirect("/admin/dashboard/projects");
+            res.redirect("/admin/events");
         });
 
 

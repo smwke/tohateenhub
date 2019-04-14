@@ -5,7 +5,8 @@
                 <img class="img-fluid" src="img/authoringTool.png" style="border-radius:50%">
             </div>
             <div class="col-md-6 col-sm-12 text-center d-flex align-items-center text-dark rounded bg-light ">
-                <h1 class="display-3 text-uppercase" style="font-size:3em;">{{lang "The best learning facility" res}}</h1>
+                <h1 class="display-3 text-uppercase" style="font-size:3em;">{{lang "The best learning facility" res}}
+                </h1>
             </div>
         </div>
     </div>
@@ -50,6 +51,21 @@
     <div class="container pt-3">
         <h1 style="font-size:3.5em">{{lang "News" res}}</h1>
         <div class="row">
+            {{#each events}}
+            <div class="col-sm-6 col-lg-4 my-1">
+                <div class="card"
+                    style="background-image: url(/get-image/{{backgroundKey}});background-size:cover;height:300px;">
+                    <h5 class="card-header h5 dark-bg text-white">{{parseDate date}}</h5>
+                    <div class="card-body d-flex flex-column">
+                        <div class="flex-grow-1 p-2 rgba-white-light rounded">
+                            <h5 class="card-title">{{lang title ../res}}</h5>
+                            <p class="card-text">{{lang subTitle ../res}}</p>
+                        </div>
+                        <a href="/event/{{_id}}" class="btn btn-primary">Details</a>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
             <div class="col-sm-6 col-lg-4 my-1">
                 <div class="card" style="height: 300px">
                     <h5 class="card-header h5 dark-bg">Featured</h5>

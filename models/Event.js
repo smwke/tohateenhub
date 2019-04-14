@@ -14,7 +14,7 @@ const EventSchema = new Schema({
     descriptionEn: {
         type: {}
     },
-    descriptionRo:{
+    descriptionRo: {
         type: {}
     },
     descriptionRu: {

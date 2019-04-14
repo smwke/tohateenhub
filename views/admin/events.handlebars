@@ -1,1 +1,25 @@
+<div class="row mx-0 px-2">
+    {{#each events}}
+    <div class="col-sm-6 col-lg-4 my-1">
+        <div class="card h-100" style="background-image: url(/get-image/{{backgroundKey}});background-size:cover;">
+            <h5 class="card-header h5 dark-bg text-white">{{parseDate date}}</h5>
+            <div class="card-body d-flex flex-column">
+                <div class="flex-grow-1 p-2 rgba-white-light rounded">
+                    <h5 class="card-title">{{lang title ../res}}</h5>
+                    <p class="card-text">{{lang subTitle ../res}}</p>
+                </div>
+                <div class="row mx-0">
+                    <a href="/event/{{_id}}" class="btn btn-primary">Details</a>
+                    <form class="d-inline-block" method="POST" action="/admin/event/delete/{{_id}}?_method=DELETE">
+                        <button type="submit" class="btn btn-dark card-link">Delete Room</button>
+                    </form>
+                    <a href="/admin/event/edit/{{_id}}" class="btn btn-warning">Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{/each}}
+</div>
+
 <a href="/admin/event/new" class="btn aqua-gradient"><b>Add a new Event</b></a>

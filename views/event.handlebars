@@ -1,0 +1,82 @@
+<style>
+    .bg-proj {
+        background-position: center center;
+        background-size: cover;
+        height: 550px;
+        max-height: 40vh;
+    }
+
+    .bg-thumb {
+        border-radius: 2%;
+        margin-right: 40%;
+        z-index: 1;
+    }
+
+    .proj-title {
+        color: black;
+        font-size: 4vmax;
+        font-weight: 400;
+    }
+
+    @media screen and (max-width: 576px) {
+        .bg-thumb {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    .bg-nav {
+        background-color: rgba(0, 0, 0, 0.2) !important;
+    }
+</style>
+
+{{#if event}}
+
+<div class="bg-proj d-flex flex-column pt-5 bg-dark"
+    style="background-image: url(/get-image/{{event.backgroundKey}});">
+    <div style="flex:1">
+
+    </div>
+    <div class="d-flex bg-thumb">
+        <img class="card-img-top mx-auto my-auto bg-light" style="max-height:400px; width:auto"
+            src="/get-image/{{event.thumbnailKey}}" alt="Card image cap">
+    </div>
+
+
+</div>
+
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="proj-title mx-auto">{{lang event.title res}}</h1>
+
+        <p id="description" class="lead">{{lang event.subTitle res}}</p>
+        <div class="my-2"></div>
+        <hr class="mt-2 mb-4">
+        <div id="EventDescription" style="border:0 !important;"></div>
+    </div>
+</div>
+{{else}}
+<div class="container mt-5 pt-5">
+    <h1>Event does not exist</h1>
+    <a class="btn btn-primary" href="/">Return To Home Page</a>
+</div>
+{{/if}}
+
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+<script>
+    var quill = new Quill("#EventDescription", {
+        modules: {
+            toolbar: false
+        },
+        theme: 'snow'
+    });
+
+    const contents = {{{ event.description }}}
+    console.log(contents)
+
+    quill.setContents(contents.ops);
+
+    quill.enable(false);
+</script>

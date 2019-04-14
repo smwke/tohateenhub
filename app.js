@@ -48,24 +48,19 @@ const storage = multers3({
     }
 });
 
-// Init Multer upload
 const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: {fileSize: 5000000}
+});
+
+// Init Multer upload
+const ImageUpload = multer({
     storage: storage,
     limits: { fileSize: 5000000 },
     fileFilter: function (req, file, cb) {
         checkFileType(file, cb);
     }
-}).fields([
-    {
-        name: 'background',
-        maxCount: 1
-    },
-    {
-        name: 'thumbnail',
-        maxCount: 1
-    }
-]);
-
+});
 //Check File Type / Ensure it is an image
 function checkFileType(file, cb) {
     // Allowed extensions
@@ -86,11 +81,16 @@ function checkFileType(file, cb) {
 //Export the upload module for use in other files
 module.exports = {
     upload: upload,
+    ImageUpload: ImageUpload,
     s3: s3
 };
 
 //Initialize MongoDB Models
 require("./models/User");
+
+// Load Event Model
+require("./models/Event");
+const Event = mongoose.model("events");
 
 // Load routes
 const admin = require("./routes/admin");
@@ -106,7 +106,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
-
 // Set up i18n
 i18n.configure({
     locales: ['en', 'ru', 'ro'],
@@ -120,14 +119,8 @@ app.use(i18n.init);
 // View engine (handlebars)
 const hbs = exphbs.create({
     defaultLayout: "main",
-    helpers: {
-        lang: function (value, res) {
-            return res.__(value);
-        }
-    }
+    helpers: require("./helpers/helpers")
 });
-
-// require("./helpers/helpers")
 
 // Handlebars Middleware
 app.engine('handlebars', hbs.engine);
@@ -171,14 +164,53 @@ app.use((req, res, next) => {
 app.use("/admin", admin);
 
 app.get("/", (req, res) => {
-    res.render("index", { name: "Hello World" });
+    Event.find({}, (err, data) => {
+        if (err) console.log(err);
+        else res.render("index", { events: data });
+    })
+
 });
+
+
 
 app.get("/setLang/:lang", (req, res) => {
     if (i18n.getLocales().indexOf(req.params.lang) > -1) {
         req.session.locale = req.params.lang;
     }
-    res.redirect("/");
+    res.redirect("back");
+});
+
+app.get("/get-image/:id", (req, res) => {
+    s3.getObject({ Bucket: "tohateenhub/images/", Key: req.params.id }, (err, data) => {
+        if (err) console.log(err);
+        else {
+            res.writeHead(200, { 'Content-Type': 'image/jpeg' });
+            res.write(data.Body, 'binary');
+            res.end(null, 'binary');
+        }
+    });
+});
+
+app.get("/event/:id", (req, res) => {
+    Event.findById(req.params.id, (err, data) => {
+        if (err) console.log(err);
+        else {
+            let event = {
+                title: data.title,
+                subTitle: data.subTitle,
+                date: data.date,
+                backgroundKey: data.backgroundKey,
+                thumbnailKey: data.thumbnailKey
+            }
+            switch (res.getLocale()) {
+                case "en": { event.description = data.descriptionEn; } break;
+                case "ro": { event.description = data.descriptionRo; } break;
+                case "ru": { event.description = data.descriptionRu; } break;
+            }
+            res.render("event", { event: event });
+        }
+    });
+
 });
 
 app.listen(port, () => {

@@ -1,8 +1,8 @@
 <div class="container pt-5">
 
-    <h1> Create a new Event! </h1>
+    <h1> Edit "{{event.title}}"</h1>
 
-    <form action="/admin/event/upload" method="POST" id="projectSubmitForm" enctype="multipart/form-data">
+    <form action="/admin/event/edit?_method=PUT" method="POST" id="projectSubmitForm" enctype="multipart/form-data">
         <!--Title INPUT-->
         <div class="form-group border border-light p-3">
             <ul class="nav nav-tabs" role="tablist">
@@ -22,16 +22,18 @@
             <div class="tab-content pt-2">
                 <div class="tab-pane fade show active" id="en" role="tabpanel" aria-labelledby="en-tab">
                     <label for="title-en">Event name</label>
-                    <input name="titleEn" type="text" class="form-control" id="title-en" placeholder="Event" required>
+                    <input value="{{langSpec event.title "en" res}}" name="titleEn" type="text" class="form-control"
+                        id="title-en" placeholder="Event">
                 </div>
                 <div class="tab-pane fade" id="ro" role="tabpanel" aria-labelledby="ro-tab">
                     <label for="title-ro">Denumirea evenimentului</label>
-                    <input name="titleRo" type="text" class="form-control" id="title-ro" placeholder="Eveniment"
-                        required>
+                    <input value="{{langSpec event.title "ro" res}}" name="titleRo" type="text" class="form-control"
+                        id="title-ro" placeholder="Eveniment">
                 </div>
                 <div class="tab-pane fade" id="ru" role="tabpanel" aria-labelledby="ru-tab">
                     <label for="title-ru">Название события</label>
-                    <input name="titleRu" type="text" class="form-control" id="title-ru" placeholder="Событие" required>
+                    <input value="{{langSpec event.title "ru" res}}" name="titleRu" type="text" class="form-control"
+                        id="title-ru" placeholder="Событие">
                 </div>
             </div>
         </div>
@@ -55,18 +57,18 @@
                 <div class="tab-pane fade show active" id="en-sub-title" role="tabpanel"
                     aria-labelledby="en-tab-subtitle">
                     <label for="sub-title-en">Event sub-title</label>
-                    <input name="subTitleEn" type="text" class="form-control" id="title-en" placeholder="Event"
-                        required>
+                    <input value="{{langSpec event.subTitle "en" res}}" name="subTitleEn" type="text"
+                        class="form-control" id="title-en" placeholder="Event">
                 </div>
                 <div class="tab-pane fade" id="ro-sub-title" role="tabpanel" aria-labelledby="ro-tab-subtitle">
                     <label for="sub-title-ro">Sub-titlul evenimentului</label>
-                    <input name="subTitleRo" type="text" class="form-control" id="title-ro" placeholder="Eveniment"
-                        required>
+                    <input value="{{langSpec event.subTitle "ro" res}}" name="subTitleRo" type="text"
+                        class="form-control" id="title-ro" placeholder="Eveniment">
                 </div>
                 <div class="tab-pane fade" id="ru-sub-title" role="tabpanel" aria-labelledby="ru-tab-subtitle">
                     <label for="sub-title-ru">Подзаголовок события</label>
-                    <input name="subTitleRu" type="text" class="form-control" id="title-ru" placeholder="Событие"
-                        required>
+                    <input value="{{langSpec event.subTitle "ru" res}}" name="subTitleRu" type="text"
+                        class="form-control" id="title-ru" placeholder="Событие">
                 </div>
             </div>
             <!--label for="briefDescription">Sub-Title</label>
@@ -89,7 +91,8 @@
                 </li>
             </ul>
             <div class="tab-content pt-2">
-                <div class="tab-pane fade show active" id="en-description" role="tabpanel" aria-labelledby="en-tab-description">
+                <div class="tab-pane fade show active" id="en-description" role="tabpanel"
+                    aria-labelledby="en-tab-description">
                     <label>Detailed Description</label>
                     <!-- Create the editor container -->
                     <div id="editor-container-en"></div>
@@ -110,19 +113,22 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="date">Date of event</label>
-            <input type="date" name="date" id="date">
+            <label for="date">Override Date of event</label>
+            <input value="{{event.date}}" type="date" name="date" id="date">
         </div>
 
         <div class="form-group">
-            <label for="background">Project Background image</label>
-            <input name="background" type="file" class="form-control-file" id="background">
+            <label for="background">Override Project Background image</label> <input name="background" type="file"
+                class="form-control-file" id="background">
         </div>
         <div class="form-group">
-            <label for="thumbnail">Project thumbnail image</label>
+            <label for="thumbnail">Override Project thumbnail image</label>
             <input name="thumbnail" type="file" class="form-control-file" id="thumbnail">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <input type="text" name="id" value="{{event._id}}" style="display:none">
+        <a href="/admin/events" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary">Save</button>
+
     </form>
 
 
@@ -178,11 +184,19 @@
         theme: 'snow'  // or 'bubble'
     });
 
+    const contentsEn = {{{ event.descriptionEn }}}
+    quillEn.setContents(contentsEn.ops);
+
+    const contentsRo = {{{ event.descriptionRo }}}
+    quillRo.setContents(contentsRo.ops);
+
+    const contentsRu = {{{ event.descriptionRu }}}
+    quillRu.setContents(contentsRu.ops);
+
     $("#projectSubmitForm").on("submit", () => {
         $("#hiddenArea-en").val(JSON.stringify(quillEn.getContents()))
         $("#hiddenArea-ro").val(JSON.stringify(quillRo.getContents()))
         $("#hiddenArea-ru").val(JSON.stringify(quillRu.getContents()))
-
     });
 
 
