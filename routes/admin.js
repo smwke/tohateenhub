@@ -5,24 +5,36 @@ const passport = require('passport');
 
 const { ensureAuthenticated } = require("../helpers/auth");
 
-const ImageUploadMulter = require("../app").ImageUpload;
-const ImageUpload = ImageUploadMulter.fields([
-    {
-        name: 'background',
-        maxCount: 1
-    },
-    {
-        name: 'thumbnail',
-        maxCount: 1
-    }
-])
-
+const ImageUpload = require("../app").ImageUpload;
 const s3 = require("../app").s3;
-const upload = require("../app").upload;
+const multer = require('multer');
 
 const path = require("path");
 var fs = require('fs');
 
+/*
+function updateJsonLocaleFields(lang,fields){
+    let pathdir = path.resolve(process.cwd(), "./locales");
+    fs.readFile(pathdir + `\\${lang}.json`, 'utf8', function readFileCallback(err, data) {
+
+        if (err) {
+            console.log(err);
+        } else {
+            let obj = JSON.parse(data);
+
+            Object.keys(fields).forEach((key)=>{
+                obj[key] = fields[key]
+            });
+
+            fs.writeFile(pathdir + `\\${lang}.json`, JSON.stringify(obj), 'utf8', (err) => {
+                if (err) console.log(err);
+
+            });
+        }
+    });
+}*/
+
+const updateJsonLocaleFields = require("../helpers/functions").updateJsonLocaleFields;
 
 const router = express.Router();
 
@@ -156,124 +168,112 @@ router.get("/event/edit/:id", ensureAuthenticated, (req, res) => {
     });
 });
 
-// Edit event PUT
-router.put('/event/edit', upload.fields([
-    {
-        name: 'background',
-        maxCount: 1
-    },
-    {
-        name: 'thumbnail',
-        maxCount: 1
-    }
-]), ensureAuthenticated, (req, res) => {
-    /*console.log("------------------------------------------------")
-    console.log(req.files.background[0]);
-    console.log("--------------------------------------------")
-    console.log(req.files.thumbnail[0]);*/
-
-
-    /*Thubnail image upload
-    let tnUpload = upload.single("thumbnail");
-    //Background image upload
-    let bgUpload = upload.single("background");*/
-
-
-
-    Event.findById(req.body.id, (err, result) => {
-        if (err) console.log(err);
-        else {
-            let newEvent = {
-                title: req.body.titleEn,
-                subTitle: req.body.subTitleEn,
-                descriptionEn: req.body.descriptionEn,
-                descriptionRo: req.body.descriptionRo,
-                descriptionRu: req.body.descriptionRu
-            }
-
-            // If background file has been sent through the form
-            if (req.files.background) {
-                newEvent.backgroundKey = req.files.background[0].key;
-                // Remove the existing background image
-                s3.deleteObjects({
-                    Bucket: "tohateenhub",
-                    Delete: {
-                        Objects: [
-                            {
-                                Key: ("images//" + result.backgroundKey).toString()
-                            }
-                        ],
-                    }
-                }, (err, data) => {
-                    if (err) {
-                        console.log(err);
-                        req.flash("error_msg", err.stack);
-                    }
-                });
-
-                // Add the new background image, situated in req.files
-                ImageUploadMulter.single("background")(req, res, (err) => {
-                    if (err) console.log(err);
-                })
-            }
-
-            // IF thumbnail has been sent through the form
-            if (req.files.thumbnail) {
-                newEvent.thumbnailKey = req.files.thumbnail[0].key;
-
-                // Remove existing thumbnail image
-                s3.deleteObjects({
-                    Bucket: "tohateenhub",
-                    Delete: {
-                        Objects: [
-                            {
-                                Key: ("images//" + result.thumbnailKey).toString()
-                            }
-                        ],
-                    }
-                }, (err, data) => {
-                    if (err) {
-                        console.log(err);
-                        req.flash("error_msg", err.stack);
-                    }
-                });
-
-                // Add the new thumbnail image, situated in req.files
-                ImageUploadMulter.single("thumbnail")(req, res, (err) => {
-                    if (err) console.log(err);
-                })
-
-            }
-
-            if (req.body.date) {
-                newEvent.date = req.body.date;
-            }
-
-
-            //result = newEvent;
-            Event.update({ _id: result._id }, newEvent, (err, raw) => {
-                if (err) console.log(err);
-                res.redirect('/admin/events');
-            })
-            //result.save();
-
-            //res.redirect('/admin/events');
+// Edit Event PUT
+router.put('/event/edit', ensureAuthenticated, (req, res) => {
+    ImageUpload(req, res, (err) => {
+        if (err instanceof multer.MulterError) {
+            console.log(err);
         }
+        Event.findById(req.body.id, (err, result) => {
+            if (err) console.log(err);
+            else {
+                let newEvent = {
+                    title: req.body.titleEn,
+                    subTitle: req.body.subTitleEn,
+                    descriptionEn: req.body.descriptionEn,
+                    descriptionRo: req.body.descriptionRo,
+                    descriptionRu: req.body.descriptionRu
+                }
+                // Edit En locale json file
+                updateJsonLocaleFields("en", {
+                    [req.body.titleEn]: req.body.titleEn,
+                    [req.body.subTitleEn]: req.body.subTitleEn
+                });
+
+                console.log("proceeding to overwrite this:");
+                console.log({
+                    [req.body.titleEn]: req.body.titleRo,
+                    [req.body.subTitleEn]: req.body.subTitleRo
+                });
+                // Edit Ro locale json file
+                updateJsonLocaleFields("ro", {
+                    [req.body.titleEn]: req.body.titleRo,
+                    [req.body.subTitleEn]: req.body.subTitleRo
+                });
+
+                // Edit Ru locale json file
+                updateJsonLocaleFields("ru", {
+                    [req.body.titleEn]: req.body.titleRu,
+                    [req.body.subTitleEn]: req.body.subTitleRu
+                });
+
+                // If the background image is overriden
+                if (req.files.background) {
+                    newEvent.backgroundKey = req.files.background[0].key;
+                    s3.deleteObjects({
+                        Bucket: "tohateenhub",
+                        Delete: {
+                            Objects: [
+                                {
+                                    Key: ("images//" + result.backgroundKey).toString()
+                                }
+                            ],
+                        }
+                    }, (err, data) => {
+                        if (err) {
+                            console.log(err);
+                            req.flash("error_msg", err.stack);
+                        } else {
+                            req.flash("success_msg", "Background deleted successfully");
+                        }
+                    });
+                }
+
+                // If the thumbnail image is overriden
+                if (req.files.thumbnail) {
+                    newEvent.thumbnailKey = req.files.thumbnail[0].key;
+                    s3.deleteObjects({
+                        Bucket: "tohateenhub",
+                        Delete: {
+                            Objects: [
+                                {
+                                    Key: ("images//" + result.thumbnailKey).toString()
+                                }
+                            ],
+                        }
+                    }, (err, data) => {
+                        if (err) {
+                            console.log(err);
+                            req.flash("error_msg", err.stack);
+                        } else {
+                            req.flash("success_msg", "Thumbnail deleted successfully");
+                        }
+                    });
+                }
+
+                // If the date is overriden
+                if (req.body.date) {
+                    newEvent.date = req.body.date;
+                }
+
+                // Put the modified object on MongoDB
+                Event.updateOne({ _id: result._id }, newEvent, (err, raw) => {
+                    if (err) console.log(err);
+                    else res.redirect('/admin/events');
+                })
+            }
+        });
     });
-
-
-    //ingleUpload = upload.singe
-
-});
+})
 
 // Submit new Event
 router.post('/event/upload', ensureAuthenticated, (req, res) => {
 
-	/* NOTE: The form has enctype="multipart/form-data" enabled
-	 * This means body-parser cannot process the form data
-	 * Multer is parsing the form-data below along with files
-	 * in / upload(()=>{}); below / 
-	*/
+    /* NOTE: The form has enctype="multipart/form-data" enabled
+     * This means body-parser cannot process the form data
+     * Multer is parsing the form-data below along with files
+     * in / upload(()=>{}); below / 
+    */
 
     //Upload the images to s3 webserver
     ImageUpload(req, res, (err) => {
@@ -295,51 +295,23 @@ router.post('/event/upload', ensureAuthenticated, (req, res) => {
             if (req.body.date) {
                 date = req.body.date;
             }
-            let pathdir = path.resolve(process.cwd(), "./locales")
 
             // Edit En locale json file
-            fs.readFile(pathdir + "\\en.json", 'utf8', function readFileCallback(err, data) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    let en = JSON.parse(data);
-                    en[req.body.titleEn] = req.body.titleEn;
-                    en[req.body.subTitleEn] = req.body.subTitleEn;
-                    fs.writeFile(pathdir + "\\en.json", JSON.stringify(en), 'utf8', (err) => {
-                        if (err) console.log(err);
-
-                    });
-                }
+            updateJsonLocaleFields("en", {
+                [req.body.titleEn]: req.body.titleEn,
+                [req.body.subTitleEn]: req.body.subTitleEn
             });
 
             // Edit Ro locale json file
-            fs.readFile(pathdir + "\\ro.json", 'utf8', function readFileCallback(err, data) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    let ro = JSON.parse(data);
-                    ro[req.body.titleEn] = req.body.titleRo;
-                    ro[req.body.subTitleEn] = req.body.subTitleRo;
-                    fs.writeFile(pathdir + "\\ro.json", JSON.stringify(ro), 'utf8', (err) => {
-                        if (err) console.log(err);
-
-                    });
-                }
+            updateJsonLocaleFields("ro", {
+                [req.body.titleEn]: req.body.titleRo,
+                [req.body.subTitleEn]: req.body.subTitleRo
             });
 
             // Edit Ru locale json file
-            fs.readFile(pathdir + "\\ru.json", 'utf8', function readFileCallback(err, data) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    let ru = JSON.parse(data);
-                    ru[req.body.titleEn] = req.body.titleRu;
-                    ru[req.body.subTitleEn] = req.body.subTitleRu;
-                    fs.writeFile(pathdir + "\\ru.json", JSON.stringify(ru), 'utf8', (err) => {
-                        if (err) console.log(err);
-
-                    });
-                }
+            updateJsonLocaleFields("ru", {
+                [req.body.titleEn]: req.body.titleRu,
+                [req.body.subTitleEn]: req.body.subTitleRu
             });
 
             // Upload to MongoDB

@@ -48,11 +48,6 @@ const storage = multers3({
     }
 });
 
-const upload = multer({
-    storage: multer.memoryStorage(),
-    limits: {fileSize: 5000000}
-});
-
 // Init Multer upload
 const ImageUpload = multer({
     storage: storage,
@@ -60,7 +55,16 @@ const ImageUpload = multer({
     fileFilter: function (req, file, cb) {
         checkFileType(file, cb);
     }
-});
+}).fields([
+    {
+        name: 'background',
+        maxCount: 1
+    },
+    {
+        name: 'thumbnail',
+        maxCount: 1
+    }
+]);
 //Check File Type / Ensure it is an image
 function checkFileType(file, cb) {
     // Allowed extensions
@@ -80,7 +84,6 @@ function checkFileType(file, cb) {
 
 //Export the upload module for use in other files
 module.exports = {
-    upload: upload,
     ImageUpload: ImageUpload,
     s3: s3
 };
@@ -110,7 +113,8 @@ app.use(bodyParser.json());
 i18n.configure({
     locales: ['en', 'ru', 'ro'],
     defaultLocale: 'en',
-    directory: __dirname + '/locales'
+    directory: __dirname + '/locales',
+    autoReload: true
 });
 
 // i18n Middleware [for internalization]
@@ -170,8 +174,6 @@ app.get("/", (req, res) => {
     })
 
 });
-
-
 
 app.get("/setLang/:lang", (req, res) => {
     if (i18n.getLocales().indexOf(req.params.lang) > -1) {
