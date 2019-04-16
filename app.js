@@ -195,7 +195,9 @@ app.get("/get-image/:id", (req, res) => {
 
 app.get("/event/:id", (req, res) => {
     Event.findById(req.params.id, (err, data) => {
-        if (err) console.log(err);
+        if (err){
+            res.render("event");
+        }
         else {
             let event = {
                 title: data.title,
