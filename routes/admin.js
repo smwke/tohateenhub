@@ -9,9 +9,6 @@ const ImageUpload = require("../app").ImageUpload;
 const s3 = require("../app").s3;
 const multer = require('multer');
 
-const path = require("path");
-var fs = require('fs');
-
 /*
 function updateJsonLocaleFields(lang,fields){
     let pathdir = path.resolve(process.cwd(), "./locales");
