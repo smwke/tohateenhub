@@ -4,8 +4,6 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const methodOverride = require("method-override");
 
-const fs = require("fs");
-
 const aws = require('aws-sdk');
 const multer = require('multer');
 const multers3 = require('multer-s3');
@@ -65,6 +63,7 @@ const ImageUpload = multer({
         maxCount: 1
     }
 ]);
+
 //Check File Type / Ensure it is an image
 function checkFileType(file, cb) {
     // Allowed extensions
@@ -152,6 +151,8 @@ app.use(passport.session());
 
 //Connect-flash middleware /* Must be initialized after session
 app.use(flash());
+
+
 
 //Global variables /* Must be initialized after flash
 app.use((req, res, next) => {

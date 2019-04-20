@@ -1,4 +1,4 @@
-<header class="parallax-bg abstract-bg d-flex align-items-center" style="min-height:100vh;color:#f3f9fb;">
+<!--header class="parallax-bg abstract-bg d-flex align-items-end" style="min-height:100vh;color:#f3f9fb;">
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-12">
@@ -10,8 +10,17 @@
             </div>
         </div>
     </div>
-</header>
+</header-->
+<header class="parallax-bg abstract-bg d-flex align-items-end" style="min-height:calc(100vh - 24px);color:#f3f9fb;">
 
+    <div class="w-100 text-center d-flex justify-content-center align-items-center text-dark rounded"
+        style="background-color:rgba(255,255,255,0.6);">
+        <h1 class="display-3 py-5 text-uppercase" style="font-size:3em;">{{lang "The best learning facility" res}}
+        </h1>
+    </div>
+
+
+</header>
 
 <div style="min-height:100vh;border-top: 4px solid gray" id="logoDiv" class="d-flex align-items-center special-color">
     <div class="container">
@@ -39,10 +48,11 @@
     </div>
 </div>
 
-<div style="min-height:90vh" class="bg-dark text-light" id="newsDiv">
+<div style="min-height:90vh;background-image:url(/img/events.jpg)" class="bg-dark text-light parallax-bg" id="newsDiv">
     <div class="container pt-3">
         <h1 style="font-size:3.5em">{{lang "Events" res}}</h1>
         <div class="row">
+            <!--
             {{#each events}}
             <div class="col-sm-6 col-lg-4 my-1">
                 <div class="card"
@@ -56,6 +66,24 @@
                         <a href="/event/{{_id}}" class="btn btn-primary">Details</a>
                     </div>
                 </div>
+            </div>
+            {{/each}}
+            -->
+            {{#each events}}
+            <div class="my-1 p-2 d-flex w-100">
+                <div class="bg-primary d-flex align-items-center justify-content-center flex-column text-center px-4 py-2"
+                    style="">
+                    <span class="d-block text-white" style="font-size:2.4em;font-weight:500;">13</span>
+                    <span class="d-block text-white" style="font-size:2.4em;font-weight:500;">JULY</span>
+                </div>
+                <div class="p-3 d-flex event flex-column text-center align-items-center justify-content-center w-100"
+                    style="position:relative;border:2px solid var(--light);">
+                    <span class="resp-text-p" style="color:bisque">{{lang title ../res}}</span>
+                    <span class="resp-text-p" style="color:bisque">{{lang subTitle ../res}}</span>
+                    <a href="/event/{{_id}}" style="position: absolute;bottom:-20;right:-15;"
+                        class="btn px-3 py-2 btn-primary"><i class="fas fa-info-circle fa-2x"></i></a>
+                </div>
+
             </div>
             {{/each}}
         </div>

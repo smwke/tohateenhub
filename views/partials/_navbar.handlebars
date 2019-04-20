@@ -1,17 +1,41 @@
 <style>
     .bg-nav {
+        position: fixed;
+        top: 50px;
+        right: 0;
+        left: 0;
+        z-index: 1030;
         background-color: transparent;
-        transition: background-color 0.5s, margin-top 0.2s;
+        transition: background-color 0.5s, margin-top 0.2s, top 0.5s;
         font-size: 1.1em;
-        font-weight: 400 !important;
-        margin-top: 24px;
-        /*transition: margin-top 0.1s;*/
+        font-weight: 450 !important;
+        /*margin-top: 50px;*/
     }
 
+    /*.bg-nav:after{
+        content:'';
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height: 100%;
+        background: var(--color4);
+        transform-origin: 100% 100%;
+        transform:skewX(-45deg);
+        z-index:-1;
+    }*/
+
     .bg-nav.scrolled {
+
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 1030;
+
         background: var(--color4) !important;
         color: var(--color2);
-        margin-top:0;
+        margin-top: 0;
     }
 
     .bg-nav a,
@@ -29,18 +53,9 @@
         transition: all 0.5s;
     }
 
-    .bg-nav .dropdown-menu {
-        background-color: var(--color3);
-
-    }
-
-    .bg-nav.scrolled .dropdown-menu {
-        background-color: var(--color5) !important;
-    }
-
-    .bg-nav.scrolled .dropdown-menu .dropdown-item:hover {
-        background: var(--color3) !important;
-    }
+    /*.bg-nav.scrolled .dropdown-item:hover {
+        background: var(--info) !important;
+    }*/
 
     .nav-list-collapse {
         transition: padding-left 0.5s;
@@ -70,8 +85,7 @@
     }
 </style>
 
-<nav class="navbar fixed-top navbar-expand-md bg-nav z-depth-0" style="height:auto">
-
+<nav class="navbar navbar-expand-md bg-nav z-depth-0" style="height:auto">
     <div class="container">
         <a class="navbar-brand" href="/">
             <img src="/img/svg/tohateen-text-logo.svg" height="30">
@@ -101,7 +115,7 @@
                         aria-expanded="false">
                         <i class="fas fa-language"></i>{{localization}}
                     </a>
-                    <div class="dropdown-menu animated fadeIn faster" aria-labelledby="languageMenu">
+                    <div class="dropdown-menu bg-white animated fadeIn faster" aria-labelledby="languageMenu">
                         <a class="dropdown-item" href="/setLang/en">English</a>
                         <a class="dropdown-item" href="/setLang/ro">Română</a>
                         <a class="dropdown-item" href="/setLang/ru">Русский</a>
@@ -114,9 +128,8 @@
 
 <script>
     $(window).scroll(() => {
-        $('nav').toggleClass('scrolled', $(this).scrollTop() > 24);
-        //$('nav').toggleClass('mt-3', $(this).scrollTop() < 50);
-        $('nav').toggleClass('z-depth-2', $(this).scrollTop() > 50)
+        $('nav').toggleClass('scrolled', $(this).scrollTop() > 50);
+        $('nav').toggleClass('z-depth-2', $(this).scrollTop() > 50);
     });
 </script>
 
