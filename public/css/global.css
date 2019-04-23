@@ -18,10 +18,11 @@ html {
 }
 
 .abstract-bg {
+    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
     /*background: url("/img/largebg.jpg") no-repeat center center;*/
     /*background: linear-gradient(to left, #436e97, #2464dc);*/
     background-attachment: fixed;
-    background-image: url("/img/blur-bg.jpg");
+   /* background-image: url("/img/blur-bg.jpg");*/
 }
 
 .dark-bg {
@@ -46,4 +47,11 @@ html {
     .resp-text-p {
         font-size: 36px;
     }
+}
+
+.square{
+    width: 12vw;
+    height: 12vw;
+    min-height: 100%;
+    
 }

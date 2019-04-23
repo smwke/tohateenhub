@@ -11,11 +11,11 @@
         </div>
     </div>
 </header-->
-<header class="parallax-bg abstract-bg d-flex align-items-end" style="min-height:calc(100vh - 24px);color:#f3f9fb;">
+<header id="initialContainer" class="parallax-bg abstract-bg d-flex align-items-end" style="color:#f3f9fb;">
 
     <div class="w-100 text-center d-flex justify-content-center align-items-center text-dark rounded"
         style="background-color:rgba(255,255,255,0.6);">
-        <h1 class="display-3 py-5 text-uppercase" style="font-size:3em;">{{lang "The best learning facility" res}}
+        <h1 class="m-0 display-3 py-5 text-uppercase" style="font-size: 6vmin;">{{lang "The best learning facility" res}}
         </h1>
     </div>
 
@@ -48,7 +48,7 @@
     </div>
 </div>
 
-<div style="min-height:90vh;background-image:url(/img/events.jpg)" class="bg-dark text-light parallax-bg" id="newsDiv">
+<div style="min-height:90vh;background: linear-gradient(90deg, #1CB5E0 0%, #000851 100%);/*background-image:url(/img/events.jpg)*/" class="bg-dark text-light parallax-bg" id="newsDiv">
     <div class="container pt-3">
         <h1 style="font-size:3.5em">{{lang "Events" res}}</h1>
         <div class="row">
@@ -70,17 +70,17 @@
             {{/each}}
             -->
             {{#each events}}
-            <div class="my-1 p-2 d-flex w-100">
+            <div class="my-1 p-2 d-flex w-100 justify-content-between">
                 <div class="bg-primary d-flex align-items-center justify-content-center flex-column text-center px-4 py-2"
                     style="">
-                    <span class="d-block text-white" style="font-size:2.4em;font-weight:500;">13</span>
-                    <span class="d-block text-white" style="font-size:2.4em;font-weight:500;">JULY</span>
+                    <span class="d-block text-white" style="font-size: 5vmin;font-weight:500;">13</span>
+                    <span class="d-block text-white" style="font-size: 5vmin;font-weight:500;">JULY</span>
                 </div>
-                <div class="p-3 d-flex event flex-column text-center align-items-center justify-content-center w-100"
-                    style="position:relative;border:2px solid var(--light);">
+                <div class="ml-3 p-3 d-flex event flex-column text-center align-items-center justify-content-center"
+                    style="position:relative;border:1px solid var(--light);">
                     <span class="resp-text-p" style="color:bisque">{{lang title ../res}}</span>
                     <span class="resp-text-p" style="color:bisque">{{lang subTitle ../res}}</span>
-                    <a href="/event/{{_id}}" style="position: absolute;bottom:-20;right:-15;"
+                    <a href="/event/{{_id}}" style="position: absolute;bottom:-30;right:-8;"
                         class="btn px-3 py-2 btn-primary"><i class="fas fa-info-circle fa-2x"></i></a>
                 </div>
 
@@ -89,3 +89,13 @@
         </div>
     </div>
 </div>
+
+<script>
+    // calculate min-height on init
+    $("#initialContainer").css("min-height", `${window.innerHeight-24}px`);
+
+    /* recalculate the min-height everytime the bar appears or disappears
+    $(window).resize(() => {
+        $("#initialContainer").css("min-height", `${window.innerHeight}px`);
+    });*/
+</script>

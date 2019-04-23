@@ -1,14 +1,15 @@
 <style>
     .bg-nav {
         position: fixed;
-        top: 50px;
+        top: 24px;
         right: 0;
         left: 0;
         z-index: 1030;
-        background-color: transparent;
+        background-color: #4B515D;
         transition: background-color 0.5s, margin-top 0.2s, top 0.5s;
         font-size: 1.1em;
         font-weight: 450 !important;
+        align-items: center;
         /*margin-top: 50px;*/
     }
 
@@ -26,26 +27,22 @@
     }*/
 
     .bg-nav.scrolled {
-
-        position: fixed;
-        top: 0;
-        right: 0;
-        left: 0;
-        z-index: 1030;
-
+        top:0;
         background: var(--color4) !important;
         color: var(--color2);
-        margin-top: 0;
     }
 
     .bg-nav a,
-    .bg-nav i {
-        color: var(--color2);
+    .bg-nav i,
+    .bg-nav span {
+        transition: color 0.5s;
+        color: white;
     }
 
     .bg-nav.scrolled a,
-    .bg-nav.scrolled i {
-        transition: all 0.5s;
+    .bg-nav.scrolled i,
+    .bg-nav.scrolled span {
+
         color: var(--color1);
     }
 
@@ -66,7 +63,7 @@
         padding-left: 1em;
     }
 
-    @media (min-width: 992px) {
+    @media screen and (min-width: 992px) {
         .bg-nav.scrolled .navbar-collapse {
 
             background: transparent !important;
@@ -113,7 +110,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="languageMenu" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
-                        <i class="fas fa-language"></i>{{localization}}
+                        <i class="fas fa-language"></i><span>{{localization}}</span>
                     </a>
                     <div class="dropdown-menu bg-white animated fadeIn faster" aria-labelledby="languageMenu">
                         <a class="dropdown-item" href="/setLang/en">English</a>

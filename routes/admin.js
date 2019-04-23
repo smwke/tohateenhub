@@ -187,11 +187,6 @@ router.put('/event/edit', ensureAuthenticated, (req, res) => {
                     [req.body.subTitleEn]: req.body.subTitleEn
                 });
 
-                console.log("proceeding to overwrite this:");
-                console.log({
-                    [req.body.titleEn]: req.body.titleRo,
-                    [req.body.subTitleEn]: req.body.subTitleRo
-                });
                 // Edit Ro locale json file
                 updateJsonLocaleFields("ro", {
                     [req.body.titleEn]: req.body.titleRo,
