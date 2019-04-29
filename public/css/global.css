@@ -6,32 +6,22 @@
     --color5: rgba(230, 250, 252, 1);
 }
 
-html {
+html, body {
     scroll-behavior: smooth;
+    margin: 0;
+	padding: 0;
+	width: 100%;
 }
-
-.parallax-bg {
-    /*background: url("/img/largebg.jpg") no-repeat center center;*/
-    background-attachment: fixed;
-    background-position: center right;
-    background-size: cover;
+ul, li {
+	display: block;
+	margin: 0;
+	padding: 0;
 }
-
-.abstract-bg {
-    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
-    /*background: url("/img/largebg.jpg") no-repeat center center;*/
-    /*background: linear-gradient(to left, #436e97, #2464dc);*/
-    background-attachment: fixed;
-   /* background-image: url("/img/blur-bg.jpg");*/
+a {
+	text-decoration: none;
 }
-
-.dark-bg {
-    background: #0F2027;
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+a:hover {
+	text-decoration: none;
 }
 
 .text-difference {
@@ -49,9 +39,64 @@ html {
     }
 }
 
-.square{
+.square {
     width: 12vw;
     height: 12vw;
     min-height: 100%;
-    
+}
+
+/* styles for banner with some breakpoints */
+
+.banner {
+    margin-top: 62px;
+}
+
+@media only screen and (min-width: 992px) {
+    .banner .carousel-item {
+        max-height: 90vh;
+    }
+}
+
+@media only screen and (max-height: 480px) {
+    .banner .carousel-item {
+        max-height: 83vh;
+    }
+}
+
+/* styles for partners section */
+
+.partners__item {
+    width: 30vh;
+}
+
+/* styles for footer and its components */
+
+footer {
+    min-height: 3vh;
+    background-color: #2E2E2E;
+}
+
+footer i {
+    color: white;
+}
+
+footer h4 {
+    color: white;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+footer p, footer a, footer li {
+    color: silver;
+    font-size: 14px;
+    line-height: 15px;
+}
+
+footer a:hover {
+    color: #1A71A4;
+}
+
+footer .media_icon {
+    width: 30px;
+    height: 30px;
 }

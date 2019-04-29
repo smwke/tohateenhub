@@ -1,88 +1,48 @@
 <style>
-    .bg-nav {
-        position: fixed;
-        top: 24px;
-        right: 0;
-        left: 0;
-        z-index: 1030;
-        background-color: #4B515D;
-        transition: background-color 0.5s, margin-top 0.2s, top 0.5s;
-        font-size: 1.1em;
-        font-weight: 450 !important;
-        align-items: center;
-        /*margin-top: 50px;*/
+    .navbar {
+        background-color: #FCFCFC;
     }
 
-    /*.bg-nav:after{
-        content:'';
-        position:absolute;
-        top:0;
-        left:0;
-        width:100%;
-        height: 100%;
-        background: var(--color4);
-        transform-origin: 100% 100%;
-        transform:skewX(-45deg);
-        z-index:-1;
-    }*/
-
-    .bg-nav.scrolled {
-        top:0;
-        background: var(--color4) !important;
-        color: var(--color2);
+    .navbar-brand img {
+        height: 20px;
     }
 
-    .bg-nav a,
-    .bg-nav i,
-    .bg-nav span {
-        transition: color 0.5s;
-        color: white;
+    .nav-link {
+        color: #575757;
+        font-weight: 600;
+        transition: 0.3s;
     }
 
-    .bg-nav.scrolled a,
-    .bg-nav.scrolled i,
-    .bg-nav.scrolled span {
-
-        color: var(--color1);
+    .nav-link:hover {
+        color: black;
+        transition: 0.3s;
     }
 
-    .dropdown-menu {
-        transition: all 0.5s;
+    .nav-link::after {
+        content: '';
+        display: block;
+        width: 0;
+        height: 1px;
+        background-color: black;
+        transition: 0, 4s;
     }
 
-    /*.bg-nav.scrolled .dropdown-item:hover {
-        background: var(--info) !important;
-    }*/
-
-    .nav-list-collapse {
-        transition: padding-left 0.5s;
-        border-bottom: none;
+    .nav-link:hover::after {
+        width: 100%;
+        transition: 0.4s;
     }
 
-    .bg-nav.scrolled .nav-list-collapse {
-        padding-left: 1em;
+    /* Scrolled Navbar styles */
+    .navbar.scrolled{
+    }
+    .navbar.scrolled .nav-link{
+        margin-right: 15px;
     }
 
-    @media screen and (min-width: 992px) {
-        .bg-nav.scrolled .navbar-collapse {
 
-            background: transparent !important;
-        }
-
-        .bg-nav .navbar-collapse {
-
-            background: transparent !important;
-        }
-    }
-
-    @media only screen and (min-width: 768px) {
-        .dropdown:hover .dropdown-menu {
-            display: block;
-        }
-    }
 </style>
 
-<nav class="navbar navbar-expand-md bg-nav z-depth-0" style="height:auto">
+<!--nav class="navbar navbar-expand-md bg-nav z-depth-0" style="height:auto">
     <div class="container">
         <a class="navbar-brand" href="/">
             <img src="/img/svg/tohateen-text-logo.svg" height="30">
@@ -90,7 +50,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
             style="padding-top:16px;padding-bottom:16px;">
-            <!--span class="navbar-toggler-icon"></span-->
+            <!span class="navbar-toggler-icon"></span>
             <i class="fas fa-bars"></i>
 
         </button>
@@ -120,6 +80,51 @@
                 </li>
             </ul>
         </div>
+    </div>
+</nav-->
+
+<nav class="navbar navbar-expand-md fixed-top shadow-sm">
+    <!--a class="navbar-brand ml-3" href="#"><img src="/img/logo.png" alt=""></a-->
+    <a class="navbar-brand ml-3 my-2" href="/">
+        <img src="/img/svg/tohateen-text-logo.svg">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars"></i>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">About Us</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Events</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">News</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contacts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Donate</a>
+            </li>
+            <li class="nav-item mr-md-4 ml-md-5">
+                <div class="dropdown">
+                    <a id="lang_select" data-toggle="dropdown"
+                        style="cursor:pointer; color:#575757; line-height:31px">Language:
+                        <img src="/img/icons/ro.png" alt="ro">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="lang_select"
+                        style="min-width: 50px;">
+                        <a class="dropdown-item" href="#"><img src="/img/icons/ro.png" alt="ro"> Romana</a>
+                        <a class="dropdown-item" href="#"><img src="/img/icons/en.png" alt="en"> English</a>
+                        <a class="dropdown-item" href="#"><img src="/img/icons/ru.png" alt="ru"> Русский</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
 </nav>
 
