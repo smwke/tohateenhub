@@ -1,0 +1,893 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	font-family: sans-serif;
+
+	-webkit-font-smoothing: antialiased;
+	-webkit-overflow-scrolling: touch;
+}
+ul, li {
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+a {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+p {
+	font-size: 1.3em;
+}
+
+
+
+
+
+
+/* general for banner (there are differences in breakpoints) */
+
+/* styles for banner and its components */
+.banner .carousel-caption {
+	right: 15%;
+    text-align: start;
+}
+.carousel-item {
+	background-color: black;
+	position: relative;
+}
+.banner_img {
+	height: 100%;
+	position: absolute;
+	object-fit: cover;
+	opacity: .45;
+}
+/* styles for button in the carousel */
+.banner .carousel-caption>a {
+	color: white;
+	font-weight: 450;
+	text-transform: capitalize;	
+	background-color: #4495E1;
+	border: 2px solid #4495E1;
+	border-radius: 0;
+	padding: .4em 1.3em;
+	transition: .3s all;
+}
+.banner .carousel-caption>a:hover {
+	background-color: #4495E1;
+}
+
+
+
+
+/* styles for all headers on mainpage */
+
+.main-h5-dark,.main-h5-light {
+	color: rgba(17, 44, 65, .7);
+	text-transform: uppercase;
+}
+.main-h5-dark::after, .main-h5-light::after {
+	content: '';
+	display: block;
+	width: 50%;
+	height: 4px;
+	margin-left: 25%;
+	margin-top: 6px;
+	background: linear-gradient(90deg,transparent 0%, pink 20%, #4495E1 40%, #4495E1 60%, pink 80%, transparent 100%);
+}
+.main-h5-dark {
+	color: #14334B;
+}
+.main-h5-light {
+	color: white;
+}
+
+
+
+/* "see more" statement in the end of a section */
+
+.see-more>div {
+	height: 2px;
+	width: 20vw;
+		display: inline-block;
+	vertical-align: middle;
+}
+.see-more>.line1 {
+	background: linear-gradient(-90deg, #4495E1 20%, pink 60%, transparent 100%);
+}
+.see-more>.line2 {
+	background: linear-gradient(90deg, #4495E1 20%, pink 60%, transparent 100%);
+}
+.see-more>a {
+	color: #4495E1;
+	padding: 2px;
+	transition: .2s all;
+}
+.see-more>a:hover {
+	color: pink;
+}
+
+
+
+
+/* about us section */
+.about {
+	padding: 0 13vw;
+	text-align: center;
+}
+.about p {
+	font-size: 2.5vh;
+}
+
+
+
+
+/* news section styles general (there are breakpoints with sizes) */
+
+.news {
+	width: 92vw;
+	margin-left: 4vw;
+	margin-right: calc(4vw - 60px);
+}
+
+.hovereffect {
+	width: 100%;
+	height: 100%;
+	float: left;
+	overflow: hidden;
+	position: relative;
+	text-align: center;
+	cursor: default;
+	background: linear-gradient(black,black);
+	transition: 1s;
+}
+	.hovereffect img {
+		display: block;
+		position: relative;
+		max-width: none;
+		width: calc(100% + 60px);
+		height: 100%;
+		object-fit: cover;
+		position: center;
+		opacity: .6;
+		-webkit-transition: opacity 0.35s, -webkit-transform 0.45s;
+		transition: opacity 0.35s, transform 0.45s;
+		-webkit-transform: translate3d(-40px,0,0);
+		transform: translate3d(-40px,0,0);
+	}
+	.hovereffect .overlay {
+		width: 100%;
+		height: 100%;
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		text-align: left;
+	}
+	.hovereffect .overlay:before {
+		position: absolute;
+		border: 1px solid #fff;
+		content: '';
+		opacity: 0;
+		filter: alpha(opacity=0);
+		-webkit-transition: opacity 0.35s, -webkit-transform 0.45s;
+		transition: opacity 0.35s, transform 0.45s;
+		-webkit-transform: translate3d(-20px,0,0);
+		transform: translate3d(-20px,0,0);
+	}
+	.hovereffect h2 {
+		padding: .2em .3em 0 .5em;
+		color: #fff;
+		text-transform: uppercase;
+		text-align: left;
+		position: relative;
+	}
+	.hovereffect a, .hovereffect p {
+		color: #FFF;
+		padding: 0 1em 0 1em;
+		opacity: 0;
+		filter: alpha(opacity=0);
+		-webkit-transition: opacity 0.35s, -webkit-transform 0.45s;
+		transition: opacity 0.35s, transform 0.45s;
+		-webkit-transform: translate3d(-10px,0,0);
+		transform: translate3d(-10px,0,0);
+	}
+	.hovereffect a {
+		text-transform: uppercase;
+		padding: .1em .2em;
+		background-color: rgba(5, 171, 224, .5);
+		word-spacing: 0.07em;
+	}
+
+.hovereffect:hover {
+	background: -webkit-linear-gradient(45deg, #D454BA 0%, #0B8DBC 100%);
+	background: linear-gradient(45deg, #D454BA 0%,#0B8DBC 100%);
+}
+	.hovereffect:hover img {
+		opacity: .6;
+		filter: alpha(opacity=60);
+		-webkit-transform: translate3d(0,0,0);
+		transform: translate3d(0,0,0);
+	}
+	.hovereffect:hover .overlay:before,
+	.hovereffect:hover a, .hovereffect:hover p {
+		opacity: 1;
+		filter: alpha(opacity=30);
+		-webkit-transform: translate3d(0,0,0);
+		transform: translate3d(0,0,0);
+	}
+
+
+
+
+/* donate */
+
+.donate {
+	background-color: black;
+	position: relative;
+	overflow: hidden;
+	padding-bottom: 1.7vh;
+	z-index: 0;
+}
+	.donate>img {
+		display: block;
+		position: absolute;
+		object-fit: cover;
+		opacity: .35;
+		z-index: -1;
+	}
+	.donate>.content {
+		color: white;
+		padding: 0 10vw;
+	}
+	.donate p {
+		line-height: 1.4em;
+		word-spacing: .1em;
+	}
+	.donate a {
+		color: white;
+		text-transform: uppercase;
+		border: 2px solid #4495E1;
+	}
+
+
+
+
+/* styles for footer and its components */
+
+footer {
+	min-height: 3vh;
+	background: url('../img/footer2.jpg');
+}
+footer i {
+	color:white;
+}
+footer h4 {
+	color : white;
+	text-transform: uppercase;
+	font-size: 12px;
+}
+footer p , a , li {
+	color: silver;
+	font-size: 14px;
+    line-height : 15px;
+}
+footer a:hover{
+	color: #1A71A4;
+}
+footer .media_icon {
+	width: 30px;
+	height: 30px;
+}
+
+
+
+
+
+
+
+
+/* breakpoint min-width:100px */
+@media only screen and (min-width: 1px) and (max-height: 1280px) {
+
+	/* navbar */
+
+	.navbar {
+		background-color: rgba(246, 246, 246, .97);
+		box-shadow: 0 1px 10px grey;
+		padding: 0;
+	}
+	.navbar-brand img {
+		height: 40px;
+		width: 40px;
+	}
+	a[aria-expanded="false"].navbar-toggler>.opened {
+		display: none;
+	}
+	a[aria-expanded="true"].navbar-toggler>.closed{
+		display: none;
+	}
+	.navbar-collapse {
+		transition: .5s;
+	}
+	.nav-link {
+		color: #545454;
+		font-size: 13px;
+		font-weight: 500;
+		text-transform: uppercase;
+	}
+	.nav-link:hover {
+		color: black;
+	}
+	#lang_select {
+		color: #545454;
+		font-size: 13px;
+		font-weight: 500;
+		text-transform: uppercase;
+		line-height: 29px;
+	}
+
+
+
+	/* banner */
+
+	.banner {
+		padding-top: 50px;
+	}
+	.banner .carousel-item {
+		min-height: 35vh;
+	}
+	.banner .carousel-caption {
+		top: 8vh;
+	}
+	.banner .carousel-caption>h2 {
+		font-size: 5vh;
+	}
+	.banner .carousel-caption>p, .carousel-caption>a {
+		font-size: 2.5vh;
+	}
+	header {
+		background-color: rgba(0, 0, 0, .8);
+	}
+
+
+
+	/* headers of sections */
+	
+	.main-h5-light, .main-h5-dark {
+		font-size: 5vw;
+	}
+
+
+	/* "see more" statement */
+
+	.see-more>a {
+		font-size: 4.2vw;
+	}
+	.see-more>a:hover {
+		font-size: 4.5vw;
+	}
+
+
+
+
+	/* news */
+
+	.news__element {
+		height: 80vw;
+	}
+	.hovereffect .overlay:before {
+		top: .6vh;
+		right: .6vh;
+		bottom: .6vh;
+		left: .6vh;
+	}
+	.hovereffect h2 {
+		font-size: 6.7vw;
+	}
+	.hovereffect a, .hovereffect p {
+		font-size: 4.7vw;
+		line-height: 1.3em;
+	}
+
+
+
+
+	/* events */
+
+	.events {
+		background-color: black;
+		position: relative;
+		overflow: hidden;
+		z-index: 0;
+	}
+		.events>img {
+			display: block;
+			position: absolute;
+			height: 100%;
+			opacity: .4;
+			z-index: -1;
+		}
+		.event img {
+			height: 5vw;
+			width: 5vw;
+		}
+		/* the square with date */
+		.date {
+			height: 19vw;
+			width: 19vw;
+			background-color: #4495E1;
+			border: 2px solid #4495E1;
+		}
+		.date>div {
+			margin-top: 5vw;
+		}
+		.date>div>h1 {
+			font-size: 9vw;
+		}
+		.date>div>p {
+			font-size: 4vw;
+			text-transform: uppercase;
+		}
+		.date>div>h1, .date>div>p {
+			line-height: 3.7vw;
+			color: white;
+		}
+		/* the figure with info about the event */
+		.info {
+			min-height: 10vh;
+			width: 70vw;
+		}
+		.info>.row {
+			min-height: 8vw;
+			color: #E9E9E9;
+			border: 2px solid #E9E9E9;
+		}
+		.info h3 {
+			margin-top: 0.7vw;
+			font-size: 5.3vw;
+			text-transform: capitalize;
+		}
+		.info>.row>.col-5,.col-7 {
+			text-transform: capitalize;
+			font-size: 3.3vw;
+		}
+		.info>.row>.col-5 {
+			border-right: 1px solid #E9E9E9;
+		}
+
+
+
+
+	/* donate */
+
+	.donate>img {
+		height: 100%;
+	}
+	.donate p {
+		font-size: 2vh;
+		margin: 3.5vh 0;
+	}
+	.donate a {
+		font-size: 2vh; 
+		padding: .8vh 1.6vh; 
+		background-color: #4495E1;
+	}
+
+
+
+
+	/* partners section */
+
+	.partners img {
+		height: 10vh;
+		margin: 3vw 2vw;
+	}
+}
+
+
+
+
+@media only screen and (max-height: 420px) and (min-width: 479px) {
+	/* banner size */
+
+	.banner .carousel-item {
+		height: 85vh;
+	}
+	.banner .carousel-caption {
+		top: 27%;
+	}
+	.banner .carousel-caption>h2 {
+		font-size: 9vh;
+	}
+	.banner .carousel-caption>p, .carousel-caption>a {
+		font-size: 4vh;
+	}
+
+
+
+	/* headers of sections */
+	
+	.main-h5-light, .main-h5-dark {
+		font-size: 6vh;
+	}
+
+
+	/* "see more" statement */
+	.see-more>a {
+		font-size: 4.5vh;
+	}
+	.see-more>a:hover {
+		font-size: 4.7vh;
+	}
+
+
+
+
+	/* about us */
+
+	.about p {
+		font-size: 2vw;
+	}
+
+
+
+
+	/* news */
+
+	.news__element {
+		height: 35vw;
+	}
+	.hovereffect .overlay:before {
+		top: .8vh;
+		right: .8vh;
+		bottom: .8vh;
+		left: .8vh;
+	}
+	.hovereffect h2 {
+		font-size: 6vh;
+	}
+	.hovereffect a, .hovereffect p {
+		font-size: 4.3vh;
+		line-height: 1.4em;
+	}
+
+
+
+
+	/* events */
+
+	.date>div>h1,.date>div>p {
+		line-height: 4.3vw;
+	}
+	.info h3 {
+		font-size: 4.2vw;
+	}
+	.info>.row>.col-5,.col-7 {
+		font-size: 2.3vw;
+	}
+
+
+
+
+	/* donate */
+
+	.donate>img {
+		width: 100%;
+	}
+	.donate p {
+		font-size: 2vw;
+		margin: 3.5vw 0;
+	}
+	.donate a {
+		font-size: 2.2vw; 
+		padding: 1vw 2.2vw;
+	}
+
+
+
+
+	/* partners section */
+
+	.partners img {
+		height: 15vh;
+		margin: 3vw 2vw;
+	}
+}
+
+
+
+
+/* breakpoint mix-width:768px for navbar(and it's comonents);
+banner, */
+@media only screen and (min-width: 768px) {
+	/* navbar */
+
+	.navbar {
+		background: transparent;
+		box-shadow: none;
+		padding: 7px 16px;
+		transition: .5s;
+	}
+	.scrolled-nav .navbar {
+		background-color: rgba(246, 246, 246, 1);
+		padding-top: .5em;
+		box-shadow: 0 1px 15px grey;
+		transition: .5s;
+	}
+	.navbar-brand img {
+		height: 70px;
+		width: 70px;
+		transition: .5s;
+	}
+	.scrolled-nav .navbar-brand img {
+		height: 40px;
+		width: 40px;
+		transition: .5s;
+	}
+	.nav-item {
+		margin-right: 3vw;
+		transition: .5s;
+		position: relative;
+	}
+	.scrolled-nav .nav-item{
+		margin-left: 1.4vw;
+		transition: .5s;
+	}
+	.nav-link {
+		color: #ECECEC;
+		font-size: 11px;
+		font-weight: 600;
+		text-transform: uppercase;
+		transition: .3s;
+	}
+	.scrolled-nav .nav-link {
+		color: #444444;
+	}
+	.nav-link:hover {
+		color: white;
+		transition: .3s;
+	}
+	.scrolled-nav .nav-link:hover {
+		color: black;
+	}
+	.nav-link::after {
+		content: '';
+		display: block;
+		width: 0%;
+		height: 2px;
+		right: 0;
+		margin-top: 3px;
+		background: #4495E1;
+		position: absolute;
+		transition: width .2s ease;
+	}
+	.nav-link:hover::after {
+		width: 100%;
+		left: 0;
+		border-bottom: none;
+		position: absolute;
+		transition: .2s;
+	}
+	#lang_select {
+		color: #F6F6F6;
+		font-size: 11px;
+		font-weight: 600;
+		text-transform: uppercase;
+		cursor: pointer;
+		line-height: 30px;
+	}
+	.dropdown-menu {
+		background-color: rgba(246, 246, 246, .8);
+		margin-top: 16px;
+	}
+
+
+
+
+	/* banner */
+
+	.banner {
+		padding-top: 0;
+	}
+	.banner .carousel-item {
+		height: 75vh;
+	}
+	.banner .carousel-caption {
+		top: 33%;
+	}
+	.banner .carousel-caption>a {
+		background-color: transparent;
+	}
+	header {
+		background: transparent;
+	}
+
+
+
+
+	/* "see more" statement */
+
+	.see-more>a {
+		font-size: 1em;
+	}
+	.see-more>a:hover {
+		font-size: 1.1em;
+	}
+
+
+
+
+	/* news */
+
+	.news {
+		width: 84vw;
+		margin-left: 8vw;
+		margin-right: calc(8vw - 60px);
+	}
+	.news__element {
+		height: 20vw;
+		width: 27.5vw;
+	}
+	.hovereffect .overlay:before {
+		top: .5vw;
+		right: .5vw;
+		bottom: .5vw;
+		left: .5vw;
+	}
+	.hovereffect h2 {
+		font-size: 1.7vw;
+		padding: .7em .7em 0 .7em;
+	}
+	.hovereffect a, .hovereffect p {
+		font-size: 1.2vw;
+		line-height: 1.4vw;
+	}
+
+
+
+
+	/* events */
+
+	.events {
+		background-color: black;
+		position: relative;
+		overflow: hidden;
+		z-index: 0;
+	}
+		.events>img {
+			display: block;
+			position: absolute;
+			width: 100%;
+			opacity: .35;
+			z-index: -1;
+		}
+			.event img {
+				height: 2vw;
+				width: 2vw;
+			}
+			/* the square with date */
+			.date {
+				height: 8vw;
+				width: 8vw;
+				background-color: #4495E1;
+				border: 2px solid #4495E1;
+			}
+			.date>div {
+				margin-top: 2.6vw;
+			}
+			.date>div>h1 {
+				font-size: 3vw;
+			}
+			.date>div>p {
+				font-size: 1.3vw;
+				text-transform: uppercase;
+			}
+			.date>div>h1, .date>div>p {
+				line-height: 1.5vw;
+				color: white;
+			}
+			/* the figure with info about the event */
+			.info {
+				min-height: 8vw;
+				width: 72vw;
+			}
+			.info>.row {
+				min-height: 8vw;
+				color: #E9E9E9;
+				border: 2px solid #E9E9E9;
+			}
+			.info h3 {
+				margin-top: 0.5vw;
+				font-size: 1.7vw;
+				text-transform: capitalize;
+			}
+			.info>.row>.col-md-2,.col-md-3 {
+				text-transform: capitalize;
+				font-size: 1vw;
+				border-left: 1px solid #E9E9E9;
+			}
+
+
+
+
+	/* donate */
+
+	.donate>img {
+		width: 100%;
+	}
+	.donate p {
+		font-size: 2.1vh;
+		margin: 1.5vw 0 4vh 0;
+	}
+	.donate a {
+		font-size: 2vh;
+		padding: 1vw 3vw;
+		background-color: transparent;
+		border: 2px solid #4495E1;
+		transition: .3s all;
+	}
+	.donate a:hover {
+		background-color: #4495E1;
+	}
+
+
+
+
+	/* partners */
+
+	.partners img {
+		height: 5vw;
+		margin: 1.7vw 3vw;
+	}
+}
+
+
+
+
+/* breakpoint mix-width:992px for banner; */
+@media only screen and (min-width: 992px) {
+	/* banner */
+
+	.banner .carousel-item {
+		height: 70vh;
+	}
+	.banner .carousel-caption>h2 {
+		font-size: 5.5vh;
+	}
+	.banner .carousel-caption>p,.banner .carousel-caption>a{
+		font-size: 2.5vh;
+	}
+
+
+
+
+	/* headers of sections */
+	
+	.main-h5-light, .main-h5-dark {
+		font-size: 3vh;
+	}
+
+
+	/* "see more" statement */
+	.see-more>a {
+		font-size: 2.1vh;
+	}
+	.see-more>a:hover {
+		font-size: 2.3vh;
+	}
+}
+
+
+
+
+/* breakpoint for tablets */ 
+@media only screen and (max-width: 1280px) and (max-height: 1366px) {
+	/* banner */
+
+	.banner .carousel-item {
+		max-height: 65vw;
+	}
+}

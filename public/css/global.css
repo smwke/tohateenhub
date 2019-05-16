@@ -8,20 +8,7 @@
 
 html, body {
     scroll-behavior: smooth;
-    margin: 0;
 	padding: 0;
-	width: 100%;
-}
-ul, li {
-	display: block;
-	margin: 0;
-	padding: 0;
-}
-a {
-	text-decoration: none;
-}
-a:hover {
-	text-decoration: none;
 }
 
 .text-difference {
@@ -37,66 +24,4 @@ a:hover {
     .resp-text-p {
         font-size: 36px;
     }
-}
-
-.square {
-    width: 12vw;
-    height: 12vw;
-    min-height: 100%;
-}
-
-/* styles for banner with some breakpoints */
-
-.banner {
-    margin-top: 62px;
-}
-
-@media only screen and (min-width: 992px) {
-    .banner .carousel-item {
-        max-height: 90vh;
-    }
-}
-
-@media only screen and (max-height: 480px) {
-    .banner .carousel-item {
-        max-height: 83vh;
-    }
-}
-
-/* styles for partners section */
-
-.partners__item {
-    width: 30vh;
-}
-
-/* styles for footer and its components */
-
-footer {
-    min-height: 3vh;
-    background-color: #2E2E2E;
-}
-
-footer i {
-    color: white;
-}
-
-footer h4 {
-    color: white;
-    text-transform: uppercase;
-    font-size: 12px;
-}
-
-footer p, footer a, footer li {
-    color: silver;
-    font-size: 14px;
-    line-height: 15px;
-}
-
-footer a:hover {
-    color: #1A71A4;
-}
-
-footer .media_icon {
-    width: 30px;
-    height: 30px;
 }

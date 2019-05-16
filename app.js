@@ -152,8 +152,6 @@ app.use(passport.session());
 //Connect-flash middleware /* Must be initialized after session
 app.use(flash());
 
-
-
 //Global variables /* Must be initialized after flash
 app.use((req, res, next) => {
     res.locals.success_msg = req.flash('success_msg');

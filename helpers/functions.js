@@ -2,6 +2,8 @@ const path = require("path");
 const fs = require('fs');
 
 function updateJsonLocaleFields(lang, fields) {
+    console.log("updateJsonLocaleFields() has just been called");
+
     let pathdir = path.resolve(process.cwd(), "./locales");
     fs.readFile(pathdir + `\\${lang}.json`, 'utf8', function readFileCallback(err, data) {
 
@@ -16,7 +18,6 @@ function updateJsonLocaleFields(lang, fields) {
 
             fs.writeFile(pathdir + `\\${lang}.json`, JSON.stringify(obj), 'utf8', (err) => {
                 if (err) console.log(err);
-
             });
         }
     });
