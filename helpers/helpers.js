@@ -13,11 +13,11 @@ module.exports = {
     let target = "";
 
     switch (lang) {
-      case "en": target = translations[0]; break;
-      case "ro": target = translations[1]; break;
-      case "ru": target = translations[2]; break;
+      case "en": { target = translations[0]; } break;
+      case "ro": { target = translations[1]; } break;
+      case "ru": { target = translations[2]; } break;
     }
-    return target
+    return target;
   },
   parseDate: function (value) {
     let a = new Date(value);
@@ -31,5 +31,30 @@ module.exports = {
 
     return a.getDate() + "." + a.getMonth() + "." + a.getFullYear() + ", " + hours + ":" + minutes + " " + ampm;
 
+  },
+  getDateDate: function(value){
+    let a = new Date(value);
+    date = a.getDate();
+
+    return date>9?date:"0"+date;
+  },
+  getDateMonth: function(value){
+    let a = new Date(value);
+    let months = [
+      "JA",
+      "FE",
+      "MR",
+      "AP",
+      "MY",
+      "JN",
+      "JL",
+      "AU",
+      "SE",
+      "OC",
+      "NV",
+      "DE"
+    ];
+    return months[a.getMonth()];
+    
   }
 }

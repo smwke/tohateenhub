@@ -154,7 +154,8 @@ router.put('/event/edit', ensureAuthenticated, (req, res) => {
             else {
                 let newEvent = {
                     title: req.body.titleEn,
-                    subTitle: req.body.subTitleEn,
+                    location: req.body.locationEn,
+                    shortDescription: req.body.shortDescriptionEn,
                     descriptionEn: req.body.descriptionEn,
                     descriptionRo: req.body.descriptionRo,
                     descriptionRu: req.body.descriptionRu
@@ -162,19 +163,22 @@ router.put('/event/edit', ensureAuthenticated, (req, res) => {
                 // Edit En locale json file
                 updateJsonLocaleFields("en", {
                     [req.body.titleEn]: req.body.titleEn,
-                    [req.body.subTitleEn]: req.body.subTitleEn
+                    [req.body.locationEn]: req.body.locationEn,
+                    [req.body.shortDescriptionEn]: req.body.shortDescriptionEn
                 });
 
                 // Edit Ro locale json file
                 updateJsonLocaleFields("ro", {
                     [req.body.titleEn]: req.body.titleRo,
-                    [req.body.subTitleEn]: req.body.subTitleRo
+                    [req.body.locationEn]: req.body.locationRo,
+                    [req.body.shortDescriptionEn]: req.body.shortDescriptionRo
                 });
 
                 // Edit Ru locale json file
                 updateJsonLocaleFields("ru", {
                     [req.body.titleEn]: req.body.titleRu,
-                    [req.body.subTitleEn]: req.body.subTitleRu
+                    [req.body.locationEn]: req.body.locationRu,
+                    [req.body.shortDescriptionEn]: req.body.shortDescriptionRu
                 });
 
                 // If the background image is overriden
@@ -226,6 +230,16 @@ router.put('/event/edit', ensureAuthenticated, (req, res) => {
                     newEvent.date = req.body.date;
                 }
 
+                // If the start time is overriden
+                if (req.body.startTime) {
+                    newEvent.startTime = req.body.startTime;
+                }
+
+                // If the end time is overriden
+                if (req.body.endTime) {
+                    newEvent.endTime = req.body.endTime;
+                }
+
                 // Put the modified object on MongoDB
                 Event.updateOne({ _id: result._id }, newEvent, (err, raw) => {
                     if (err) console.log(err);
@@ -252,7 +266,7 @@ router.post('/event/upload', ensureAuthenticated, (req, res) => {
             res.redirect('/admin/events');
         } else {
             console.log("Uploaded images!");
-            let bgkey, thumbkey, date = Date.now();
+            let bgkey, thumbkey, date = Date.now(), startTime = "All day", endTime = "All day";
             //Save the project data to mongoDB
             if (req.files.background) {
                 bgkey = req.files.background[0].key;
@@ -262,38 +276,62 @@ router.post('/event/upload', ensureAuthenticated, (req, res) => {
                 thumbkey = req.files.thumbnail[0].key;
             } else thumbkey = "thumbnail-1554469053905.jpg";
 
+
+            // Date of event
             if (req.body.date) {
                 date = req.body.date;
+            } else {
+                console.warn("an event was added without a date");
+            }
+
+            // Start time of event
+            if (req.body.startTime) {
+                startTime = req.body.startTime;
+            } else {
+                console.warn("an event was added without a start time");
+            }
+
+            // End time of event
+            if (req.body.endTime) {
+                endTime = req.body.endTime;
+            } else {
+                console.warn("an event was added without an end time");
             }
 
             // Edit En locale json file
             updateJsonLocaleFields("en", {
                 [req.body.titleEn]: req.body.titleEn,
-                [req.body.subTitleEn]: req.body.subTitleEn
+                [req.body.locationEn]: req.body.locationEn,
+                [req.body.shortDescriptionEn]: req.body.shortDescriptionEn
             });
 
             // Edit Ro locale json file
             updateJsonLocaleFields("ro", {
                 [req.body.titleEn]: req.body.titleRo,
-                [req.body.subTitleEn]: req.body.subTitleRo
+                [req.body.locationEn]: req.body.locationRo,
+                [req.body.shortDescriptionEn]: req.body.shortDescriptionRo
             });
 
             // Edit Ru locale json file
             updateJsonLocaleFields("ru", {
                 [req.body.titleEn]: req.body.titleRu,
-                [req.body.subTitleEn]: req.body.subTitleRu
+                [req.body.locationEn]: req.body.locationRu,
+                [req.body.shortDescriptionEn]: req.body.shortDescriptionRu
             });
 
             // Upload to MongoDB
             new Event({
                 title: req.body.titleEn,
-                subTitle: req.body.subTitleEn,
+                shortDescription: req.body.shortDescriptionEn,
+                location: req.body.locationEn,
                 descriptionEn: req.body.descriptionEn,
                 descriptionRo: req.body.descriptionRo,
                 descriptionRu: req.body.descriptionRu,
                 backgroundKey: bgkey,
                 thumbnailKey: thumbkey,
-                date: date
+                date: date,
+                startTime: startTime,
+                endTime: endTime
             }).save()
                 .then(data => {
                     req.flash('success_msg', 'Event added!');

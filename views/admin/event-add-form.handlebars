@@ -35,38 +35,70 @@
                 </div>
             </div>
         </div>
-        <!--Sub-title INPUT-->
+        <!--Short description INPUT-->
         <div class="form-group border border-light p-3">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="en-tab-subtitle" data-toggle="tab" href="#en-sub-title" role="tab"
+                    <a class="nav-link active" id="en-tab" data-toggle="tab" href="#en-tab-shortDescription" role="tab" aria-controls="en"
+                        aria-selected="true">En</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="ro-tab" data-toggle="tab" href="#ro-tab-shortDescription" role="tab" aria-controls="ro"
+                        aria-selected="false">Ro</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="ru-tab" data-toggle="tab" href="#ru-tab-shortDescription" role="tab" aria-controls="ru"
+                        aria-selected="false">Ru</a>
+                </li>
+            </ul>
+            <div class="tab-content pt-2">
+                <div class="tab-pane fade show active" id="en-tab-shortDescription" role="tabpanel" aria-labelledby="en-tab">
+                    <label for="title-en">Event short description</label>
+                    <input name="shortDescriptionEn" type="text" class="form-control" id="title-en" placeholder="Event" required>
+                </div>
+                <div class="tab-pane fade" id="ro-tab-shortDescription" role="tabpanel" aria-labelledby="ro-tab">
+                    <label for="title-ro">Descriere scurtă a evenimentului</label>
+                    <input name="shortDescriptionRo" type="text" class="form-control" id="title-ro" placeholder="Eveniment"
+                        required>
+                </div>
+                <div class="tab-pane fade" id="ru-tab-shortDescription" role="tabpanel" aria-labelledby="ru-tab">
+                    <label for="title-ru">Краткое описание события</label>
+                    <input name="shortDescriptionRu" type="text" class="form-control" id="title-ru" placeholder="Событие" required>
+                </div>
+            </div>
+        </div>
+        <!--Location INPUT-->
+        <div class="form-group border border-light p-3">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="en-tab-location" data-toggle="tab" href="#en-sub-title" role="tab"
                         aria-controls="en" aria-selected="true">En</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="ro-tab-subtitle" data-toggle="tab" href="#ro-sub-title" role="tab"
+                    <a class="nav-link" id="ro-tab-location" data-toggle="tab" href="#ro-sub-title" role="tab"
                         aria-controls="ro" aria-selected="false">Ro</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="ru-tab-subtitle" data-toggle="tab" href="#ru-sub-title" role="tab"
+                    <a class="nav-link" id="ru-tab-location" data-toggle="tab" href="#ru-sub-title" role="tab"
                         aria-controls="ru" aria-selected="false">Ru</a>
                 </li>
             </ul>
             <div class="tab-content pt-2">
                 <div class="tab-pane fade show active" id="en-sub-title" role="tabpanel"
-                    aria-labelledby="en-tab-subtitle">
-                    <label for="sub-title-en">Event sub-title</label>
-                    <input name="subTitleEn" type="text" class="form-control" id="title-en" placeholder="Event"
-                        required>
+                    aria-labelledby="en-tab-location">
+                    <label for="sub-title-en">Event location</label>
+                    <input name="locationEn" type="text" class="form-control" id="title-en"
+                        placeholder="Strada Păcii 11, Tohatin, Chișinău" required>
                 </div>
-                <div class="tab-pane fade" id="ro-sub-title" role="tabpanel" aria-labelledby="ro-tab-subtitle">
-                    <label for="sub-title-ro">Sub-titlul evenimentului</label>
-                    <input name="subTitleRo" type="text" class="form-control" id="title-ro" placeholder="Eveniment"
-                        required>
+                <div class="tab-pane fade" id="ro-sub-title" role="tabpanel" aria-labelledby="ro-tab-location">
+                    <label for="sub-title-ro">Locația evenimentului</label>
+                    <input name="locationRo" type="text" class="form-control" id="title-ro"
+                        placeholder="Strada Păcii 11, Tohatin, Chișinău" required>
                 </div>
-                <div class="tab-pane fade" id="ru-sub-title" role="tabpanel" aria-labelledby="ru-tab-subtitle">
-                    <label for="sub-title-ru">Подзаголовок события</label>
-                    <input name="subTitleRu" type="text" class="form-control" id="title-ru" placeholder="Событие"
-                        required>
+                <div class="tab-pane fade" id="ru-sub-title" role="tabpanel" aria-labelledby="ru-tab-location">
+                    <label for="sub-title-ru">Место проведения</label>
+                    <input name="locationRu" type="text" class="form-control" id="title-ru"
+                        placeholder="Strada Păcii 11, Tohatin, Chișinău" required>
                 </div>
             </div>
             <!--label for="briefDescription">Sub-Title</label>
@@ -89,19 +121,76 @@
                 </li>
             </ul>
             <div class="tab-content pt-2">
-                <div class="tab-pane fade show active" id="en-description" role="tabpanel" aria-labelledby="en-tab-description">
+                <div class="tab-pane fade show active" id="en-description" style="position:relative;" role="tabpanel"
+                    aria-labelledby="en-tab-description">
+                    <!-- Translator dropdown EN -->
+                    <div style="position:absolute;top:10;right:10px;">
+                        <a href="#" data-target="#translationDiv" data-toggle="collapse" class="">translate <i
+                                class="fas fa-globe-europe"></i></a>
+                        <div id="translationDiv" class="collapse" style="font-size: 1rem;
+                    color: #212529;
+                    text-align: left;
+                    list-style: none;
+                    background-color: #fff;
+                    background-clip: padding-box;
+                    border: 1px solid rgba(0,0,0,.15);
+                    border-radius: .25rem;position:absolute;
+                    z-index:1000;
+                    right:0;">
+                            <a onclick="addTranslateToDescription('ro','en')" class="dropdown-item">From Romanian</a>
+                            <a onclick="addTranslateToDescription('ru','en')" class="dropdown-item">From Russian</a>
+                        </div>
+                    </div>
                     <label>Detailed Description</label>
                     <!-- Create the editor container -->
                     <div id="editor-container-en"></div>
                     <textarea name="descriptionEn" style="display:none" id="hiddenArea-en"></textarea>
                 </div>
-                <div class="tab-pane fade" id="ro-description" role="tabpanel" aria-labelledby="ro-tab-description">
+                <div class="tab-pane fade" id="ro-description" style="position:relative;" role="tabpanel"
+                    aria-labelledby="ro-tab-description">
+                    <!-- Translator dropdown RO -->
+                    <div style="position:absolute;top:10;right:10px;">
+                        <a href="#" data-target="#translationDiv-ro" data-toggle="collapse" class="">translate <i
+                                class="fas fa-globe-europe"></i></a>
+                        <div id="translationDiv-ro" class="collapse" style="font-size: 1rem;
+                    color: #212529;
+                    text-align: left;
+                    list-style: none;
+                    background-color: #fff;
+                    background-clip: padding-box;
+                    border: 1px solid rgba(0,0,0,.15);
+                    border-radius: .25rem;position:absolute;
+                    z-index:1000;
+                    right:0;">
+                            <a onclick="addTranslateToDescription('en','ro')" class="dropdown-item">From English</a>
+                            <a onclick="addTranslateToDescription('ru','ro')" class="dropdown-item">From Russian</a>
+                        </div>
+                    </div>
                     <label>Detailed Description</label>
                     <!-- Create the editor container -->
                     <div id="editor-container-ro"></div>
                     <textarea name="descriptionRo" style="display:none" id="hiddenArea-ro"></textarea>
                 </div>
-                <div class="tab-pane fade" id="ru-description" role="tabpanel" aria-labelledby="ru-tab-description">
+                <div class="tab-pane fade" id="ru-description" style="position:relative;" role="tabpanel"
+                    aria-labelledby="ru-tab-description">
+                    <!-- Translator dropdown RU -->
+                    <div style="position:absolute;top:10;right:10px;">
+                        <a href="#" data-target="#translationDiv-ru" data-toggle="collapse" class="">translate <i
+                                class="fas fa-globe-europe"></i></a>
+                        <div id="translationDiv-ru" class="collapse" style="font-size: 1rem;
+                    color: #212529;
+                    text-align: left;
+                    list-style: none;
+                    background-color: #fff;
+                    background-clip: padding-box;
+                    border: 1px solid rgba(0,0,0,.15);
+                    border-radius: .25rem;position:absolute;
+                    z-index:1000;
+                    right:0;">
+                            <a onclick="addTranslateToDescription('en','ru')" class="dropdown-item">From English</a>
+                            <a onclick="addTranslateToDescription('ro','ru')" class="dropdown-item">From Romanian</a>
+                        </div>
+                    </div>
                     <label>Detailed Description</label>
                     <!-- Create the editor container -->
                     <div id="editor-container-ru"></div>
@@ -113,6 +202,16 @@
             <label for="date">Date of event</label>
             <input type="date" name="date" id="date">
         </div>
+        <div class="form-group">
+            <label for="date">Start time</label>
+            <input type="time" name="startTime" id="startTime">
+        </div>
+        <div class="form-group">
+            <label for="date">End time</label>
+            <input type="time" name="endTime" id="endTime">
+        </div>
+
+
 
         <div class="form-group">
             <label for="background">Project Background image</label>
@@ -134,8 +233,13 @@
 <!-- Include the Quill library -->
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
+<!-- Include translation library -->
+<script src="/js/translate.js"></script>
 <!-- Initialize Quill editor -->
 <script>
+    translate.engine = 'yandex';
+    translate.key = 'trnsl.1.1.20190421T151403Z.c73e985599ec6adf.f313cfda0d0ec27636389428c8eed9deabd54636';
+
     const toolbarOptions = [
         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
         ['blockquote', 'code-block'],
@@ -185,6 +289,40 @@
 
     });
 
+    function addTranslateToDescription(from, to) {
+        let ops = {};
+        switch (from) {
+            case 'en': {
+                ops = quillEn.getContents().ops;
+            } break;
+            case 'ro': {
+                ops = quillRo.getContents().ops;
+            } break;
+            case 'ru': {
+                ops = quillRu.getContents().ops;
+            } break;
+        }
+
+        ops.forEach((op, index) => {
+            if (ops[index].insert != "↵") {
+                translate(op.insert, { from: from, to: to }).then((a) => {
+                    ops[index].insert = a;
+                    if (index == ops.length - 1)
+                        switch (to) {
+                            case 'en': {
+                                quillEn.setContents(ops);
+                            } break;
+                            case 'ro': {
+                                quillRo.setContents(ops);
+                            } break;
+                            case 'ru': {
+                                quillRu.setContents(ops);
+                            } break;
+                        }
+                })
+            }
+        });
+    }
 
 
 </script>

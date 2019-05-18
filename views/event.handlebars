@@ -46,11 +46,12 @@
 <div class="container">
     <div class="jumbotron" style="height:fit-content;">
         <h1 class="proj-title mx-auto">{{lang event.title res}}</h1>
-
-        <p id="description" class="lead">{{lang event.subTitle res}}</p>
+        <p id="description" class="lead">{{lang event.shortDescription res}}</p>
         <div class="my-2"></div>
         <hr class="mt-2 mb-4">
         <div id="EventDescription" style="border:0 !important;"></div>
+         <hr class="mt-2 mb-4">
+        <p id="description" class="lead">{{lang event.location res}}</p>
     </div>
 </div>
 {{else}}
@@ -64,6 +65,13 @@
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
 <script>
+    var lockedNavbar = 1;
+
+    $(".navbar").css("transition","none");
+    $("#scrolledNavbar").toggleClass("scrolled-nav",true);
+
+    //$(".navbar").css("background-color","rgb(246, 246, 246)");
+
     var quill = new Quill("#EventDescription", {
         modules: {
             toolbar: false

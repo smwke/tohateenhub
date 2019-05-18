@@ -37,41 +37,76 @@
                 </div>
             </div>
         </div>
-        <!--Sub-title INPUT-->
+        <!--Short description INPUT-->
         <div class="form-group border border-light p-3">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="en-tab-subtitle" data-toggle="tab" href="#en-sub-title" role="tab"
+                    <a class="nav-link active" id="en-tab" data-toggle="tab" href="#en-tab-shortDescription" role="tab"
                         aria-controls="en" aria-selected="true">En</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="ro-tab-subtitle" data-toggle="tab" href="#ro-sub-title" role="tab"
+                    <a class="nav-link" id="ro-tab" data-toggle="tab" href="#ro-tab-shortDescription" role="tab"
                         aria-controls="ro" aria-selected="false">Ro</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="ru-tab-subtitle" data-toggle="tab" href="#ru-sub-title" role="tab"
+                    <a class="nav-link" id="ru-tab" data-toggle="tab" href="#ru-tab-shortDescription" role="tab"
                         aria-controls="ru" aria-selected="false">Ru</a>
                 </li>
             </ul>
             <div class="tab-content pt-2">
-                <div class="tab-pane fade show active" id="en-sub-title" role="tabpanel"
-                    aria-labelledby="en-tab-subtitle">
-                    <label for="sub-title-en">Event sub-title</label>
-                    <input value="{{langSpec event.subTitle "en" res}}" name="subTitleEn" type="text"
+                <div class="tab-pane fade show active" id="en-tab-shortDescription" role="tabpanel"
+                    aria-labelledby="en-tab">
+                    <label for="title-en">Event short description</label>
+                    <input value="{{langSpec event.shortDescription "en" res}}" name="shortDescriptionEn" type="text" class="form-control" id="title-en" placeholder="Event"
+                        required>
+                </div>
+                <div class="tab-pane fade" id="ro-tab-shortDescription" role="tabpanel" aria-labelledby="ro-tab">
+                    <label for="title-ro">Descriere scurtă a evenimentului</label>
+                    <input value="{{langSpec event.shortDescription "ro" res}}" name="shortDescriptionRo" type="text" class="form-control" id="title-ro"
+                        placeholder="Eveniment" required>
+                </div>
+                <div class="tab-pane fade" id="ru-tab-shortDescription" role="tabpanel" aria-labelledby="ru-tab">
+                    <label for="title-ru">Краткое описание события</label>
+                    <input value="{{langSpec event.shortDescription "ru" res}}" name="shortDescriptionRu" type="text" class="form-control" id="title-ru"
+                        placeholder="Событие" required>
+                </div>
+            </div>
+        </div>
+        <!--location INPUT-->
+        <div class="form-group border border-light p-3">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="en-tab-location" data-toggle="tab" href="#en-location" role="tab"
+                        aria-controls="en" aria-selected="true">En</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="ro-tab-location" data-toggle="tab" href="#ro-location" role="tab"
+                        aria-controls="ro" aria-selected="false">Ro</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="ru-tab-location" data-toggle="tab" href="#ru-location" role="tab"
+                        aria-controls="ru" aria-selected="false">Ru</a>
+                </li>
+            </ul>
+            <div class="tab-content pt-2">
+                <div class="tab-pane fade show active" id="en-location" role="tabpanel"
+                    aria-labelledby="en-tab-location">
+                    <label for="location-en">Event location</label>
+                    <input value="{{langSpec event.location "en" res}}" name="locationEn" type="text"
                         class="form-control" id="title-en" placeholder="Event">
                 </div>
-                <div class="tab-pane fade" id="ro-sub-title" role="tabpanel" aria-labelledby="ro-tab-subtitle">
-                    <label for="sub-title-ro">Sub-titlul evenimentului</label>
-                    <input value="{{langSpec event.subTitle "ro" res}}" name="subTitleRo" type="text"
+                <div class="tab-pane fade" id="ro-location" role="tabpanel" aria-labelledby="ro-tab-location">
+                    <label for="location-ro">Locația evenimentului</label>
+                    <input value="{{langSpec event.location "ro" res}}" name="locationRo" type="text"
                         class="form-control" id="title-ro" placeholder="Eveniment">
                 </div>
-                <div class="tab-pane fade" id="ru-sub-title" role="tabpanel" aria-labelledby="ru-tab-subtitle">
-                    <label for="sub-title-ru">Подзаголовок события</label>
-                    <input value="{{langSpec event.subTitle "ru" res}}" name="subTitleRu" type="text"
+                <div class="tab-pane fade" id="ru-location" role="tabpanel" aria-labelledby="ru-tab-location">
+                    <label for="location-ru">Место проведения</label>
+                    <input value="{{langSpec event.location "ru" res}}" name="locationRu" type="text"
                         class="form-control" id="title-ru" placeholder="Событие">
                 </div>
             </div>
-            <!--label for="briefDescription">Sub-Title</label>
+            <!--label for="briefDescription">location</label>
             <textarea name="briefDescription" class="form-control" id="briefDescription" rows="2" required></textarea-->
         </div>
         <!--Description INPUT-->
@@ -171,6 +206,15 @@
         <div class="form-group">
             <label for="date">Override Date of event</label>
             <input value="{{event.date}}" type="date" name="date" id="date">
+        </div>
+
+        <div class="form-group">
+            <label for="date">Override start time of event</label>
+            <input type="time" name="startTime" id="startTime">
+        </div>
+        <div class="form-group">
+            <label for="date">Override end time of event</label>
+            <input type="time" name="endTime" id="endTime">
         </div>
 
         <div class="form-group">

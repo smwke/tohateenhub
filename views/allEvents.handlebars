@@ -1,0 +1,83 @@
+<link href="/css/events.css" rel="stylesheet">
+<div id="allEventsContainer">
+	<div class="container" id="eventsContainer">
+		<div class="d-flex">
+			<h1 class="top-header">events</h1>
+		</div>
+
+		{{#each events}}
+		<div class="row my-4">
+			<div class="col-lg-2">
+				<figure>
+					<a href="/event/{{id}}">
+						<div class="overlay">
+							<h2>read more</h2>
+						</div>
+						<img class="news-img" src="../img/children.jpg">
+					</a>
+				</figure>
+			</div>
+			<div class="col-lg-10">
+				<div class="header">
+					<a href="/event/{{id}}">{{lang this.title ../res}}</a>
+					<h6>{{getDateDate date}} {{getDateMonth date}}, {{this.startTime}}-{{this.endTime}}</h6>
+				</div>
+				<div class="description">{{lang this.shortDescription ../res}}</div>
+				<a class="readmore" href="/event/{{id}}">read more »</a>
+			</div>
+		</div>
+		{{/each}}
+
+	</div>
+	<div class="container">
+		<a href="#" id="loadmMoreButton" class="btn text-white" style="background-color:#4495E1">Load more</a>
+	</div>
+</div>
+<!-- Override navbar behaviour -->
+<script>
+	var lockedNavbar = 1;
+
+	$(".navbar").css("transition", "none");
+	$("#scrolledNavbar").toggleClass("scrolled-nav", true);
+
+	let page = 1;
+
+	let loadbtn = $("#loadmMoreButton");
+
+	// Load more button
+	loadbtn.on("click", (e) => {
+		e.preventDefault();
+		fetch(`/get-events/${page}/2`).then((response) => {
+			return response.json();
+		}).then((event) => {
+			if (event.length == 0) $("#loadmMoreButton").remove();
+			event.forEach((value) => {
+				console.log(value);
+				// Add the fetched data to a new event card
+				$("#eventsContainer").append(`<div class="row my-4">
+		<div class="col-lg-2">
+			<figure>
+				<a href="/event/${value.id}">
+					<div class="overlay">
+						<h2>read more</h2>
+					</div>
+					<img class="news-img" src="../img/children.jpg">
+				</a>
+			</figure>
+		</div>
+		<div class="col-lg-10">
+			<div class="header">
+				<a href="/event/${value.id}">${value.title}</a>
+				<h6>${value.date} ${value.month}, ${value.startTime}-${value.endTime}</h6>
+			</div>
+			<div class="description">${value.shortDescription}</div>
+			<a class="readmore" href="/event/${value.id}">read more »</a>
+		</div>
+	</div>`);
+			});
+		});
+		page++;
+	});
+
+
+</script>

@@ -167,10 +167,11 @@ app.use((req, res, next) => {
 app.use("/admin", admin);
 
 app.get("/", (req, res) => {
+
     Event.find({}, (err, data) => {
         if (err) console.log(err);
         else res.render("index", { events: data });
-    })
+    }).sort({ 'date': -1 }).limit(3);
 
 });
 
@@ -192,15 +193,74 @@ app.get("/get-image/:id", (req, res) => {
     });
 });
 
+app.get("/events", (req, res) => {
+    Event.find({}, (err, data) => {
+        if (err) console.log(err);
+        else
+            res.render("allEvents", { events: data });
+    }).sort({ 'date': -1 }).limit(2);
+
+});
+
+
+app.get("/get-events/:page/:limit", (req, res) => {
+    let skip = req.params.page;
+    skip *= req.params.limit;
+
+    if (isNaN(req.params.page) || isNaN(req.params.limit)) {
+        req.flash("error_msg","Incorrect url parameters");
+        res.redirect("back");
+    }else
+    Event.find({}, (err, data) => {
+        if (err) console.log(err);
+        else {
+            let months = [
+                "JA",
+                "FE",
+                "MR",
+                "AP",
+                "MY",
+                "JN",
+                "JL",
+                "AU",
+                "SE",
+                "OC",
+                "NV",
+                "DE"
+            ];
+
+            let result = [];
+            let buffer = {};
+            data.forEach((event) => {
+                let a = new Date(event.date);
+
+                buffer.title = res.__(event.title);
+                buffer.shortDescription = res.__(event.shortDescription);
+                buffer.date = a.getDate();
+                buffer.month = months[a.getMonth()];
+                buffer.startTime = event.startTime;
+                buffer.endTime = event.endTime;
+                buffer.id = event._id;
+                buffer.thumbnailKey = event.thumbnailKey;
+
+                result.push(buffer);
+            });
+
+            res.status(200).json(result);
+        }
+    }).sort({ 'date': -1 }).limit(parseInt(req.params.limit)).skip(parseInt(skip));
+});
+
 app.get("/event/:id", (req, res) => {
     Event.findById(req.params.id, (err, data) => {
-        if (err){
+        if (err) {
             res.render("event");
         }
         else {
             let event = {
                 title: data.title,
-                subTitle: data.subTitle,
+                shortDescription: data.shortDescription,
+                location: data.location,
                 date: data.date,
                 backgroundKey: data.backgroundKey,
                 thumbnailKey: data.thumbnailKey

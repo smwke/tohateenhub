@@ -1,9 +1,16 @@
-window.onscroll = function() {myFunction()};
+let navbar = document.getElementById("scrolledNavbar");
+
+
+
+if(typeof lockedNavbar == 'undefined'){
+  window.onscroll = function() {myFunction()};
+  $("#scrolledNavbar").toggleClass("scrolled-nav",(document.body.scrollTop > 40 || document.documentElement.scrollTop > 40));
+}
 
 function myFunction() {
   if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
-    document.getElementById("scrolledNavbar").className = "scrolled-nav";
-  } else {
-    document.getElementById("scrolledNavbar").className = "";
+    $("#scrolledNavbar").toggleClass("scrolled-nav",true);
+  } else{
+    $("#scrolledNavbar").toggleClass("scrolled-nav",false);
   }
 }

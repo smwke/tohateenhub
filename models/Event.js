@@ -7,7 +7,7 @@ const EventSchema = new Schema({
         type: String,
         required: true
     },
-    subTitle: {
+    shortDescription: {
         type: String,
         required: true
     },
@@ -31,7 +31,18 @@ const EventSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    startTime: {
+        type: String,
+        default: Date.now.toString()
+    },
+    endTime:{
+        type: String,
+        default: Date.now.toString()
+    },
+    location:{
+        type: String,
+        default: "Strada Păcii 11, Tohatin, Chișinău"
     }
 });
-
 mongoose.model('events', EventSchema);

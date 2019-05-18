@@ -8,11 +8,55 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 </head-->
-
+	<div class="banner">
+		<div class="bd-example">
+			<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel" data-interval="4000" data-pause="false">
+				<ol class="carousel-indicators">
+					<li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+					<li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+					<li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+				</ol>
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<img src="/img/robotics1.jpg" class="banner_img d-block w-100" alt="robotics">
+						<div class="carousel-caption d-block">
+					    	<h2>ROBOTICS</h2>
+					    	<p class="d-none d-sm-block">Some plaintext of description the topic in a few words.</p>
+					    	<a class="btn" href="#">{{lang "Learn more" res}}</a>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<img src="/img/chess1.jpg" class="banner_img d-block w-100" alt="chess">
+						<div class="carousel-caption d-block">
+					    	<h2>CHESS</h2>
+					  		<p class="d-none d-sm-block">Some plaintext of description the topic in a few words.</p>
+					  		<a class="btn" href="#">{{lang "Learn more" res}}</a>
+					</div>
+					</div>
+					<div class="carousel-item">
+						<img src="/img/origami1.jpg" class="banner_img d-block w-100" alt="origami">
+						<div class="carousel-caption d-block">
+					  		<h2>ORIGAMI</h2>
+					  		<p class="d-none d-sm-block">Some plaintext of description the topic in a few words.</p>
+					  		<a class="btn" href="#">{{lang "Learn more" res}}</a>
+						</div>
+					</div>
+				</div>
+				<a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
+			</div>
+		</div>
+	</div>
 <main>
-	<section class="about container-flex pt-4 pb-2">
+	<section id="aboutUsDiv" class="about container-flex pt-4 pb-2">
 		<div class="d-flex justify-content-center mb-4">
-			<h5 class="main-h5-dark">About us</h5>
+			<h5 class="main-h5-dark">{{lang "About us" res}}</h5>
 		</div>
 		<p>
 			Lorem ipsum dolor sit amet, coectetur apisicing elit, sed do eiusmod
@@ -29,103 +73,51 @@
 	</section>
 
 
-	<section class="events">
+	<section class="events" id="eventsDiv">
 		<img src="/img/events3.jpg">
 		<div class="content pt-5 pb-2">
 			<div class="d-flex justify-content-center mb-5">
 				<h5 class="main-h5-light">upcoming events</h5>
 			</div>
+			{{#each events}}
 			<div class="event d-flex justify-content-center mb-5">
 				<div class="date mx-1 mx-md-3">
 					<div class="text-center">
-						<h1>02</h1>
-						<p>aug</p>
+						<h1>{{getDateDate date}}</h1>
+						<p>{{getDateMonth date}}</p>
 					</div>
 				</div>
-				<div class="info container-flex ml-3 mr-3">
-					<div class="row align-items-center">
+				<div onclick="location.href='/event/{{id}}';" class="info container-flex ml-3 mr-3">
+					<div class="eventButton row align-items-center">
 						<div class="col-12 col-md-7 pl-3">
-							<h3>here will be placed the event's name blah blah blah blah blah blah</h3>
+							<h3>{{lang this.title ../res}}</h3>
 						</div>
 						<div class="col-5 col-md-2 d-flex pl-3 mb-2 mb-md-0">
 							<img class="align-self-center" src="/img/icons/time.png">
 							<div class="ml-3">
-								02:30PM-04:00PM
+								{{this.startTime}}-{{this.endTime}}
 							</div>
 						</div>
 						<div class="col-7 col-md-3 d-flex pb-2 pb-md-0">
 							<img class="align-self-center" src="/img/icons/place.png">
 							<div class="ml-3">
-								strada pacii 11, tohatin, chisinau
+								{{lang location ../res}}
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="event d-flex justify-content-center mb-5">
-				<div class="date mx-1 mx-md-3">
-					<div class="text-center">
-						<h1>02</h1>
-						<p>aug</p>
-					</div>
-				</div>
-				<div class="info container-flex ml-3 mr-3">
-					<div class="row align-items-center">
-						<div class="col-12 col-md-7 pl-3">
-							<h3>here will be placed the event's name</h3>
-						</div>
-						<div class="col-5 col-md-2 d-flex pl-3 mb-2 mb-md-0">
-							<img class="align-self-center" src="/img/icons/time.png">
-							<div class="ml-3">
-								02:30PM-04:00PM
-							</div>
-						</div>
-						<div class="col-7 col-md-3 d-flex pb-2 pb-md-0">
-							<img class="align-self-center" src="/img/icons/place.png">
-							<div class="ml-3">
-								strada pacii 11, tohatin, chisinau
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="event d-flex justify-content-center pb-3">
-				<div class="date mx-1 mx-md-3">
-					<div class="text-center">
-						<h1>02</h1>
-						<p>aug</p>
-					</div>
-				</div>
-				<div class="info container-flex ml-3 mr-3">
-					<div class="row align-items-center">
-						<div class="col-12 col-md-7 pl-3">
-							<h3>here will be placed the event's name blah blah blah</h3>
-						</div>
-						<div class="col-5 col-md-2 d-flex pl-3 mb-2 mb-md-0">
-							<img class="align-self-center" src="/img/icons/time.png">
-							<div class="ml-3">
-								02:30PM-04:00PM
-							</div>
-						</div>
-						<div class="col-7 col-md-3 d-flex pb-2 pb-md-0">
-							<img class="align-self-center" src="/img/icons/place.png">
-							<div class="ml-3">
-								strada pacii 11, tohatin, chisinau
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			{{/each}}
 			<div class="see-more text-center my-4">
 				<div class="line1"></div>
-				<a href="#">More Events</a>
+				<a href="/events">More Events</a>
 				<div class="line2"></div>
 			</div>
 		</div>
 	</section>
 
 
-	<section class="news container-flex pt-5 pb-2">
+	<section class="news container-flex pt-5 pb-2" id="newsDiv">
 		<div class="d-flex justify-content-center mb-4">
 			<h5 class="main-h5-dark">latest news</h5>
 		</div>
@@ -200,190 +192,3 @@
 		<a href="https://y4i.eu" target="_blank"><img src="/img/icons/youth4.png" alt="youth4"></a>
 	</section>
 </main>
-
-
-
-<footer>
-	<div class="container pt-3">
-		<div class="row">
-			<div class="col-12 col-sm-7 col-md-5 col-lg-4 pl-lg-5">
-				<h4>Contact Nicoleta</h4>
-				<ul>
-					<li>
-						<a href="#"><i class="far fa-envelope"></i> nicoleta.damian.alexandru@gmai.com</a>
-					</li>
-					<li>
-						<p><i class="fas fa-mobile-alt"></i> +(373)69 787 929</p>
-					</li>
-				</ul>
-			</div>
-			<div class="col-12 col-sm-5 col-lg-2 px-lg-0">
-				<h4>Contact Igor</h4>
-				<ul>
-					<li>
-						<a href="#"><i class="far fa-envelope"></i> igor.ciurea@gmail.com</a>
-					</li>
-					<li>
-						<p><i class="fas fa-mobile-alt"></i> +(373)69 531 061</p>
-					</li>
-				</ul>
-			</div>
-			<div class="col-12 col-sm-5 col-lg-3 pl-lg-5">
-				<h4>Contact PROBONO</h4>
-				<ul>
-					<li>
-						<a href="http://probono.com/" target="_blank"><i class="fab fa-chrome"></i> probono.md</a>
-					</li>
-					<li>
-						<a href="https://www.facebook.com/cirProBono/" target="_blank"><i class="fab fa-facebook"></i> facebook.com/cirProBono</a>
-					</li>
-				</ul>
-			</div>
-			<div class="col-12 col-sm-4 col-lg-2 pt-3 pt-sm-0">
-				<h4>Our Address</h4>
-				<p>Strada Păcii 11, Tohatin, Chisinau, Moldova</p>
-			</div>
-			<div class="col-12 col-sm-3 col-lg-1 px-lg-0">
-				<h4>Media</h4>
-				<div>
-					<a href="https://www.facebook.com/tohateenhub/" target="_blank"><img class="media_icon" src="/img/icons/facebook.png" alt="facebook"></a>
-					<a href="https://www.instagram.com/tohateenhub/" target="_blank"><img class="media_icon" src="/img/icons/instagram.png" alt="facebook"></a>
-				</div>
-			</div>
-			<div class="d-flex justify-content-center col-12 col-lg-4 offset-lg-4 pt-3">
-					<p class="align-self-end">&#169 2018-2019 Tohateenhub. All rights reserved.</p>
-			</div>
-		</div>
-	</div>
-</footer>
-
-
-
-
-	<!--script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	<script src="js/main.js" type="text/javascript"></script-->
-
-<!--div class="banner">
-    <div class="bd-example">
-        <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-                <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="img/banner_robotics.jpg" class="d-block w-100" alt="robotics">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>First slide label</h5>
-                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="img/banner_chess.jpg" class="d-block w-100" alt="chess">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Second slide label</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="img/banner_origami.jpg" class="d-block w-100" alt="origami">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Third slide label</h5>
-                        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                    </div>
-                </div>
-            </div>
-            <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </div>
-</div>
-
-<div style="min-height:100vh;border-top: 4px solid gray" id="logoDiv" class="d-flex align-items-center special-color">
-    <div class="container">
-        <div class="row py-4 d-flex align-items-center">
-            <div class="d-flex align-items-center col-12 col-md-6" style="border-radius:50%;height:55vmin;">
-                <img class="d-block mx-auto rounded-circle animated wow fadeIn" src="img/logo.jpg"
-                    style="max-height:100%;width:auto;">
-            </div>
-            <div class="col-12 col-md-6 mt-2">
-                <h1 class="mb-0 text-white" style="font-size:3em">{{lang "About us" res}}</h1>
-                <ul class="text-white mt-2" style="font-size:17px;">
-                    <li class="my-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-                        in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum;</li>
-                    <li class="my-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                        ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
-                        in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div style="min-height:90vh;background: linear-gradient(90deg, #1CB5E0 0%, #000851 100%);/*background-image:url(/img/events.jpg)*/"
-    class="bg-dark text-light parallax-bg" id="newsDiv">
-    <div class="container pt-3">
-        <h1 style="font-size:3.5em">{{lang "Events" res}}</h1>
-        <div class="row">
-            <!--
-            {{#each events}}
-            <div class="col-sm-6 col-lg-4 my-1">
-                <div class="card"
-                    style="background-image: url(/get-image/{{backgroundKey}});background-size:cover;height:300px;">
-                    <h5 class="card-header h5 dark-bg text-white">{{parseDate date}}</h5>
-                    <div class="card-body d-flex flex-column">
-                        <div class="flex-grow-1 p-2 rgba-white-light rounded">
-                            <h5 class="card-title text-dark">{{lang title ../res}}</h5>
-                            <p class="card-text">{{lang subTitle ../res}}</p>
-                        </div>
-                        <a href="/event/{{_id}}" class="btn btn-primary">Details</a>
-                    </div>
-                </div>
-            </div>
-            {{/each}}
-            >
-            {{#each events}}
-            <div class="my-1 p-2 d-flex w-100 justify-content-between">
-                <div class="bg-primary d-flex align-items-center justify-content-center flex-column text-center px-4 py-2"
-                    style="">
-                    <span class="d-block text-white" style="font-size: 5vmin;font-weight:500;">13</span>
-                    <span class="d-block text-white" style="font-size: 5vmin;font-weight:500;">JULY</span>
-                </div>
-                <div class="ml-3 p-3 d-flex event flex-column text-center align-items-center justify-content-center"
-                    style="position:relative;border:1px solid var(--light);">
-                    <span class="resp-text-p" style="color:bisque">{{lang title ../res}}</span>
-                    <span class="resp-text-p" style="color:bisque">{{lang subTitle ../res}}</span>
-                    <a href="/event/{{_id}}" style="position: absolute;bottom:-30;right:-8;"
-                        class="btn px-3 py-2 btn-primary"><i class="fas fa-info-circle fa-2x"></i></a>
-                </div>
-
-            </div>
-            {{/each}}
-        </div>
-    </div>
-</div>
-
-<script>
-    // calculate min-height on init
-    $("#initialContainer").css("min-height", `${window.innerHeight - 24}px`);
-
-    /* recalculate the min-height everytime the bar appears or disappears
-    $(window).resize(() => {
-        $("#initialContainer").css("min-height", `${window.innerHeight}px`);
-    });*/
-</script-->
-

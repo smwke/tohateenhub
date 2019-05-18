@@ -282,26 +282,18 @@ footer .media_icon {
 	height: 30px;
 }
 
-
-
-
-
-
-
-
 /* breakpoint min-width:100px */
-@media only screen and (min-width: 1px) and (max-height: 1280px) {
+@media only screen and (max-height: 1280px) {
 
 	/* navbar */
 
 	.navbar {
-		background-color: rgba(246, 246, 246, .97);
-		box-shadow: 0 1px 10px grey;
+		background-color: rgb(246, 246, 246);
 		padding: 0;
 	}
 	.navbar-brand img {
 		height: 40px;
-		width: 40px;
+		width: 120px;
 	}
 	a[aria-expanded="false"].navbar-toggler>.opened {
 		display: none;
@@ -457,7 +449,14 @@ footer .media_icon {
 		.info>.row>.col-5 {
 			border-right: 1px solid #E9E9E9;
 		}
-
+		.eventButton{
+			transition: transform 0.2s, background-color 0.1s;
+		}
+		.eventButton:hover{
+			background-color:rgba(255,255,255,0.3);
+			cursor:pointer;
+			transform:scale(1.01);
+		}
 
 
 
@@ -600,8 +599,16 @@ footer .media_icon {
 
 
 
-/* breakpoint mix-width:768px for navbar(and it's comonents);
+/* breakpoint mix-width:768px for navbar(and it's components);
 banner, */
+@media only screen and (min-width: 810px){
+	.navbar-brand img {
+		height: 70px;
+		width: 140px;
+		transition: .5s;
+		margin-left:35%;
+	}
+}
 @media only screen and (min-width: 768px) {
 	/* navbar */
 
@@ -619,12 +626,15 @@ banner, */
 	}
 	.navbar-brand img {
 		height: 70px;
-		width: 70px;
+		width: 140px;
 		transition: .5s;
+		background-color:rgba(255, 255, 255, 0.4);
+		padding:4px 4px 4px 4px;
+		border-radius:45%;
 	}
 	.scrolled-nav .navbar-brand img {
 		height: 40px;
-		width: 40px;
+		width: 90px;
 		transition: .5s;
 	}
 	.nav-item {
@@ -670,6 +680,9 @@ banner, */
 		border-bottom: none;
 		position: absolute;
 		transition: .2s;
+	}
+	.scrolled-nav #lang_select{
+		color: #545454;
 	}
 	#lang_select {
 		color: #F6F6F6;
