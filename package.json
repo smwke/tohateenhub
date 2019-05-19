@@ -7,6 +7,11 @@
     "start": "node app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "coloredRegions":{
+    "namedColors":{
+      "default":"rgba(0, 212, 255,0.05)"
+    }
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {

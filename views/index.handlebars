@@ -122,19 +122,21 @@
 			<h5 class="main-h5-dark">latest news</h5>
 		</div>
 		<div class="row d-flex justify-content-center">
+			{{#each news}}
 			<div class="col-lg-4 col-md-6 col-12 mb-3 news__element">
 			    <div class="hovereffect">
-			        <img src="/img/children.jpg" alt="">
+			        <img src="/get-image/{{thumbnailKey}}" alt="">
 		            <div class="overlay">
-		                <h2>some event name</h2>
+		                <h2>{{lang title ../res}}</h2>
 						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod orem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod sed do eiusmod eiusmod sed do consectetur adip.
+							{{lang shortDescription ../res}}
 						</p>
-						<p><a href="#">see more</a></p>
+						<p><a href="/news/{{id}}">Read more</a></p>
 		            </div>
 			    </div>
 			</div>
-			<div class="col-lg-4 col-md-6 col-12 mb-3 news__element">
+			{{/each}}
+			<!--div class="col-lg-4 col-md-6 col-12 mb-3 news__element">
 			    <div class="hovereffect">
 			        <img src="/img/children.jpg" alt="">
 		            <div class="overlay">
@@ -157,11 +159,11 @@
 						<p><a href="#">see more</a></p>
 		            </div>
 			    </div>
-			</div>
+			</div-->
 		</div>
 		<div class="see-more text-center my-4">
 			<div class="line1"></div>
-			<a href="#">More News</a>
+			<a href="/news">More News</a>
 			<div class="line2"></div>
 		</div>
 	</section>

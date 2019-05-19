@@ -1,0 +1,103 @@
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<style>
+    .bg-proj {
+        background-position: center center;
+        background-size: cover;
+        height: 550px;
+        max-height: 40vh;
+    }
+
+    .jumbotron {
+        box-shadow: none;
+    }
+
+
+    .bg-thumb {
+        height: 30vmin;
+        border-radius: 2%;
+        margin-right: 40%;
+        z-index: 1;
+    }
+
+    .ql-editor {
+        padding: 0;
+    }
+
+    .proj-title {
+        color: black;
+        font-size: 4vmax;
+        font-weight: 400;
+    }
+
+    @media screen and (max-width: 576px) {
+        .bg-thumb {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #projectDescContainer {
+            padding: 0;
+        }
+    }
+
+    .bg-nav {
+        background-color: rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .lead {
+        font-size: 1em;
+    }
+</style>
+
+{{#if news}}
+<div class="bg-proj d-flex flex-column pt-5 bg-dark" style="background-image: url(/get-image/{{news.backgroundKey}});">
+    <div style="flex:1">
+    </div>
+    <div class="d-flex bg-thumb">
+        <img class="card-img-top mx-auto mt-auto bg-light" style="max-height:250px;height:100%;width:auto"
+            src="/get-image/{{news.thumbnailKey}}" alt="Card image cap">
+    </div>
+</div>
+<div class="container" id="projectDescContainer">
+    <div class="jumbotron" style="height:fit-content;">
+        <h1 class="proj-title mx-auto">{{lang news.title res}}</h1>
+        <p id="description" class="lead">{{lang news.shortDescription res}}</p>
+        <div class="my-2"></div>
+        <hr class="mt-2 mb-4">
+        <div id="Description" style="border:0 !important;"></div>
+        <hr class="mt-2 mb-4">
+        <p id="description" class="lead">{{parseDate news.date}}</p>
+    </div>
+</div>
+{{else}}
+<div class="container mt-5 pt-5">
+    <h1>Post doesn't exist</h1>
+    <a class="btn btn-primary" href="/">Return To Home Page</a>
+</div>
+{{/if}}
+
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+<script>
+    var lockedNavbar = 1;
+
+    $(".navbar").css("transition", "none");
+    $("#scrolledNavbar").toggleClass("scrolled-nav", true);
+
+    //$(".navbar").css("background-color","rgb(246, 246, 246)");
+
+    var quill = new Quill("#Description", {
+        modules: {
+            toolbar: false
+        },
+        theme: 'snow'
+    });
+
+    const contents = {{{ news.description }}}
+    console.log(contents)
+
+    quill.setContents(contents.ops);
+
+    quill.enable(false);
+</script>

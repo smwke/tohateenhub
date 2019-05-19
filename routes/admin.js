@@ -21,6 +21,10 @@ const User = mongoose.model("users");
 require("../models/Event");
 const Event = mongoose.model("events");
 
+// Load News model
+require("../models/News");
+const News = mongoose.model("news");
+
 // Login Page
 router.get('/login', (req, res) => {
     res.render('admin/login', { layout: "dashboard" });
@@ -108,6 +112,20 @@ router.get('/', ensureAuthenticated, (req, res) => {
     res.render('admin/index', { layout: 'dashboard' });
 });
 
+
+/** Event/News EDIT FORM PUT EXPLANATION of files
+ * the edit put form is of enctype=multipart/form-data
+ * this means body-parser cannot parse the form body
+ * instead, multer is used to parse this form in the [ ImageUpload ] object
+ * firstly, multer automatically detects if either or both of the files
+ * have been sent through the form and uploads them straight away
+ * then in the script it is checked again wether either of these files 
+ * have been sent and if a file has indeed been sent (and is already uploaded), 
+ * then the new path to the image is also updated to mongoDB
+ */
+
+//#region [rgba(165, 255, 0,0.05)] EVENTS CRUD
+
 // Event list page
 router.get('/events', ensureAuthenticated, (req, res) => {
     Event.find({}, (err, result) => {
@@ -126,11 +144,11 @@ router.get('/events', ensureAuthenticated, (req, res) => {
 // New Event form page
 router.get('/event/new', ensureAuthenticated, (req, res) => {
     res.render('admin/event-add-form', {
-        layout: 'dashboard',
+        layout: 'dashboard'
     });
 });
 
-// Edit Event page
+// Edit Event form page
 router.get("/event/edit/:id", ensureAuthenticated, (req, res) => {
     Event.findById(req.params.id, (err, data) => {
         if (err) console.log(err);
@@ -253,12 +271,6 @@ router.put('/event/edit', ensureAuthenticated, (req, res) => {
 // Submit new Event
 router.post('/event/upload', ensureAuthenticated, (req, res) => {
 
-    /* NOTE: The form has enctype="multipart/form-data" enabled
-     * This means body-parser cannot process the form data
-     * Multer is parsing the form-data below along with files
-     * in / upload(()=>{}); below / 
-    */
-
     //Upload the images to s3 webserver
     ImageUpload(req, res, (err) => {
         if (err) {
@@ -376,5 +388,242 @@ router.delete('/event/delete/:id', ensureAuthenticated, (req, res) => {
 
     });
 });
+//#endregion
+
+//#region [rgba(0, 212, 255,0.05)] NEWS CRUD
+
+// News list page
+router.get('/news', ensureAuthenticated, (req, res) => {
+    News.find({}, (err, result) => {
+        if (err) {
+            req.flash('error_msg', err);
+        } else {
+            //projects: [{ title: "Edinet- pol de crestere economica", description: "pretty good project!", key: "background-1554024904339.jpg" }]\
+            res.render('admin/news', {
+                layout: 'dashboard',
+                news: result
+            });
+        }
+    });
+});
+
+// New News form page
+router.get('/news/new', ensureAuthenticated, (req, res) => {
+    res.render("admin/news-add-form", {
+        layout: "dashboard"
+    })
+});
+
+// Edit News form page
+router.get("/news/edit/:id", ensureAuthenticated, (req, res) => {
+    News.findById(req.params.id, (err, data) => {
+        if (err) console.log(err);
+        else {
+            res.render("admin/news-edit-form", {
+                layout: 'dashboard',
+                news: data
+            })
+        }
+    });
+});
+
+// Edit News PUT
+router.put('/news/edit', ensureAuthenticated, (req, res) => {
+    ImageUpload(req, res, (err) => {
+        if (err instanceof multer.MulterError) {
+            console.log(err);
+        }
+        News.findById(req.body.id, (err, result) => {
+            if (err) console.log(err);
+            else {
+                let newNews = {
+                    title: req.body.titleEn,
+                    shortDescription: req.body.shortDescriptionEn,
+                    descriptionEn: req.body.descriptionEn,
+                    descriptionRo: req.body.descriptionRo,
+                    descriptionRu: req.body.descriptionRu
+                }
+                // Edit En locale json file
+                updateJsonLocaleFields("en", {
+                    [req.body.titleEn]: req.body.titleEn,
+                    [req.body.shortDescriptionEn]: req.body.shortDescriptionEn
+                });
+
+                // Edit Ro locale json file
+                updateJsonLocaleFields("ro", {
+                    [req.body.titleEn]: req.body.titleRo,
+                    [req.body.shortDescriptionEn]: req.body.shortDescriptionRo
+                });
+
+                // Edit Ru locale json file
+                updateJsonLocaleFields("ru", {
+                    [req.body.titleEn]: req.body.titleRu,
+                    [req.body.shortDescriptionEn]: req.body.shortDescriptionRu
+                });
+
+                // If the background image is overriden
+                if (req.files.background) {
+                    // Set the new already uploaded image's path
+                    newNews.backgroundKey = req.files.background[0].key;
+                    // Delete the old image
+                    s3.deleteObjects({
+                        Bucket: "tohateenhub",
+                        Delete: {
+                            Objects: [
+                                {
+                                    Key: ("images//" + result.backgroundKey).toString()
+                                }
+                            ],
+                        }
+                    }, (err, data) => {
+                        if (err) {
+                            console.log(err);
+                            req.flash("error_msg", err.stack);
+                        } else {
+                            req.flash("success_msg", "Background deleted successfully");
+                        }
+                    });
+                }
+
+                // If the thumbnail image is overriden
+                if (req.files.thumbnail) {
+                    newNews.thumbnailKey = req.files.thumbnail[0].key;
+                    s3.deleteObjects({
+                        Bucket: "tohateenhub",
+                        Delete: {
+                            Objects: [
+                                {
+                                    Key: ("images//" + result.thumbnailKey).toString()
+                                }
+                            ],
+                        }
+                    }, (err, data) => {
+                        if (err) {
+                            console.log(err);
+                            req.flash("error_msg", err.stack);
+                        } else {
+                            req.flash("success_msg", "Thumbnail deleted successfully");
+                        }
+                    });
+                }
+
+                // If the date is overriden
+                if (req.body.date) {
+                    newNews.date = req.body.date;
+                }
+
+                // Put the modified object on MongoDB
+                News.updateOne({ _id: result._id }, newNews, (err, raw) => {
+                    if (err) console.log(err);
+                    else res.redirect('/admin/news');
+                })
+            }
+        });
+    });
+})
+
+// Submit News
+router.post('/news/upload', ensureAuthenticated, (req, res) => {
+    
+    //Upload the images to s3 webserver
+    ImageUpload(req, res, (err) => {
+        if (err) {
+            req.flash('error_msg', 'There has been an ' + err);
+            res.redirect('/admin/news');
+        } else {
+            console.log("Uploaded images!");
+            let bgkey, thumbkey, date = Date.now();
+
+            //Save the project data to mongoDB
+            if (req.files.background) {
+                bgkey = req.files.background[0].key;
+            } else bgkey = "thumbnail-1554469053905.jpg";
+
+            if (req.files.thumbnail) {
+                thumbkey = req.files.thumbnail[0].key;
+            } else thumbkey = "thumbnail-1554469053905.jpg";
+
+
+            // Date of news
+            if (req.body.date) {
+                date = req.body.date;
+            } else {
+                console.warn("a news was added without a date");
+            }
+
+            // Edit En locale json file
+            updateJsonLocaleFields("en", {
+                [req.body.titleEn]: req.body.titleEn,
+                [req.body.shortDescriptionEn]: req.body.shortDescriptionEn
+            });
+
+            // Edit Ro locale json file
+            updateJsonLocaleFields("ro", {
+                [req.body.titleEn]: req.body.titleRo,
+                [req.body.shortDescriptionEn]: req.body.shortDescriptionRo
+            });
+
+            // Edit Ru locale json file
+            updateJsonLocaleFields("ru", {
+                [req.body.titleEn]: req.body.titleRu,
+                [req.body.shortDescriptionEn]: req.body.shortDescriptionRu
+            });
+
+            // Upload to MongoDB
+            new News({
+                title: req.body.titleEn,
+                shortDescription: req.body.shortDescriptionEn,
+                descriptionEn: req.body.descriptionEn,
+                descriptionRo: req.body.descriptionRo,
+                descriptionRu: req.body.descriptionRu,
+                backgroundKey: bgkey,
+                thumbnailKey: thumbkey,
+                date: date
+            }).save()
+                .then(data => {
+                    req.flash('success_msg', 'Event added!');
+                    res.redirect('/admin/events');
+                });
+        }
+    });
+});
+
+// Delete News
+router.delete('/news/delete/:id', ensureAuthenticated, (req, res) => {
+
+    News.findByIdAndDelete(req.params.id, (err, result) => {
+        if (err) {
+            console.log(err);
+            req.flash("error_msg", err);
+        } else {
+            req.flash("success_msg", "Data removed from MongoDB.");
+        }
+        s3.deleteObjects({
+            Bucket: "tohateenhub",
+            Delete: {
+                Objects: [
+                    {
+                        Key: ("images//" + result.backgroundKey).toString()
+                    },
+                    {
+                        Key: ("images//" + result.thumbnailKey).toString()
+                    }
+                ],
+            }
+        }, (err, data) => {
+            if (err) {
+                console.log(err);
+                req.flash("error_msg", err.stack);
+            } else {
+                req.flash("success_msg", "Images deleted from s3.");
+            }
+            res.redirect("/admin/news");
+        });
+
+
+    });
+});
+
+//#endregion
 
 module.exports = router;

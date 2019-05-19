@@ -1,0 +1,44 @@
+figure {
+  position: relative;
+  background-color: black;
+}
+figure>img {
+  width: 100%;
+  height: auto;
+  opacity: .8;
+}
+.header>a {
+  color: #4A4A4A;
+  font-size: 30px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  transition: .15s all;
+}
+.header>a:hover {
+  color: #4495E1;
+}
+
+.description {
+  color: #4A4A4A;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+.learnmore {
+  color: #4A4A4A;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 6px 15px;
+  border: 2px solid #4495E1;
+  transition: .3s all;
+}
+.learnmore:hover {
+  color: white;
+  background-color : #4495E1;
+}
+.top-header {
+  color: #00374B;
+  font-size: 25px;
+  font-weight: 600;
+  text-transform: uppercase;
+}

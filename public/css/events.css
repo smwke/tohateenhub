@@ -7,16 +7,19 @@
 
 
 /* styles for blocks with news */
-#allEventsContainer{
+.postsContainer{
   padding-top:90px;
+  padding-bottom:30px;
   min-height: 90vh;
   background-color: #FFFEF9;
 }
-#eventsContainer .row {
+.postsContainer .row {
   border: 1px solid #E9E9E9;
   padding: 15px 0;
   background-color: white;
 }
+
+
 
 figure {
   position: relative;

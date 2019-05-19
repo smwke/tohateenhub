@@ -4,6 +4,8 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const methodOverride = require("method-override");
 
+const fs = require("fs");
+
 const aws = require('aws-sdk');
 const multer = require('multer');
 const multers3 = require('multer-s3');
@@ -29,13 +31,20 @@ const flash = require("connect-flash");
 // MongoDB database manager
 const mongoose = require("mongoose");
 
-// Connect to database
+/* Connect to database
 mongoose.connect("mongodb://dorin:goodpass123@ds135726.mlab.com:35726/tohateenhub", {
     useNewUrlParser: true
 }, (err) => {
     if (err) throw err;
     console.log("MongoDB connected...");
-});
+});*/
+
+mongoose.connect("mongodb://localhost:27017/tohateenhub", {
+    useNewUrlParser: true
+}, (err) => {
+    if (err) throw err;
+    console.log("MongoDB connected...");
+})
 
 // Set Storage Engine
 const storage = multers3({
@@ -45,6 +54,14 @@ const storage = multers3({
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); //use Date.now() for unique file keys
     }
 });
+
+/*
+const storage = multer.diskStorage({
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); //use Date.now() for unique file keys
+    },
+    destination: "uploads/",
+})*/
 
 // Init Multer upload
 const ImageUpload = multer({
@@ -87,16 +104,23 @@ module.exports = {
     s3: s3
 };
 
-//Initialize MongoDB Models
+/*      Initialize MongoDB Models       */
+// Load User model (usage in passport)
 require("./models/User");
 
 // Load Event Model
 require("./models/Event");
 const Event = mongoose.model("events");
 
-// Load routes
+// Load News Model
+require("./models/News");
+const News = mongoose.model("news");
+
+/*      Load routes     */
 const admin = require("./routes/admin");
 
+
+/*      Server configuration        */
 //Server port
 const port = process.env.PORT || 4200;
 
@@ -164,17 +188,27 @@ app.use((req, res, next) => {
     next();
 });
 
+
+/*      Site Routes     */
 app.use("/admin", admin);
 
+const components_to_load_on_main_page = 3;
+
+// Default route
 app.get("/", (req, res) => {
-
-    Event.find({}, (err, data) => {
+    Event.find({}, (err, events) => {
         if (err) console.log(err);
-        else res.render("index", { events: data });
-    }).sort({ 'date': -1 }).limit(3);
-
+        else {
+            News.find({}, (err, news) => {
+                if (err) console.log(er);
+                else
+                    res.render("index", { events: events, news: news });
+            }).sort({ 'date': -1 }).limit(components_to_load_on_main_page);
+        }
+    }).sort({ 'date': -1 }).limit(components_to_load_on_main_page);
 });
 
+// Set locale
 app.get("/setLang/:lang", (req, res) => {
     if (i18n.getLocales().indexOf(req.params.lang) > -1) {
         req.session.locale = req.params.lang;
@@ -183,99 +217,226 @@ app.get("/setLang/:lang", (req, res) => {
 });
 
 app.get("/get-image/:id", (req, res) => {
-    s3.getObject({ Bucket: "tohateenhub/images/", Key: req.params.id }, (err, data) => {
+    /*
+    let pathdir = path.resolve(process.cwd(), "./uploads");
+    fs.readFile(pathdir + `\\${req.params.id}`, 'utf8', function readFileCallback(err, data) {
         if (err) console.log(err);
-        else {
+        else if (data) {
             res.writeHead(200, { 'Content-Type': 'image/jpeg' });
             res.write(data.Body, 'binary');
             res.end(null, 'binary');
         }
     });
+    */
+    
+    s3.getObject({ Bucket: "tohateenhub/images/", Key: req.params.id }, (err, data) => {
+        if (err instanceof multer.MulterError) {
+            console.log(err);
+
+        }
+        else {
+            if (data) {
+                res.writeHead(200, { 'Content-Type': 'image/jpeg' });
+                res.write(data.Body, 'binary');
+                res.end(null, 'binary');
+            }
+        }
+    });
+    
 });
 
+// How many events/ news should be loaded from the database upon accessing the full list?
+const components_to_load = 2;
+
+//#region [ rgba(255,255,255,0.05) ] News routes
+// All news list
+app.get("/news", (req, res) => {
+    News.find({}, (err, data) => {
+        if (err) console.log(err);
+        else {
+            res.render("allNews", { news: data });
+        }
+    }).sort({ 'date': -1 }).limit(components_to_load);
+});
+
+// Load another :limit number of news based on the current :page
+app.get("/get-news/:page/:limit", (req, res) => {
+    let skip = req.params.page;
+    skip *= req.params.limit;
+
+    if (isNaN(req.params.page) || isNaN(req.params.limit)) {
+        req.flash("error_msg", "Incorrect url parameters");
+        res.redirect("back");
+    } else {
+        News.find({}, (err, data) => {
+            if (err) console.log(err);
+            else {
+                let months = [
+                    "JA",
+                    "FE",
+                    "MR",
+                    "AP",
+                    "MY",
+                    "JN",
+                    "JL",
+                    "AU",
+                    "SE",
+                    "OC",
+                    "NV",
+                    "DE"
+                ];
+
+                let result = [];
+                let buffer = {};
+                data.forEach((event) => {
+                    let a = new Date(event.date);
+
+                    buffer.title = res.__(event.title);
+                    buffer.shortDescription = res.__(event.shortDescription);
+                    buffer.date = a.getDate();
+                    buffer.month = months[a.getMonth()];
+                    buffer.id = event._id;
+                    buffer.thumbnailKey = event.thumbnailKey;
+
+                    result.push(buffer);
+                });
+
+                res.status(200).json(result);
+            }
+        }).sort({ 'date': -1 }).limit(parseInt(req.params.limit)).skip(parseInt(skip));
+
+    }
+});
+
+// Specific news description
+app.get("/news/:id", (req, res) => {
+    News.findById(req.params.id, (err, data) => {
+        if (err) {
+            res.render("news");
+        }
+        else {
+            if (data) {
+                let news = {
+                    title: data.title,
+                    shortDescription: data.shortDescription,
+                    location: data.location,
+                    date: data.date,
+                    backgroundKey: data.backgroundKey,
+                    thumbnailKey: data.thumbnailKey,
+                    id: data._id
+                }
+                switch (res.getLocale()) {
+                    case "en": { news.description = data.descriptionEn; } break;
+                    case "ro": { news.description = data.descriptionRo; } break;
+                    case "ru": { news.description = data.descriptionRu; } break;
+                }
+                res.render("news", { news: news });
+            } else {
+                res.render("news");
+            }
+        }
+    });
+
+});
+//#endregion
+
+
+//#region [ rgba(255,255,255,0.05) ] Events routes
+// All events list
 app.get("/events", (req, res) => {
     Event.find({}, (err, data) => {
         if (err) console.log(err);
         else
             res.render("allEvents", { events: data });
-    }).sort({ 'date': -1 }).limit(2);
+    }).sort({ 'date': -1 }).limit(components_to_load);
 
 });
 
-
+// Load another :limit number of events based on the current :page
 app.get("/get-events/:page/:limit", (req, res) => {
     let skip = req.params.page;
     skip *= req.params.limit;
 
     if (isNaN(req.params.page) || isNaN(req.params.limit)) {
-        req.flash("error_msg","Incorrect url parameters");
+        req.flash("error_msg", "Incorrect url parameters");
         res.redirect("back");
-    }else
-    Event.find({}, (err, data) => {
-        if (err) console.log(err);
-        else {
-            let months = [
-                "JA",
-                "FE",
-                "MR",
-                "AP",
-                "MY",
-                "JN",
-                "JL",
-                "AU",
-                "SE",
-                "OC",
-                "NV",
-                "DE"
-            ];
+    } else
+        Event.find({}, (err, data) => {
+            if (err) console.log(err);
+            else {
+                let months = [
+                    "JA",
+                    "FE",
+                    "MR",
+                    "AP",
+                    "MY",
+                    "JN",
+                    "JL",
+                    "AU",
+                    "SE",
+                    "OC",
+                    "NV",
+                    "DE"
+                ];
 
-            let result = [];
-            let buffer = {};
-            data.forEach((event) => {
-                let a = new Date(event.date);
+                let result = [];
+                let buffer = {};
+                data.forEach((event) => {
+                    let a = new Date(event.date);
 
-                buffer.title = res.__(event.title);
-                buffer.shortDescription = res.__(event.shortDescription);
-                buffer.date = a.getDate();
-                buffer.month = months[a.getMonth()];
-                buffer.startTime = event.startTime;
-                buffer.endTime = event.endTime;
-                buffer.id = event._id;
-                buffer.thumbnailKey = event.thumbnailKey;
+                    buffer.title = res.__(event.title);
+                    buffer.shortDescription = res.__(event.shortDescription);
+                    buffer.date = a.getDate();
+                    buffer.month = months[a.getMonth()];
+                    buffer.startTime = event.startTime;
+                    buffer.endTime = event.endTime;
+                    buffer.id = event._id;
+                    buffer.thumbnailKey = event.thumbnailKey;
 
-                result.push(buffer);
-            });
+                    result.push(buffer);
+                });
 
-            res.status(200).json(result);
-        }
-    }).sort({ 'date': -1 }).limit(parseInt(req.params.limit)).skip(parseInt(skip));
+                res.status(200).json(result);
+            }
+        }).sort({ 'date': -1 }).limit(parseInt(req.params.limit)).skip(parseInt(skip));
 });
 
+// Specific event description
 app.get("/event/:id", (req, res) => {
     Event.findById(req.params.id, (err, data) => {
         if (err) {
             res.render("event");
         }
         else {
-            let event = {
-                title: data.title,
-                shortDescription: data.shortDescription,
-                location: data.location,
-                date: data.date,
-                backgroundKey: data.backgroundKey,
-                thumbnailKey: data.thumbnailKey
+            if (data) {
+                let event = {
+                    title: data.title,
+                    shortDescription: data.shortDescription,
+                    location: data.location,
+                    date: data.date,
+                    backgroundKey: data.backgroundKey,
+                    thumbnailKey: data.thumbnailKey
+                }
+                switch (res.getLocale()) {
+                    case "en": { event.description = data.descriptionEn; } break;
+                    case "ro": { event.description = data.descriptionRo; } break;
+                    case "ru": { event.description = data.descriptionRu; } break;
+                }
+                res.render("event", { event: event });
+            } else {
+                res.render("event");
             }
-            switch (res.getLocale()) {
-                case "en": { event.description = data.descriptionEn; } break;
-                case "ro": { event.description = data.descriptionRo; } break;
-                case "ru": { event.description = data.descriptionRu; } break;
-            }
-            res.render("event", { event: event });
+
         }
     });
 
 });
+//#endregion
 
+
+
+
+// Start server
 app.listen(port, () => {
     console.log("Server started on: " + port);
 });

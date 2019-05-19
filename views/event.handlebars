@@ -1,57 +1,115 @@
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <style>
     .bg-proj {
-        background-position: center center;
-        background-size: cover;
-        height: 550px;
-        max-height: 40vh;
+        background: transparent;
+        /*
+        background-size: contain;
+        background-repeat: no-repeat;*/
+        margin-top: 65px;
+        max-height: 60vh;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        align-content: flex-end;
+        justify-content: center;
+
+    }
+
+    .jumbotron {
+        box-shadow: none;
+        padding-top: 60px;
+        margin: 0;
     }
 
     .bg-thumb {
+
         height: 30vmin;
         border-radius: 2%;
-        margin-right: 40%;
-        z-index: 1;
+
+        /*margin-right: 40%;*/
+        /*z-index: 1;*/
+
+    }
+
+    .ql-editor {
+        padding: 0;
+    }
+
+    #projectDescContainer {
+        min-height: 60vh;
     }
 
     .proj-title {
         color: black;
-        font-size: 4vmax;
-        font-weight: 400;
+        font-size: 4vmin;
+        font-weight: 600;
+        background-color: white;
+        margin-bottom: 0;
+      
+    }
+
+    @media screen and (max-width: 768px) {
+        .bg-proj {
+            margin-top: 50px;
+        }
+
+        .jumbotron {
+            padding-top: 20px;
+        }
     }
 
     @media screen and (max-width: 576px) {
         .bg-thumb {
             margin-left: auto;
             margin-right: auto;
+
         }
+
+
+        #projectDescContainer {
+            padding: 0;
+        }
+
+
     }
 
     .bg-nav {
         background-color: rgba(0, 0, 0, 0.2) !important;
     }
+
+    .lead {
+        font-size: 1em;
+    }
 </style>
 
 {{#if event}}
 
-<div class="bg-proj d-flex flex-column pt-5 bg-dark"
-    style="background-image: url(/get-image/{{event.backgroundKey}});">
-    <div style="flex:1">
-    </div>
-    <div class="d-flex bg-thumb">
-        <img class="card-img-top mx-auto mt-auto bg-light" style="max-height:250px;height:100%;width:auto"
+<div class="bg-proj parallax-window">
+    <!--style="background-image: url(/get-image/{{event.backgroundKey}});"-->
+    <img src="/get-image/{{event.backgroundKey}}" style="width:100%;visibility:hidden;" />
+    <!--div style="flex:1">
+    </div-->
+    <!--div class="d-flex bg-thumb">
+        <img class="card-img-top mt-auto" style="max-height:250px;height:100%;width:auto"
             src="/get-image/{{event.thumbnailKey}}" alt="Card image cap">
-    </div>
+    </div-->
+    <h1 class="proj-title text-center rounded-top px-1">{{lang event.title res}}</h1>
 </div>
+<script>
 
-<div class="container">
-    <div class="jumbotron" style="height:fit-content;">
-        <h1 class="proj-title mx-auto">{{lang event.title res}}</h1>
-        <p id="description" class="lead">{{lang event.shortDescription res}}</p>
+    $('.parallax-window').parallax({ imageSrc: "/get-image/{{event.backgroundKey}}" });
+</script>
+<div class="container-fluid bg-white">
+    <div class="container" id="projectDescContainer">
+        <div class="jumbotron" style="height:fit-content;">
+
+            <!--p id="description" class="lead">{{lang event.shortDescription res}}</p>
         <div class="my-2"></div>
-        <hr class="mt-2 mb-4">
-        <div id="EventDescription" style="border:0 !important;"></div>
-         <hr class="mt-2 mb-4">
-        <p id="description" class="lead">{{lang event.location res}}</p>
+        <hr class="mt-2 mb-4"-->
+            <div id="EventDescription" style="border:0 !important;"></div>
+            <hr class="mt-2 mb-4">
+            <p id="description" class="lead">{{lang event.location res}}</p>
+        </div>
     </div>
 </div>
 {{else}}
@@ -61,14 +119,14 @@
 </div>
 {{/if}}
 
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
 <script>
     var lockedNavbar = 1;
 
-    $(".navbar").css("transition","none");
-    $("#scrolledNavbar").toggleClass("scrolled-nav",true);
+    $(".navbar").css("transition", "none");
+    $("#scrolledNavbar").toggleClass("scrolled-nav", true);
 
     //$(".navbar").css("background-color","rgb(246, 246, 246)");
 

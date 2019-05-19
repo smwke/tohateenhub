@@ -28,8 +28,10 @@ module.exports = {
     hours = hours % 12;
     hours = hours ? hours : 12;
     minutes = minutes < 10 ? '0' + minutes : minutes;
+    
+    let month = a.getMonth()<10?"0"+(a.getMonth()+1):a.getMonth()+1;
 
-    return a.getDate() + "." + a.getMonth() + "." + a.getFullYear() + ", " + hours + ":" + minutes + " " + ampm;
+    return a.getDate() + "." + ++month + "." + a.getFullYear() + ", " + hours + ":" + minutes + " " + ampm;
 
   },
   getDateDate: function(value){
