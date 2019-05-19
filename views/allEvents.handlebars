@@ -49,7 +49,13 @@
 	// Load more button
 	loadbtn.on("click", (e) => {
 		e.preventDefault();
-		fetch(`/get-events/${page}/2`).then((response) => {
+
+		
+		// MAKE SURE THIS IS EQUAL TO THE const components_to_load IN APP.JS
+		const components_to_fetch = 2;
+
+
+		fetch(`/get-events/${page}/${components_to_fetch}`).then((response) => {
 			return response.json();
 		}).then((event) => {
 			if (event.length == 0) $("#loadmMoreButton").remove();
@@ -63,7 +69,7 @@
 					<div class="overlay">
 						<h2>read more</h2>
 					</div>
-					<img class="news-img" src="../img/children.jpg">
+					<img class="news-img" src="/get-image/${value.thumbnailKey}">
 				</a>
 			</figure>
 		</div>

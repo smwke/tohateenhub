@@ -206,6 +206,9 @@ app.get("/", (req, res) => {
             }).sort({ 'date': -1 }).limit(components_to_load_on_main_page);
         }
     }).sort({ 'date': -1 }).limit(components_to_load_on_main_page);
+
+
+
 });
 
 // Set locale
@@ -286,9 +289,10 @@ app.get("/get-news/:page/:limit", (req, res) => {
                     "DE"
                 ];
 
-                let result = [];
-                let buffer = {};
+                let result = []
+                let buffer;
                 data.forEach((event) => {
+                    buffer = {};
                     let a = new Date(event.date);
 
                     buffer.title = res.__(event.title);
@@ -364,6 +368,7 @@ app.get("/get-events/:page/:limit", (req, res) => {
         Event.find({}, (err, data) => {
             if (err) console.log(err);
             else {
+                
                 let months = [
                     "JA",
                     "FE",
@@ -380,8 +385,9 @@ app.get("/get-events/:page/:limit", (req, res) => {
                 ];
 
                 let result = [];
-                let buffer = {};
+                let buffer;
                 data.forEach((event) => {
+                    buffer = {};
                     let a = new Date(event.date);
 
                     buffer.title = res.__(event.title);
@@ -395,7 +401,6 @@ app.get("/get-events/:page/:limit", (req, res) => {
 
                     result.push(buffer);
                 });
-
                 res.status(200).json(result);
             }
         }).sort({ 'date': -1 }).limit(parseInt(req.params.limit)).skip(parseInt(skip));

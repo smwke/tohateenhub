@@ -13,13 +13,17 @@
     <link href="/css/mdb.min.css" rel="stylesheet">
     <!-- Custom styles -->
     <link href="/css/global.css" rel="stylesheet">
+    <!-- Preloader css -->
+    <link href="/css/preloader.css" rel="stylesheet">
     <link href="/css/main.css" rel="stylesheet">
 </head>
 
-<body>
-
-
-
+<body class="preloader-site">
+    <div class="preloader-wrapper">
+        <div class="preloader">
+            <img src="/img/icons/preloader.gif" alt="NILA">
+        </div>
+    </div>
     <!-- SCRIPTS -->
     <!-- JQuery -->
     <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
@@ -31,19 +35,41 @@
     <script type="text/javascript" src="/js/mdb.min.js"></script>
     <!-- Parallax effect -->
     <script src="/js/parallax.min.js"></script>
-
-    <!-- Document Start-->
+    <!-- Preloader script>
+    <script src="/js/preloader.js"></script-->
+    <!--Dima JS File-- >
+    <script src="/js/main.js"></script>
+    <!--Document Start-->
 
     {{> _navbar}}
 
-    {{{body}}}  
+    {{{body}}}
 
     {{> _footer}}
 
+
+
+    <script>
+        $(window).on("load", () => {
+            $('.preloader-wrapper').fadeOut();
+            $('body').removeClass('preloader-site');
+        });
+
+        if (typeof lockedNavbar == 'undefined') {
+            $(window).on("scroll", () => {
+                if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
+                    $("#scrolledNavbar").toggleClass("scrolled-nav", true);
+                } else {
+                    $("#scrolledNavbar").toggleClass("scrolled-nav", false);
+                }
+            })
+            $("#scrolledNavbar").toggleClass("scrolled-nav", (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40));
+        }
+    </script>
+
     <!-- /Document End-->
 
-    <!-- Dima JS File -->
-    <script type="text/javascript" src="/js/main.js"></script>
+
 
 </body>
 

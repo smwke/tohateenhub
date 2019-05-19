@@ -633,9 +633,11 @@ banner, */
 		cursor: pointer;
 		line-height: 30px;
 	}
-	.dropdown-menu {
+    .dropdown-menu {
 		background-color: rgba(246, 246, 246, .8);
-		margin-top: 16px;
+	}
+	.dropdown-container {
+		position: relative;
 	}
 	/* banner */
 	.banner {
@@ -793,6 +795,7 @@ banner, */
 		font-size: 2.3vh;
 	}
 }
+
 /* breakpoint for tablets */
 
 @media only screen and (max-width: 1280px) and (max-height: 1366px) {

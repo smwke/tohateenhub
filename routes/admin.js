@@ -49,6 +49,8 @@ router.post('/login', (req, res, next) => {
 router.post('/register', (req, res) => {
     let errors = [];
 
+    errors.push({text:"Registering is not available"});
+
     //errors.push({ text: 'Registration is not possible' });
 
     if (req.body.password != req.body.password2) {
@@ -65,7 +67,7 @@ router.post('/register', (req, res) => {
             name: req.body.name,
             password: req.body.password,
             password2: req.body.password2,
-            layout: 'admin'
+            layout: 'dashboard'
         });
     } else {
         User.findOne({ name: req.body.name })
@@ -465,7 +467,7 @@ router.put('/news/edit', ensureAuthenticated, (req, res) => {
                 if (req.files.background) {
                     // Set the new already uploaded image's path
                     newNews.backgroundKey = req.files.background[0].key;
-                    // Delete the old image
+                    // Delete the old image  
                     s3.deleteObjects({
                         Bucket: "tohateenhub",
                         Delete: {
@@ -581,8 +583,8 @@ router.post('/news/upload', ensureAuthenticated, (req, res) => {
                 date: date
             }).save()
                 .then(data => {
-                    req.flash('success_msg', 'Event added!');
-                    res.redirect('/admin/events');
+                    req.flash('success_msg', 'News added!');
+                    res.redirect('/admin/news');
                 });
         }
     });
