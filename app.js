@@ -190,6 +190,7 @@ app.use((req, res, next) => {
 
 
 /*      Site Routes     */
+// use admin routes
 app.use("/admin", admin);
 
 const components_to_load_on_main_page = 3;
@@ -206,9 +207,11 @@ app.get("/", (req, res) => {
             }).sort({ 'date': -1 }).limit(components_to_load_on_main_page);
         }
     }).sort({ 'date': -1 }).limit(components_to_load_on_main_page);
+});
 
-
-
+// Courses route
+app.get("/courses",(req,res)=>{
+    res.render("courses");
 });
 
 // Set locale
@@ -219,6 +222,7 @@ app.get("/setLang/:lang", (req, res) => {
     res.redirect("back");
 });
 
+// Get image
 app.get("/get-image/:id", (req, res) => {
     /*
     let pathdir = path.resolve(process.cwd(), "./uploads");
@@ -437,9 +441,6 @@ app.get("/event/:id", (req, res) => {
 
 });
 //#endregion
-
-
-
 
 // Start server
 app.listen(port, () => {

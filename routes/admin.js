@@ -263,7 +263,10 @@ router.put('/event/edit', ensureAuthenticated, (req, res) => {
                 // Put the modified object on MongoDB
                 Event.updateOne({ _id: result._id }, newEvent, (err, raw) => {
                     if (err) console.log(err);
-                    else res.redirect('/admin/events');
+                    else{
+                        req.flash("success_msg", "Event updated successfully!")
+                         res.redirect('/admin/events');
+                    }
                 })
             }
         });
@@ -517,7 +520,10 @@ router.put('/news/edit', ensureAuthenticated, (req, res) => {
                 // Put the modified object on MongoDB
                 News.updateOne({ _id: result._id }, newNews, (err, raw) => {
                     if (err) console.log(err);
-                    else res.redirect('/admin/news');
+                    else {
+                        req.flash("success_msg", "News updated successfully!")
+                        res.redirect('/admin/news');
+                    }
                 })
             }
         });

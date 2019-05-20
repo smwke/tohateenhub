@@ -7,25 +7,16 @@ figure>img {
   height: auto;
   opacity: .8;
 }
-.header>a {
-  color: #4A4A4A;
-  font-size: 30px;
-  font-weight: 600;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  transition: .15s all;
-}
-.header>a:hover {
-  color: #4495E1;
-}
 
 .description {
   color: #4A4A4A;
   font-size: 15px;
   margin-bottom: 10px;
 }
+
 .learnmore {
   color: #4A4A4A;
+  font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
   padding: 6px 15px;
@@ -35,10 +26,4 @@ figure>img {
 .learnmore:hover {
   color: white;
   background-color : #4495E1;
-}
-.top-header {
-  color: #00374B;
-  font-size: 25px;
-  font-weight: 600;
-  text-transform: uppercase;
 }
