@@ -588,18 +588,17 @@ banner, */
 		transition: .5s;
 	}
 	.nav-link {
-		color: #ECECEC;
+		color: #444444;
 		font-size: 11px;
 		font-weight: 600;
 		text-transform: uppercase;
-		transition: .3s;
+		transition: color .3s;
 	}
 	.scrolled-nav .nav-link {
 		color: #444444;
 	}
 	.nav-link:hover {
-		color: white;
-		transition: .3s;
+		color: black;
 	}
 	.scrolled-nav .nav-link:hover {
 		color: black;
