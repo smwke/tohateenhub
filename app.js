@@ -31,20 +31,21 @@ const flash = require("connect-flash");
 // MongoDB database manager
 const mongoose = require("mongoose");
 
-/* Connect to database
+// Connect to database
 mongoose.connect("mongodb://dorin:goodpass123@ds135726.mlab.com:35726/tohateenhub", {
     useNewUrlParser: true
 }, (err) => {
     if (err) throw err;
     console.log("MongoDB connected...");
-});*/
+});
 
+/*
 mongoose.connect("mongodb://localhost:27017/tohateenhub", {
     useNewUrlParser: true
 }, (err) => {
     if (err) throw err;
     console.log("MongoDB connected...");
-})
+})*/
 
 // Set Storage Engine
 const storage = multers3({
