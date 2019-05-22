@@ -280,19 +280,19 @@ app.get("/get-news/:page/:limit", (req, res) => {
             if (err) console.log(err);
             else {
                 let months = [
-                    "JA",
-                    "FE",
-                    "MR",
-                    "AP",
-                    "MY",
-                    "JN",
-                    "JL",
-                    "AU",
-                    "SE",
-                    "OC",
-                    "NV",
-                    "DE"
-                ];
+                    "JAN",
+                    "FEB",
+                    "MAR",
+                    "APR",
+                    "MAY",
+                    "JUN",
+                    "JUL",
+                    "AUG",
+                    "SEP",
+                    "OCT",
+                    "NOV",
+                    "DEC"
+                  ];
 
                 let result = []
                 let buffer;
@@ -375,19 +375,19 @@ app.get("/get-events/:page/:limit", (req, res) => {
             else {
                 
                 let months = [
-                    "JA",
-                    "FE",
-                    "MR",
-                    "AP",
-                    "MY",
-                    "JN",
-                    "JL",
-                    "AU",
-                    "SE",
-                    "OC",
-                    "NV",
-                    "DE"
-                ];
+                    "JAN",
+                    "FEB",
+                    "MAR",
+                    "APR",
+                    "MAY",
+                    "JUN",
+                    "JUL",
+                    "AUG",
+                    "SEP",
+                    "OCT",
+                    "NOV",
+                    "DEC"
+                  ];
 
                 let result = [];
                 let buffer;
