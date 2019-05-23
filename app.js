@@ -215,6 +215,16 @@ app.get("/courses",(req,res)=>{
     res.render("courses");
 });
 
+// Contacts route
+app.get("/contacts",(req,res)=>{
+    res.render("contacts");
+});
+
+// about us route
+app.get("/about-us",(req,res)=>{
+    res.render("aboutUs");
+});
+
 // Set locale
 app.get("/setLang/:lang", (req, res) => {
     if (i18n.getLocales().indexOf(req.params.lang) > -1) {

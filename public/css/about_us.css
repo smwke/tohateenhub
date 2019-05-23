@@ -1,0 +1,41 @@
+.top-header {
+  color: #00374B;
+  font-size: 25px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.about h2 {
+  font-size: 1.9vw;
+  font-weight: 600;
+}
+.about h4 {
+  font-size: 1.3vw;
+  color: #6E6E6E;
+  padding: 0 40px;
+}
+h2 {
+  font-size: 1.9vw;
+  font-weight: 600;
+}
+.team {
+  background-color: #F2EDD7;
+}
+.member-img, .member-info {
+  padding: 0;
+}
+.member-img>img {
+  width: 100%;
+}
+.member-info>h2 {
+  font-size: 1.9vw;
+  padding: 0 .2vw;
+  line-height: 10px;
+}
+.member-info>h3 {
+  font-size: 1.2vw;
+}
+.member-info>h4 {
+  font-size: 1vw;
+  padding: 1vh 1em;
+}
