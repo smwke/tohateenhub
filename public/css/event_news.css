@@ -1,0 +1,89 @@
+.bg-proj {
+    height: 45vh;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.bg-proj.fixedS {
+    align-items: flex-end;
+}
+
+.jumbotron {
+    box-shadow: none;
+    padding-top: 25px;
+    margin: 0;
+}
+
+.bg-thumb {
+
+    height: 25vmin;
+    border-radius: 2%;
+
+    /*margin-right: 40%;*/
+    /*z-index: 1;*/
+
+}
+
+.ql-editor {
+    padding: 0;
+}
+
+#projectDescContainer {
+    min-height: 60vh;
+}
+
+.proj-title {
+    font-size: 3.3vmax;
+    font-weight: 600;
+    background: transparent;
+    margin-bottom: 0;
+    transition: text-shadow 0.1s;
+    position: fixed;
+    top: 27vh;
+    color: white;
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+}
+
+
+.proj-title.fixedS {
+    position: initial;
+    text-shadow: none;
+}
+
+@media screen and (max-width: 768px) {
+    .bg-proj {
+        margin-top: 50px;
+    }
+
+    .jumbotron {
+        padding-top: 20px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    #projectDescContainer {
+        padding: 0;
+    }
+
+    .proj-title {
+        font-size: 7.5vmin;
+    }
+
+
+}
+
+.bg-nav {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.lead {
+    font-size: 1em;
+}

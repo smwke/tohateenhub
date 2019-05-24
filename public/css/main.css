@@ -25,6 +25,11 @@ p {
 	font-size: 1.3em;
 }
 
+#bodyWrapper{
+	margin-top: 50px;
+}
+
+
 /* general for banner (there are differences in breakpoints) */
 
 /* styles for banner and its components */
@@ -332,9 +337,6 @@ footer .media_icon {
 		line-height: 29px;
 	}
 	/* banner */
-	.banner {
-		margin-top:50px;
-	}
 	.banner .carousel-item {
 		min-height: 35vh;
 	}
@@ -555,14 +557,15 @@ banner, */
 }
 
 @media only screen and (min-width: 768px) {
+	#bodyWrapper{
+		margin-top: 94px;
+	}
+	#bodyWrapper.scrolled{
+		margin-top: 65px;
+	}
 	/* navbar */
-
 	.navbar {
-<<<<<<< HEAD
 		background: white;
-=======
-		background: white;;
->>>>>>> c0cf471e0a0d628740a82dc004d0f60880d8e0f5
 		box-shadow: none;
 		padding: 7px 16px;
 		transition: .5s;
@@ -645,7 +648,6 @@ banner, */
 	}
 	/* banner */
 	.banner {
-		margin-top:94px;
 		padding-top: 0;
 	}
 	.banner .carousel-item {
