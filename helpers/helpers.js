@@ -43,18 +43,18 @@ module.exports = {
   getDateMonth: function(value){
     let a = new Date(value);
     let months = [
-      "JA",
-      "FE",
-      "MR",
-      "AP",
-      "MY",
-      "JN",
-      "JL",
-      "AU",
-      "SE",
-      "OC",
-      "NV",
-      "DE"
+      "JAN",
+      "FEB",
+      "MAR",
+      "APR",
+      "MAY",
+      "JUN",
+      "JUL",
+      "AUG",
+      "SEP",
+      "OCT",
+      "NOV",
+      "DEC"
     ];
     return months[a.getMonth()];
     
