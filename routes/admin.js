@@ -25,6 +25,10 @@ const Event = mongoose.model("events");
 require("../models/News");
 const News = mongoose.model("news");
 
+// Load Registrations model
+require("../models/Registration");
+const Registration = mongoose.model("registrations");
+
 // Login Page
 router.get('/login', (req, res) => {
     res.render('admin/login', { layout: "dashboard" });
@@ -49,7 +53,7 @@ router.post('/login', (req, res, next) => {
 router.post('/register', (req, res) => {
     let errors = [];
 
-    errors.push({text:"Registering is not available"});
+    errors.push({ text: "Registering is not available" });
 
     //errors.push({ text: 'Registration is not possible' });
 
@@ -263,9 +267,9 @@ router.put('/event/edit', ensureAuthenticated, (req, res) => {
                 // Put the modified object on MongoDB
                 Event.updateOne({ _id: result._id }, newEvent, (err, raw) => {
                     if (err) console.log(err);
-                    else{
+                    else {
                         req.flash("success_msg", "Event updated successfully!")
-                         res.redirect('/admin/events');
+                        res.redirect('/admin/events');
                     }
                 })
             }
@@ -532,7 +536,7 @@ router.put('/news/edit', ensureAuthenticated, (req, res) => {
 
 // Submit News
 router.post('/news/upload', ensureAuthenticated, (req, res) => {
-    
+
     //Upload the images to s3 webserver
     ImageUpload(req, res, (err) => {
         if (err) {
@@ -633,5 +637,34 @@ router.delete('/news/delete/:id', ensureAuthenticated, (req, res) => {
 });
 
 //#endregion
+
+//#region [rgba(255,255,255,0.05)] EVENT REGISTRATIONS CRUD
+// Registrations list page
+router.get("/registrations", ensureAuthenticated, (req, res) => {
+    Registration.find({}, (err, result) => {
+        if (err) console.log(err);
+        else {
+            res.render("admin/registrations", {
+                layout: "dashboard",
+                registrations: result
+            });
+        }
+    })
+});
+router.delete("/registrations/delete/:id", ensureAuthenticated, (req, res) => {
+    Registration.findOneAndDelete({ _id: req.params.id }, (err, result) => {
+        if (err) console.log(err);
+        else {
+            res.status(200).json(result.name);
+        }
+    });/* This method is deprecated
+    Registration.findByIdAndRemove(req.params.id, (err, result) => {
+        if (err) console.log(err);
+        else {
+            res.status(200).json(result.name);
+        }
+    })*/
+});
+//endregion
 
 module.exports = router;

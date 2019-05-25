@@ -117,6 +117,10 @@ const Event = mongoose.model("events");
 require("./models/News");
 const News = mongoose.model("news");
 
+// Load Event Registration Model
+require("./models/Registration");
+const Registration = mongoose.model("registrations");
+
 /*      Load routes     */
 const admin = require("./routes/admin");
 
@@ -371,6 +375,26 @@ app.get("/events", (req, res) => {
 
 });
 
+// Event Register modal form POST
+app.post("/events/register", (req,res)=>{
+    console.log(req.body.name);
+    console.log(req.body.email);
+    console.log(req.body.eventName);
+    console.log(req.body.eventId);
+    // Save registration to MongoDB
+    new Registration({
+        name: req.body.name,
+        email: req.body.email,
+        phoneNumber: req.body.phone,
+        eventName: req.body.eventName,
+        eventId: req.body.eventId
+    }).save().then(data=>{
+        req.flash("success_msg","Registration submitted!");
+        res.status(200).json("Registration sent!");
+    });
+    
+});
+
 // Load another :limit number of events based on the current :page
 app.get("/get-events/:page/:limit", (req, res) => {
     let skip = req.params.page;
@@ -383,7 +407,6 @@ app.get("/get-events/:page/:limit", (req, res) => {
         Event.find({}, (err, data) => {
             if (err) console.log(err);
             else {
-                
                 let months = [
                     "JAN",
                     "FEB",
@@ -435,7 +458,8 @@ app.get("/event/:id", (req, res) => {
                     location: data.location,
                     date: data.date,
                     backgroundKey: data.backgroundKey,
-                    thumbnailKey: data.thumbnailKey
+                    thumbnailKey: data.thumbnailKey,
+                    id: data._id
                 }
                 switch (res.getLocale()) {
                     case "en": { event.description = data.descriptionEn; } break;

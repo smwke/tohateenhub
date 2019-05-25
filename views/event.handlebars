@@ -1,7 +1,51 @@
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <link href="/css/event_news.css" rel="stylesheet">
 
+
+
+
 {{#if event}}
+<!-- Modal Event registration form, 
+HIDDEN by default and shown
+at the press of the register button -->
+<div class="modal fade" id="RegisterModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Sign up</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="RegisterForm" class="modal-body mx-3">
+                <div class="md-form mb-5">
+                    <i class="fas fa-user prefix grey-text"></i>
+                    <input name="name" type="text" id="registerForm-name" class="form-control validate">
+                    <label for="registerForm-name">Your name</label>
+                </div>
+                <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input name="email" type="email" id="registerForm-email" class="form-control validate">
+                    <label data-error="{{lang "please use name@domain" res}}" data-success="good!"
+                        for="registerForm-email">Your email</label>
+                </div>
+
+                <div class="md-form mb-4">
+                    <i class="fas fa-phone prefix grey-text"></i>
+                    <input name="phone" type="tel" name="number" id="registerForm-phone" class="form-control validate">
+                    <label data-error="wrong" data-success="good!" for="registerForm-phone">Your phone number</label>
+                </div>
+
+                <input type="text" name="eventName" value="{{event.title}}" class="d-none">
+                <input type="text" name="eventId" value="{{event.id}}" class="d-none">
+            </form>
+            <div class="modal-footer d-flex justify-content-center">
+                <button id="RegisterFormSubmit" class="btn btn-deep-orange">{{lang "Sign up" res}}</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="bg-proj parallax-window">
     <!--style="background-image: url(/get-image/{{event.backgroundKey}});"-->
@@ -15,11 +59,29 @@
     <h1 class="text-uppercase proj-title text-center px-1">{{lang event.title res}}</h1>
 </div>
 <script>
+    $("#RegisterFormSubmit").on("click", (e) => {
+        e.preventDefault();
+        $('#RegisterModal').modal('hide');
+        $.post('/events/register',
+            $('#RegisterForm').serialize(),
+            function (data, status, xhr) {
+                console.log("got a response!@");
+                $("body").append(`<div class="alert alert-success alert-dismissible position-fixed w-100 text-center fade show" role="alert" style="top:65px">
+                    <strong>Success,</strong> Registration has been sent!
+                    <button type = "button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>`)
+            });
+    });
+
+
+
     var windowHeight = $(window).height();
     $('.parallax-window').parallax({ imageSrc: "/get-image/{{event.backgroundKey}}" });
 
     $(window).on("scroll", () => {
-        if (document.body.scrollTop > windowHeight*0.17) {
+        if (document.body.scrollTop > windowHeight * 0.17) {
             $(".proj-title").toggleClass("fixedS", true);
             $(".bg-proj").toggleClass("fixedS", true);
         } else {
@@ -39,6 +101,7 @@
         <div class="my-2"></div>
         <hr class="mt-2 mb-4"-->
             <div id="EventDescription" style="border:0 !important;"></div>
+            <a data-toggle="modal" data-target="#RegisterModal" class="btn btn-secondary">{{lang "Sign up" res}}</a>
             <hr class="mt-2 mb-4">
             <p id="description" class="lead">{{lang event.location res}}</p>
         </div>
