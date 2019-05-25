@@ -41,7 +41,7 @@
     font-weight: 600;
     background: transparent;
     margin-bottom: 0;
-    transition: text-shadow 0.1s;
+    transition: text-shadow 0.1s, background-color 0.2s;
     position: fixed;
     top: 27vh;
     color: white;
@@ -50,10 +50,14 @@
         1px -1px 0 #000,
         -1px 1px 0 #000,
         1px 1px 0 #000;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
 
 .proj-title.fixedS {
+    background-color: white;
+    color:black;
     position: initial;
     text-shadow: none;
 }

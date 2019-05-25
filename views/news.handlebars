@@ -11,13 +11,15 @@
         <img class="card-img-top mt-auto" style="max-height:250px;height:100%;width:auto"
             src="/get-image/{{news.thumbnailKey}}" alt="Card image cap">
     </div-->
-    <h1 class="proj-title text-center rounded-top px-1">{{lang news.title res}}</h1>
+    <h1 class="proj-title text-center px-1">{{lang news.title res}}</h1>
 </div>
 <script>
+    var windowHeight = $(window).height();
+
     $('.parallax-window').parallax({ imageSrc: "/get-image/{{news.backgroundKey}}" });
 
     $(window).on("scroll", () => {
-        if (document.body.scrollTop > 150) {
+        if (document.body.scrollTop > windowHeight*0.17) {
             $(".proj-title").toggleClass("fixedS", true);
             $(".bg-proj").toggleClass("fixedS", true);
         } else {

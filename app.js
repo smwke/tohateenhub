@@ -184,7 +184,7 @@ app.use((req, res, next) => {
     res.locals.error = req.flash('error');
     res.locals.user = req.user || null;
     res.locals.res = res;
-    res.locals.localization = req.session.locale || "en"
+    res.locals.localization = req.session.locale || "en";
     res.setLocale(res.locals.localization);
     next();
 });
