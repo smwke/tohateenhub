@@ -1,0 +1,22 @@
+<a href="/admin/course/new" class="btn aqua-gradient"><b>Add a new Course</b></a>
+<div class="row mx-0 px-2">
+    {{#each courses}}
+    <div class="col-sm-6 col-lg-4 my-1">
+        <div class="card h-100" style="background-image: url(/get-image/{{backgroundKey}});background-size:cover;">
+            <div class="card-body d-flex flex-column">
+                <div class="flex-grow-1 p-2 rgba-white-light rounded">
+                    <h5 class="card-title">{{lang title ../res}}</h5>
+                    <p class="card-text">{{lang shortDescription ../res}}</p>
+                </div>
+                <div class="row mx-0">
+                    <a href="/course/{{_id}}" class="btn btn-primary">Details</a>
+                    <form class="d-inline-block" method="POST" action="/admin/course/delete/{{_id}}?_method=DELETE">
+                        <button type="submit" class="btn btn-dark card-link">Delete Course</button>
+                    </form>
+                    <a href="/admin/course/edit/{{_id}}" class="btn btn-warning">Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>

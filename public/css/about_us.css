@@ -1,3 +1,6 @@
+main{
+  margin-top:90px;
+}
 .top-header {
   color: #00374B;
   font-size: 25px;
@@ -5,21 +8,23 @@
   text-transform: uppercase;
 }
 
-.about h2 {
-  font-size: 1.9vw;
+.section-header {
+  font-size: 23px;
   font-weight: 600;
 }
 .about h4 {
-  font-size: 1.3vw;
+  font-size: 15px;
   color: #6E6E6E;
-  padding: 0 40px;
+  padding: 0 5px;
 }
-h2 {
-  font-size: 1.9vw;
-  font-weight: 600;
+
+.about {
+	padding: 0;
+	text-align: center;
 }
+
 .team {
-  background-color: #F2EDD7;
+  margin: 0 1px;
 }
 .member-img, .member-info {
   padding: 0;
@@ -27,15 +32,139 @@ h2 {
 .member-img>img {
   width: 100%;
 }
-.member-info>h2 {
-  font-size: 1.9vw;
-  padding: 0 .2vw;
-  line-height: 10px;
+.back1 {
+  background-color: #F6F2E0;
 }
-.member-info>h3 {
-  font-size: 1.2vw;
+.back2 {
+  background-color: #ECE3BD;
 }
-.member-info>h4 {
-  font-size: 1vw;
-  padding: 1vh 1em;
+.back3 {
+  background-color: #fff;
+}
+.back4 {
+  background-color: #fff;
+}
+.member-info h2 {
+  font-size: 17px;
+  line-height: 2px;
+  padding-bottom: 5px;
+}
+.member-info h3 {
+  font-size: 11px;
+}
+.member-info h4 {
+  font-size: 10px;
+  padding: 0 7px;
+  color: #5A5A5A;
+}
+.member-info .fa-lg {
+  font-size: 15px;
+  color: black;
+}
+.member-info .fa-lg:hover {
+  color: #4495E1;
+}
+
+.volunteers {
+  margin: 0 1px;
+}
+.volunteer-img, .volunteer-info {
+  padding: 0;
+  margin-bottom: 15px;
+}
+.volunteer-img>img {
+  width: 100%;
+}
+.volunteer-info>h2 {
+  font-size: 14px;
+  font-weight: 600;
+}
+.volunteer-info>h4 {
+  font-size: 11px;
+}
+
+.vol-apply>h2 {
+  font-size: 1.4em;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+}
+.vol-apply>a {
+  color: #464646;
+  font-weight: 550;
+  padding: 20px 40px;
+  border: 2px solid #4495E1;
+  transition: .3s;
+}
+.vol-apply>a:hover {
+  color: white;
+  background-color: #4495E1;
+}
+
+
+@media only screen and (max-height: 420px) and (min-width: 479px) {
+  .section-header {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .about h4 {
+    font-size: 12px;
+    color: #6E6E6E;
+    padding: 0 5px;
+  }
+
+
+  .member-info h2 {
+    font-size: 13px;
+    line-height: 2px;
+    padding-bottom: 5px;
+  }
+  .member-info h3 {
+    line-height: 5px;
+    font-size: 9px;
+  }
+  .member-info h4 {
+    font-size: 8px;
+    padding: 0 7px;
+  }
+  .member-info .fa-lg {
+    font-size: 13px;
+    color: black;
+  }
+
+
+  .volunteer-info>h2 {
+    font-size: 13px;
+  }
+  .volunteer-info>h4 {
+    font-size: 10px;
+  }
+
+}
+
+/* breakpoint mix-width:992px for banner; */
+@media only screen and (min-width: 992px) {
+
+  .member-info h2 {
+    font-size: 22px;
+    padding: 0 .2vw;
+    line-height: 10px;
+  }
+  .member-info h3 {
+    font-size: 15px;
+  }
+  .member-info h4 {
+    font-size: 14px;
+    padding: 1vh 1em;
+  }
+  .member-info .fa-lg {
+    font-size: 20px;
+    color: black;
+  }
+  .volunteer-info>h2 {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .volunteer-info>h4 {
+    font-size: 13px;
+  }
 }

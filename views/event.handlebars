@@ -48,7 +48,6 @@ at the press of the register button -->
 </div>
 
 <div class="bg-proj parallax-window">
-    <!--style="background-image: url(/get-image/{{event.backgroundKey}});"-->
     <img src="/get-image/{{event.backgroundKey}}" style="display:none;width:100%;visibility:hidden;" />
     <!--div style="flex:1">
     </div-->
@@ -66,12 +65,8 @@ at the press of the register button -->
             $('#RegisterForm').serialize(),
             function (data, status, xhr) {
                 console.log("got a response!@");
-                $("body").append(`<div class="alert alert-success alert-dismissible position-fixed w-100 text-center fade show" role="alert" style="top:65px">
-                    <strong>Success,</strong> Registration has been sent!
-                    <button type = "button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>`)
+
+                successAlert("<strong>Success,</strong> Registration has been sent!", 5);
             });
     });
 
@@ -96,12 +91,12 @@ at the press of the register button -->
 <div class="container-fluid bg-white">
     <div class="container" id="projectDescContainer">
         <div class="jumbotron" style="height:fit-content;">
-
-            <!--p id="description" class="lead">{{lang event.shortDescription res}}</p>
-        <div class="my-2"></div>
-        <hr class="mt-2 mb-4"-->
             <div id="EventDescription" style="border:0 !important;"></div>
-            <a data-toggle="modal" data-target="#RegisterModal" class="btn btn-secondary">{{lang "Sign up" res}}</a>
+
+            <div class="d-flex justify-content-center w-100">
+                <a data-toggle="modal" data-target="#RegisterModal" class="btn btn-secondary btn-lg">{{lang "Sign up" res}}</a>
+            </div>
+
             <hr class="mt-2 mb-4">
             <p id="description" class="lead">{{lang event.location res}}</p>
         </div>
@@ -119,8 +114,6 @@ at the press of the register button -->
 
 <script>
     var lockedNavbar = 1;
-
-    //$(".navbar").css("background-color","rgb(246, 246, 246)");
 
     var quill = new Quill("#EventDescription", {
         modules: {

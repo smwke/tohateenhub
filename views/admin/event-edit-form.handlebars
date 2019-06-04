@@ -250,7 +250,7 @@
 
     const toolbarOptions = [
         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-        ['blockquote', 'code-block'],
+        ['link','blockquote', 'code-block'],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }],
         [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
         [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
@@ -322,7 +322,7 @@
         }
 
         ops.forEach((op, index) => {
-            if (ops[index].insert != "↵") {
+            if (ops[index].insert != "↵" && !ops[index].insert.image) {
                 translate(op.insert, { from: from, to: to }).then((a) => {
                     ops[index].insert = a;
                     if (index == ops.length - 1)

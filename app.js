@@ -4,6 +4,9 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const methodOverride = require("method-override");
 
+const nodemailer = require('nodemailer');
+const bcrypt = require("bcryptjs");
+
 const fs = require("fs");
 
 const aws = require('aws-sdk');
@@ -16,6 +19,8 @@ const s3 = new aws.S3({
     secretAccessKey: "b4f47174fdebc9059b42cee9940389640300be22",
     endpoint: 'http://rest.s3for.me'
 });
+
+const siteName = "92.115.252.247:4200"
 
 // Localization
 const i18n = require("i18n");
@@ -30,22 +35,23 @@ const flash = require("connect-flash");
 
 // MongoDB database manager
 const mongoose = require("mongoose");
-
+mongoose.set('useCreateIndex', true)
 // Connect to database
+/*
 mongoose.connect("mongodb://dorin:goodpass123@ds135726.mlab.com:35726/tohateenhub", {
     useNewUrlParser: true
 }, (err) => {
     if (err) throw err;
     console.log("MongoDB connected...");
 });
+*/
 
-/*
 mongoose.connect("mongodb://localhost:27017/tohateenhub", {
     useNewUrlParser: true
 }, (err) => {
     if (err) throw err;
     console.log("MongoDB connected...");
-})*/
+})
 
 // Set Storage Engine
 const storage = multers3({
@@ -120,6 +126,21 @@ const News = mongoose.model("news");
 // Load Event Registration Model
 require("./models/Registration");
 const Registration = mongoose.model("registrations");
+
+// Load Course Model
+require("./models/Course");
+const Course = mongoose.model("courses");
+
+// NodeMailer config
+let transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        user: 'cascavaldorin@gmail.com',
+        pass: 'dorin_284692'
+    }
+});
 
 /*      Load routes     */
 const admin = require("./routes/admin");
@@ -214,18 +235,13 @@ app.get("/", (req, res) => {
     }).sort({ 'date': -1 }).limit(components_to_load_on_main_page);
 });
 
-// Courses route
-app.get("/courses",(req,res)=>{
-    res.render("courses");
-});
-
 // Contacts route
-app.get("/contacts",(req,res)=>{
+app.get("/contacts", (req, res) => {
     res.render("contacts");
 });
 
 // about us route
-app.get("/about-us",(req,res)=>{
+app.get("/about-us", (req, res) => {
     res.render("aboutUs");
 });
 
@@ -250,7 +266,7 @@ app.get("/get-image/:id", (req, res) => {
         }
     });
     */
-    
+
     s3.getObject({ Bucket: "tohateenhub/images/", Key: req.params.id }, (err, data) => {
         if (err instanceof multer.MulterError) {
             console.log(err);
@@ -264,7 +280,7 @@ app.get("/get-image/:id", (req, res) => {
             }
         }
     });
-    
+
 });
 
 // How many events/ news should be loaded from the database upon accessing the full list?
@@ -306,7 +322,7 @@ app.get("/get-news/:page/:limit", (req, res) => {
                     "OCT",
                     "NOV",
                     "DEC"
-                  ];
+                ];
 
                 let result = []
                 let buffer;
@@ -363,7 +379,6 @@ app.get("/news/:id", (req, res) => {
 });
 //#endregion
 
-
 //#region [ rgba(255,255,255,0.05) ] Events routes
 // All events list
 app.get("/events", (req, res) => {
@@ -375,24 +390,60 @@ app.get("/events", (req, res) => {
 
 });
 
+app.get("/confirm-event/:token", (req, res) => {
+    Registration.findOne({ token: req.params.token }, (err, data) => {
+        if (err) console.log(err);
+        else {
+            if (data) {
+                Registration.updateOne({ _id: data._id }, { confirmed: true, expireAt: null }, (err, raw) => {
+                    if (err) console.log(err);
+                    else {
+                        req.flash("success_msg", "Registration complete!");
+                        res.redirect("/");
+                    }
+                });
+            } else {
+                req.flash("error_msg", "Registration not found");
+                res.redirect("/");
+            }
+        }
+    })
+});
+
 // Event Register modal form POST
-app.post("/events/register", (req,res)=>{
-    console.log(req.body.name);
-    console.log(req.body.email);
-    console.log(req.body.eventName);
-    console.log(req.body.eventId);
-    // Save registration to MongoDB
-    new Registration({
-        name: req.body.name,
-        email: req.body.email,
-        phoneNumber: req.body.phone,
-        eventName: req.body.eventName,
-        eventId: req.body.eventId
-    }).save().then(data=>{
-        req.flash("success_msg","Registration submitted!");
-        res.status(200).json("Registration sent!");
-    });
-    
+app.post("/events/register", (req, res) => {
+    bcrypt.hash(Date.now().toString(), 1, (err, hash) => {
+        if (err) console.log(err);
+        else {
+            hash = hash.replace(/[\/?$]/g, "");
+            // Save registration to MongoDB
+            new Registration({
+                name: req.body.name,
+                email: req.body.email,
+                phoneNumber: req.body.phone,
+                eventName: req.body.eventName,
+                eventId: req.body.eventId,
+                token: hash
+            }).save().then(data => {
+                // setup email data
+                let mailOptions = {
+                    from: "Dorin",
+                    to: req.body.email,
+                    subject: "TohaTeen Event Registration",
+                    text: `Hello, please confirm your registration of ${req.body.eventName}`,
+                    html: `<h1>Hello, please confirm your registration of <b>${req.body.eventName}</b></h1><a href="http://${siteName}/confirm-event/${hash}">Confirm</a>`
+                }
+
+                transporter.sendMail(mailOptions, (err, info) => {
+                    if (err) console.log(err);
+                    else {
+                        res.status(200).json("Please confirm your registration at " + req.body.email);
+                    }
+                });
+            });
+
+        }
+    })
 });
 
 // Load another :limit number of events based on the current :page
@@ -420,7 +471,7 @@ app.get("/get-events/:page/:limit", (req, res) => {
                     "OCT",
                     "NOV",
                     "DEC"
-                  ];
+                ];
 
                 let result = [];
                 let buffer;
@@ -476,6 +527,46 @@ app.get("/event/:id", (req, res) => {
 
 });
 //#endregion
+
+//#region [ rgba(255,255,255,0.05) ] Courses routes
+
+// Specific Course description
+app.get("/courses", (req, res) => {
+    Course.find({}, (err, data) => {
+        if (err) console.log(err);
+        else {
+            res.render("allCourses", { courses: data });
+        }
+    }).sort({ 'date': -1 }).limit(components_to_load);
+});
+app.get("/course/:id", (req, res) => {
+    Course.findById(req.params.id, (err, data) => {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            if (data) {
+                let course = {
+                    title: data.title,
+                    shortDescription: data.shortDescription,
+                    backgroundKey: data.backgroundKey,
+                    thumbnailKey: data.thumbnailKey,
+                    id: data._id
+                }
+                switch (res.getLocale()) {
+                    case "en": { course.description = data.descriptionEn; } break;
+                    case "ro": { course.description = data.descriptionRo; } break;
+                    case "ru": { course.description = data.descriptionRu; } break;
+                }
+                res.render("course", { course: course });
+            } else {
+                res.render("course");
+            }
+        }
+    });
+
+});
+//endregion
 
 // Start server
 app.listen(port, () => {

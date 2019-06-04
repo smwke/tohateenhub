@@ -5,6 +5,9 @@ module.exports = {
     }
     return options.inverse(this);
   },
+  even: function(a){
+    return a%2 == 0;
+  },
   lang: function (value, res) {
     return res.__(value);
   },

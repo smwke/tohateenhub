@@ -1,3 +1,4 @@
+<h1 class="mx-2 my-2">Showing confirmed event registrations</h1>
 <!-- MDBootstrap Datatables  -->
 <script type="text/javascript" src="/js/addons/datatables.min.js"></script>
 <div class="p-5">
@@ -41,27 +42,7 @@
         $.post(`/admin/registrations/delete/${id}?_method=DELETE`, { name: name }, (data, status, query) => {
             console.log("Removed " + data);
             $(`#${id}`).remove();
-
-            let alert = document.createElement("div");
-            alert.classList = "alert alert-success alert-dismissible position-fixed text-center fade show";
-            alert.setAttribute("role", "alert");
-            alert.setAttribute("style", "top:65px;left:50%;transform: translateX(-50%);");
-            alert.innerHTML = `<strong>${data}</strong> registration has been removed!
-                    <button type = "button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>`;
-            $("body").append(alert);
-
-            setTimeout(() => {
-                $(alert).remove();
-            }, 2000);
-            /*
-            $("body").append(`<div class="alert alert-success alert-dismissible position-fixed text-center fade show" role="alert" style="top:65px;margin:0 auto;">
-                    <strong>${data}</strong> registration has been removed!
-                    <button type = "button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>`);*/
-
+            successAlert(`<strong>${data}</strong> registration has been removed!`, 3)
         })
     }
 

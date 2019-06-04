@@ -1,0 +1,48 @@
+<link href="/css/courses.css" rel="stylesheet">
+<div class="container pt-3">
+	<div class="d-flex">
+		<h1 class="top-header">{{lang "Courses" res}}</h1>
+	</div>
+	{{#each courses}}
+	{{#ifeq (even @index) true}}
+	<div class="row my-4">
+		<div class="col-lg-4">
+			<figure>
+				<img src="/get-image/{{thumbnailKey}}">
+			</figure>
+		</div>
+		<div class="col-lg-8 text-left my-auto">
+			<div class="header">
+				<a style="font-size:35px;" href="/course/{{_id}}">{{lang title ../res}}</a>
+			</div>
+			<div class="description">{{lang shortDescription ../res}}
+			</div>
+			<a class="learnmore" href="/course/{{_id}}">learn more</a>
+		</div>
+	</div>
+	{{else}}
+	<div class="row my-4">
+		<div class="col-lg-4 order-lg-12">
+			<figure>
+				<img src="/get-image/{{thumbnailKey}}">
+			</figure>
+		</div>
+		<div class="col-lg-8 text-lg-right my-auto">
+			<div class="header">
+				<a style="font-size:35px;" href="/course/{{_id}}">{{lang title ../res}}</a>
+			</div>
+			<div class="description">{{lang shortDescription ../res}}
+			</div>
+			<a class="learnmore" href="/course/{{_id}}">learn more</a>
+		</div>
+	</div>
+	{{/ifeq}}
+	{{/each}}
+</div>
+
+<script>
+	var lockedNavbar = 1;
+
+	$(".navbar").css("transition", "none");
+	$("#scrolledNavbar").toggleClass("scrolled-nav", true);
+</script>

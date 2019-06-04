@@ -1,8 +1,8 @@
 <div class="container pt-5">
 
-    <h1> Create News! </h1>
+    <h1> Edit "{{course.title}}"</h1>
 
-    <form action="/admin/news/upload" method="POST" id="projectSubmitForm" enctype="multipart/form-data">
+    <form action="/admin/course/edit?_method=PUT" method="POST" id="projectSubmitForm" enctype="multipart/form-data">
         <!--Title INPUT-->
         <div class="form-group border border-light p-3">
             <ul class="nav nav-tabs" role="tablist">
@@ -21,17 +21,19 @@
             </ul>
             <div class="tab-content pt-2">
                 <div class="tab-pane fade show active" id="en" role="tabpanel" aria-labelledby="en-tab">
-                    <label for="title-en">News headline</label>
-                    <input name="titleEn" type="text" class="form-control" id="title-en" placeholder="News" required>
+                    <label for="title-en">Course name</label>
+                    <input value="{{langSpec course.title "en" res}}" name="titleEn" type="text" class="form-control"
+                        id="title-en" placeholder="Course">
                 </div>
                 <div class="tab-pane fade" id="ro" role="tabpanel" aria-labelledby="ro-tab">
-                    <label for="title-ro">Titlul noutății</label>
-                    <input name="titleRo" type="text" class="form-control" id="title-ro" placeholder="Noutate"
-                        required>
+                    <label for="title-ro">Denumirea evenimentului</label>
+                    <input value="{{langSpec course.title "ro" res}}" name="titleRo" type="text" class="form-control"
+                        id="title-ro" placeholder="Curs">
                 </div>
                 <div class="tab-pane fade" id="ru" role="tabpanel" aria-labelledby="ru-tab">
-                    <label for="title-ru">Название Новости</label>
-                    <input name="titleRu" type="text" class="form-control" id="title-ru" placeholder="Новость" required>
+                    <label for="title-ru">Название события</label>
+                    <input value="{{langSpec course.title "ru" res}}" name="titleRu" type="text" class="form-control"
+                        id="title-ru" placeholder="Курс">
                 </div>
             </div>
         </div>
@@ -39,31 +41,34 @@
         <div class="form-group border border-light p-3">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="en-tab" data-toggle="tab" href="#en-tab-shortDescription" role="tab" aria-controls="en"
-                        aria-selected="true">En</a>
+                    <a class="nav-link active" id="en-tab" data-toggle="tab" href="#en-tab-shortDescription" role="tab"
+                        aria-controls="en" aria-selected="true">En</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="ro-tab" data-toggle="tab" href="#ro-tab-shortDescription" role="tab" aria-controls="ro"
-                        aria-selected="false">Ro</a>
+                    <a class="nav-link" id="ro-tab" data-toggle="tab" href="#ro-tab-shortDescription" role="tab"
+                        aria-controls="ro" aria-selected="false">Ro</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="ru-tab" data-toggle="tab" href="#ru-tab-shortDescription" role="tab" aria-controls="ru"
-                        aria-selected="false">Ru</a>
+                    <a class="nav-link" id="ru-tab" data-toggle="tab" href="#ru-tab-shortDescription" role="tab"
+                        aria-controls="ru" aria-selected="false">Ru</a>
                 </li>
             </ul>
             <div class="tab-content pt-2">
-                <div class="tab-pane fade show active" id="en-tab-shortDescription" role="tabpanel" aria-labelledby="en-tab">
-                    <label for="title-en">News short description</label>
-                    <input name="shortDescriptionEn" type="text" class="form-control" id="title-en" placeholder="News" required>
-                </div>
-                <div class="tab-pane fade" id="ro-tab-shortDescription" role="tabpanel" aria-labelledby="ro-tab">
-                    <label for="title-ro">Descriere scurtă a noutății</label>
-                    <input name="shortDescriptionRo" type="text" class="form-control" id="title-ro" placeholder="Noutate"
+                <div class="tab-pane fade show active" id="en-tab-shortDescription" role="tabpanel"
+                    aria-labelledby="en-tab">
+                    <label for="title-en">Course short description</label>
+                    <input value="{{langSpec course.shortDescription "en" res}}" name="shortDescriptionEn" type="text" class="form-control" id="title-en" placeholder="Event"
                         required>
                 </div>
+                <div class="tab-pane fade" id="ro-tab-shortDescription" role="tabpanel" aria-labelledby="ro-tab">
+                    <label for="title-ro">Descriere scurtă a evenimentului</label>
+                    <input value="{{langSpec course.shortDescription "ro" res}}" name="shortDescriptionRo" type="text" class="form-control" id="title-ro"
+                        placeholder="Curs" required>
+                </div>
                 <div class="tab-pane fade" id="ru-tab-shortDescription" role="tabpanel" aria-labelledby="ru-tab">
-                    <label for="title-ru">Краткое описание новостей</label>
-                    <input name="shortDescriptionRu" type="text" class="form-control" id="title-ru" placeholder="Новость" required>
+                    <label for="title-ru">Краткое описание события</label>
+                    <input value="{{langSpec course.shortDescription "ru" res}}" name="shortDescriptionRu" type="text" class="form-control" id="title-ru"
+                        placeholder="Курс" required>
                 </div>
             </div>
         </div>
@@ -161,35 +166,35 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <label for="date">Date of News, leave blank for today</label>
-            <input type="date" name="date" id="date">
-        </div>
 
         <div class="form-group">
-            <label for="background">News Background image</label>
-            <input name="background" type="file" class="form-control-file" id="background">
+            <label for="background">Override Project Background image</label> <input name="background" type="file"
+                class="form-control-file" id="background">
         </div>
         <div class="form-group">
-            <label for="thumbnail">News thumbnail image</label>
+            <label for="thumbnail">Override Project thumbnail image</label>
             <input name="thumbnail" type="file" class="form-control-file" id="thumbnail">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <input type="text" name="id" value="{{course._id}}" style="display:none">
+        <a href="/admin/courses" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary">Save</button>
+
     </form>
 
 
 </div>
-
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 
 <!-- Include the Quill library -->
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 
-<!-- Include translation library -->
-<script src="/js/translate.js"></script>
+<script src="/js/translate.js">
+</script>
+
 <!-- Initialize Quill editor -->
 <script>
+
     translate.engine = 'yandex';
     translate.key = 'trnsl.1.1.20190421T151403Z.c73e985599ec6adf.f313cfda0d0ec27636389428c8eed9deabd54636';
 
@@ -235,11 +240,21 @@
         theme: 'snow'  // or 'bubble'
     });
 
+
+
+    const contentsEn = {{{ course.descriptionEn }}}
+    quillEn.setContents(contentsEn.ops);
+
+    const contentsRo = {{{ course.descriptionRo }}}
+    quillRo.setContents(contentsRo.ops);
+
+    const contentsRu = {{{ course.descriptionRu }}}
+    quillRu.setContents(contentsRu.ops);
+
     $("#projectSubmitForm").on("submit", () => {
         $("#hiddenArea-en").val(JSON.stringify(quillEn.getContents()))
         $("#hiddenArea-ro").val(JSON.stringify(quillRo.getContents()))
         $("#hiddenArea-ru").val(JSON.stringify(quillRu.getContents()))
-
     });
 
     function addTranslateToDescription(from, to) {
@@ -257,7 +272,7 @@
         }
 
         ops.forEach((op, index) => {
-            if (ops[index].insert != "↵") {
+            if (ops[index].insert != "↵" && !ops[index].insert.image) {
                 translate(op.insert, { from: from, to: to }).then((a) => {
                     ops[index].insert = a;
                     if (index == ops.length - 1)

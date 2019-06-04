@@ -13,6 +13,8 @@ const updateJsonLocaleFields = require("../helpers/functions").updateJsonLocaleF
 
 const router = express.Router();
 
+//#region [rgba(255,255,255,0.06)] MONGOOSE MODELS
+
 // Load User Model
 require("../models/User");
 const User = mongoose.model("users");
@@ -28,6 +30,12 @@ const News = mongoose.model("news");
 // Load Registrations model
 require("../models/Registration");
 const Registration = mongoose.model("registrations");
+
+// Load Courses model
+require("../models/Course");
+const Course = mongoose.model("courses");
+
+//endregion
 
 // Login Page
 router.get('/login', (req, res) => {
@@ -638,10 +646,232 @@ router.delete('/news/delete/:id', ensureAuthenticated, (req, res) => {
 
 //#endregion
 
+//#region [rgba(0, 212, 255,0.05)] COURSES CRUD
+
+// Courses list page
+router.get("/courses", ensureAuthenticated, (req, res) => {
+    Course.find({}, (err, data) => {
+        if (err) console.log(err);
+        else {
+            res.render("admin/courses", {
+                layout: "dashboard",
+                courses: data
+            });
+        }
+    });
+});
+
+// New Course Form page
+router.get("/course/new", ensureAuthenticated, (req, res) => {
+    res.render("admin/courses-add-form", {
+        layout: "dashboard"
+    })
+});
+
+// Submit Course POST
+router.post("/course/upload", ensureAuthenticated, (req, res) => {
+
+    //Upload the images to s3 webserver
+    ImageUpload(req, res, (err) => {
+        if (err) {
+            req.flash('error_msg', 'There has been an ' + err);
+            res.redirect('/admin/courses');
+        } else {
+            console.log("Uploaded images!");
+            let bgkey, thumbkey;
+            //Save the project data to mongoDB
+            if (req.files.background) {
+                bgkey = req.files.background[0].key;
+            } else bgkey = "default.jpg";
+
+            if (req.files.thumbnail) {
+                thumbkey = req.files.thumbnail[0].key;
+            } else thumbkey = "default.jpg";
+
+            // Edit En locale json file
+            updateJsonLocaleFields("en", {
+                [req.body.titleEn]: req.body.titleEn,
+                [req.body.shortDescriptionEn]: req.body.shortDescriptionEn
+            });
+
+            // Edit Ro locale json file
+            updateJsonLocaleFields("ro", {
+                [req.body.titleEn]: req.body.titleRo,
+                [req.body.shortDescriptionEn]: req.body.shortDescriptionRo
+            });
+
+            // Edit Ru locale json file
+            updateJsonLocaleFields("ru", {
+                [req.body.titleEn]: req.body.titleRu,
+                [req.body.shortDescriptionEn]: req.body.shortDescriptionRu
+            });
+
+            // Upload to MongoDB
+            new Course({
+                title: req.body.titleEn,
+                shortDescription: req.body.shortDescriptionEn,
+                descriptionEn: req.body.descriptionEn,
+                descriptionRo: req.body.descriptionRo,
+                descriptionRu: req.body.descriptionRu,
+                backgroundKey: bgkey,
+                thumbnailKey: thumbkey,
+            }).save()
+                .then(data => {
+                    req.flash('success_msg', 'News added!');
+                    res.redirect('/admin/courses');
+                });
+        }
+    });
+});
+
+// Edit Course form page
+router.get("/course/edit/:id", ensureAuthenticated, (req, res) => {
+    Course.findById(req.params.id, (err, data) => {
+        if (err) console.log(err);
+        else {
+            res.render("admin/course-edit-form", {
+                layout: 'dashboard',
+                course: data
+            })
+        }
+    });
+});
+
+// Edit Course PUT
+router.put('/course/edit', ensureAuthenticated, (req, res) => {
+    ImageUpload(req, res, (err) => {
+        if (err instanceof multer.MulterError) {
+            console.log(err);
+        }
+        Course.findById(req.body.id, (err, result) => {
+            if (err) console.log(err);
+            else {
+                let newCourse = {
+                    title: req.body.titleEn,
+                    shortDescription: req.body.shortDescriptionEn,
+                    descriptionEn: req.body.descriptionEn,
+                    descriptionRo: req.body.descriptionRo,
+                    descriptionRu: req.body.descriptionRu
+                }
+                // Edit En locale json file
+                updateJsonLocaleFields("en", {
+                    [req.body.titleEn]: req.body.titleEn,
+                    [req.body.shortDescriptionEn]: req.body.shortDescriptionEn
+                });
+
+                // Edit Ro locale json file
+                updateJsonLocaleFields("ro", {
+                    [req.body.titleEn]: req.body.titleRo,
+                    [req.body.shortDescriptionEn]: req.body.shortDescriptionRo
+                });
+
+                // Edit Ru locale json file
+                updateJsonLocaleFields("ru", {
+                    [req.body.titleEn]: req.body.titleRu,
+                    [req.body.shortDescriptionEn]: req.body.shortDescriptionRu
+                });
+
+                // If the background image is overriden
+                if (req.files.background) {
+                    newCourse.backgroundKey = req.files.background[0].key;
+                    s3.deleteObjects({
+                        Bucket: "tohateenhub",
+                        Delete: {
+                            Objects: [
+                                {
+                                    Key: ("images//" + result.backgroundKey).toString()
+                                }
+                            ],
+                        }
+                    }, (err, data) => {
+                        if (err) {
+                            console.log(err);
+                            req.flash("error_msg", err.stack);
+                        } else {
+                            req.flash("success_msg", "Background deleted successfully");
+                        }
+                    });
+                }
+
+                // If the thumbnail image is overriden
+                if (req.files.thumbnail) {
+                    newCourse.thumbnailKey = req.files.thumbnail[0].key;
+                    s3.deleteObjects({
+                        Bucket: "tohateenhub",
+                        Delete: {
+                            Objects: [
+                                {
+                                    Key: ("images//" + result.thumbnailKey).toString()
+                                }
+                            ],
+                        }
+                    }, (err, data) => {
+                        if (err) {
+                            console.log(err);
+                            req.flash("error_msg", err.stack);
+                        } else {
+                            req.flash("success_msg", "Thumbnail deleted successfully");
+                        }
+                    });
+                }
+
+                // Put the modified object on MongoDB
+                Course.updateOne({ _id: result._id }, newCourse, (err, raw) => {
+                    if (err) console.log(err);
+                    else {
+                        req.flash("success_msg", "Course updated successfully!")
+                        res.redirect('/admin/courses');
+                    }
+                })
+            }
+        });
+    });
+})
+
+
+// Delete Course
+router.delete('/course/delete/:id', ensureAuthenticated, (req, res) => {
+
+    Course.findByIdAndDelete(req.params.id, (err, result) => {
+        if (err) {
+            console.log(err);
+            req.flash("error_msg", err);
+        } else {
+            req.flash("success_msg", "Data removed from MongoDB.");
+        }
+        s3.deleteObjects({
+            Bucket: "tohateenhub",
+            Delete: {
+                Objects: [
+                    {
+                        Key: ("images//" + result.backgroundKey).toString()
+                    },
+                    {
+                        Key: ("images//" + result.thumbnailKey).toString()
+                    }
+                ],
+            }
+        }, (err, data) => {
+            if (err) {
+                console.log(err);
+                req.flash("error_msg", err.stack);
+            } else {
+                req.flash("success_msg", "Images deleted from s3.");
+            }
+            res.redirect("/admin/courses");
+        });
+
+
+    });
+});
+
+//endregion
+
 //#region [rgba(255,255,255,0.05)] EVENT REGISTRATIONS CRUD
+
 // Registrations list page
 router.get("/registrations", ensureAuthenticated, (req, res) => {
-    Registration.find({}, (err, result) => {
+    Registration.find({ confirmed: true }, (err, result) => {
         if (err) console.log(err);
         else {
             res.render("admin/registrations", {
@@ -651,6 +881,7 @@ router.get("/registrations", ensureAuthenticated, (req, res) => {
         }
     })
 });
+
 router.delete("/registrations/delete/:id", ensureAuthenticated, (req, res) => {
     Registration.findOneAndDelete({ _id: req.params.id }, (err, result) => {
         if (err) console.log(err);
@@ -665,6 +896,7 @@ router.delete("/registrations/delete/:id", ensureAuthenticated, (req, res) => {
         }
     })*/
 });
+
 //endregion
 
 module.exports = router;

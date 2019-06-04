@@ -1,48 +1,43 @@
-<main style="min-height:84vh;">
-    <div class="container contact-form col-md-8">
-        <h1 class="text-center text-monospace text-info">-LET'S GET IN TOUCH.</h1>
-        <hr class="col-md-10">
+<link rel="stylesheet" href="/css/contact.css">
+<main id="contactsDiv">
+	<div class="container contact-form">
+		<h1 class="text-center text-monospace text-info">-LET'S GET IN TOUCH.</h1>
+		<hr class="col-10">
 
-        <div class="row">
+		<div class="row">
 
-            <div class="col-md-6">
-                <p class="text-center text-monospace lead mb-1 mt-4"><img class="align-self-center mr-2"
-                        src="/img/location.png">Our Address</p>
-                <p class="text-center text-secondary pb-4">Pacii 11 Street, Tohatin, Chisinau</p>
-                <p class="text-center text-monospace lead mb-1"><img class="align-self-center mr-2"
-                        src="/img/phone.png">Let's Talk</p>
-                <p class="text-center text-primary mb-0">+ 373 69 531 061</p>
-                <p class="text-center text-primary pb-4">+ 373 69 787 929</p>
-                <p class="text-center text-monospace lead mb-1"><img class="align-self-center mr-2"
-                        src="/img/mail.png">General Support</p>
-                <p class="text-center text-primary pb-4">igor.ciurea@gmail.com</p>
-            </div>
+			<div class="col-md-6">
+				<p class="text-center text-monospace text-light font-weight-bold lead mb-1 mt-4"><img class="align-self-center mr-2" src="/img/location.png">Our Address</p>
+				<p class="text-center text-light pb-4">Pacii 11 Street, Tohatin, Chisinau</p>
+				<p class="text-center text-monospace text-light font-weight-bold lead mb-1"><img class="align-self-center mr-2" src="/img/phone.png">Let's Talk</p>
+				<p class="text-center text-light mb-0">+ 373 69 531 061</p>
+				<p class="text-center text-light pb-4">+ 373 69 787 929</p>
+				<p class="text-center text-monospace text-light font-weight-bold lead mb-1"><img class="align-self-center mr-2" src="/img/mail.png">General Support</p>
+				<p class="text-center text-light pb-4">igor.ciurea@gmail.com</p>		
+			</div> 
 
-            <div class="col-md-5">
-                <div class="form-group">
-                    <label class="text-monospace text-secondary">TELL US YOUR NAME</label>
-                    <input type="text" class="form-control" placeholder="Name Surname">
-                </div>
-                <div class="form-group">
-                    <label class="text-monospace text-secondary">ENTER YOUR EMAIL</label>
-                    <input type="text" class="form-control" placeholder="example@mail.com">
-                </div>
-                <div class="form-group">
-                    <label class="text-monospace text-secondary">WRITE US A MESSAGE</label>
-                    <textarea class="form-control" rows="5" placeholder="Message..."></textarea>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary btn-block font-weight-bold text-monospace">SUBMIT</button>
-                </div>
-            </div>
+			<div class="col-md-5">
+				<div class="form-group">
+					<label class="text-monospace text-light">{{lang "Your name" res}}</label>
+					<input type="text" class="form-control" placeholder="Name Surname">
+				</div>
+				<div class="form-group">
+						<label class="text-monospace text-light">{{lang "Your email" res}}</label>
+						<input type="text" class="form-control" placeholder="example@mail.com">
+				</div>
+				<div class="form-group">
+						<label class="text-monospace text-light">{{lang "Your message" res}}</label>
+						<textarea class="form-control" rows="5" placeholder="{{lang "Message" res}}"></textarea>
+				</div>
+				<div class="form-group">
+						<button class="btn btn-primary btn-block font-weight-bold text-monospace">{{lang "Submit" res}}</button>
+				</div>
+			</div>
 
-        </div>
-    </div>
+		</div>
+	</div>
 </main>
 
 <script>
     var lockedNavbar = 1;
-
-    $(".navbar").css("transition", "none");
-    $("#scrolledNavbar").toggleClass("scrolled-nav", true);
 </script>

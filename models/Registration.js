@@ -25,6 +25,18 @@ const RegistrationSchema = new Schema({
     date:{
         type: Date,
         default: Date.now()
+    },
+    confirmed:{
+        type: Boolean,
+        default: false
+    },
+    token:{
+        type:String,
+        required: true
+    },
+    expireAt:{
+        type: Date,
+        default: Date.now() + 60000*30,
     }
 });
 

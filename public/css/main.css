@@ -13,6 +13,11 @@ ul, li {
 	padding: 0;
 }
 
+.row{
+	margin-left:0;
+	margin-right:0;
+}
+
 a {
 	text-decoration: none;
 }
@@ -573,7 +578,7 @@ banner, */
 	.scrolled-nav .navbar {
 		background-color: rgba(246, 246, 246, 1);
 		padding-top: .5em;
-		box-shadow: 0 1px 15px grey;
+		box-shadow: 0 1px 15px rgba(0, 0, 0, .25);
 		transition: .5s;
 	}
 	.navbar-brand img {

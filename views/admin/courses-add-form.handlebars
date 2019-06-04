@@ -1,8 +1,8 @@
 <div class="container pt-5">
 
-    <h1> Create News! </h1>
+    <h1> Add a new Course! </h1>
 
-    <form action="/admin/news/upload" method="POST" id="projectSubmitForm" enctype="multipart/form-data">
+    <form action="/admin/course/upload" method="POST" id="projectSubmitForm" enctype="multipart/form-data">
         <!--Title INPUT-->
         <div class="form-group border border-light p-3">
             <ul class="nav nav-tabs" role="tablist">
@@ -21,17 +21,17 @@
             </ul>
             <div class="tab-content pt-2">
                 <div class="tab-pane fade show active" id="en" role="tabpanel" aria-labelledby="en-tab">
-                    <label for="title-en">News headline</label>
-                    <input name="titleEn" type="text" class="form-control" id="title-en" placeholder="News" required>
+                    <label for="title-en">Course name</label>
+                    <input name="titleEn" type="text" class="form-control" id="title-en" placeholder="Course" required>
                 </div>
                 <div class="tab-pane fade" id="ro" role="tabpanel" aria-labelledby="ro-tab">
-                    <label for="title-ro">Titlul noutății</label>
-                    <input name="titleRo" type="text" class="form-control" id="title-ro" placeholder="Noutate"
+                    <label for="title-ro">Denumirea Cursului</label>
+                    <input name="titleRo" type="text" class="form-control" id="title-ro" placeholder="Curs"
                         required>
                 </div>
                 <div class="tab-pane fade" id="ru" role="tabpanel" aria-labelledby="ru-tab">
-                    <label for="title-ru">Название Новости</label>
-                    <input name="titleRu" type="text" class="form-control" id="title-ru" placeholder="Новость" required>
+                    <label for="title-ru">Название курса</label>
+                    <input name="titleRu" type="text" class="form-control" id="title-ru" placeholder="Курс" required>
                 </div>
             </div>
         </div>
@@ -53,17 +53,17 @@
             </ul>
             <div class="tab-content pt-2">
                 <div class="tab-pane fade show active" id="en-tab-shortDescription" role="tabpanel" aria-labelledby="en-tab">
-                    <label for="title-en">News short description</label>
-                    <input name="shortDescriptionEn" type="text" class="form-control" id="title-en" placeholder="News" required>
+                    <label for="title-en">Course short description</label>
+                    <input name="shortDescriptionEn" type="text" class="form-control" id="title-en" placeholder="Course" required>
                 </div>
                 <div class="tab-pane fade" id="ro-tab-shortDescription" role="tabpanel" aria-labelledby="ro-tab">
-                    <label for="title-ro">Descriere scurtă a noutății</label>
-                    <input name="shortDescriptionRo" type="text" class="form-control" id="title-ro" placeholder="Noutate"
+                    <label for="title-ro">Descriere scurtă a Cursului</label>
+                    <input name="shortDescriptionRo" type="text" class="form-control" id="title-ro" placeholder="Curs"
                         required>
                 </div>
                 <div class="tab-pane fade" id="ru-tab-shortDescription" role="tabpanel" aria-labelledby="ru-tab">
-                    <label for="title-ru">Краткое описание новостей</label>
-                    <input name="shortDescriptionRu" type="text" class="form-control" id="title-ru" placeholder="Новость" required>
+                    <label for="title-ru">Краткое описание курса</label>
+                    <input name="shortDescriptionRu" type="text" class="form-control" id="title-ru" placeholder="Курс" required>
                 </div>
             </div>
         </div>
@@ -162,16 +162,11 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="date">Date of News, leave blank for today</label>
-            <input type="date" name="date" id="date">
-        </div>
-
-        <div class="form-group">
-            <label for="background">News Background image</label>
+            <label for="background">Course Background image</label>
             <input name="background" type="file" class="form-control-file" id="background">
         </div>
         <div class="form-group">
-            <label for="thumbnail">News thumbnail image</label>
+            <label for="thumbnail">Course thumbnail image</label>
             <input name="thumbnail" type="file" class="form-control-file" id="thumbnail">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
@@ -195,7 +190,7 @@
 
     const toolbarOptions = [
         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-        ['link','blockquote', 'code-block'],
+        ['link', 'blockquote', 'code-block'],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }],
         [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
         [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
@@ -239,7 +234,6 @@
         $("#hiddenArea-en").val(JSON.stringify(quillEn.getContents()))
         $("#hiddenArea-ro").val(JSON.stringify(quillRo.getContents()))
         $("#hiddenArea-ru").val(JSON.stringify(quillRu.getContents()))
-
     });
 
     function addTranslateToDescription(from, to) {
@@ -257,7 +251,7 @@
         }
 
         ops.forEach((op, index) => {
-            if (ops[index].insert != "↵") {
+            if (ops[index].insert != "↵" && !ops[index].insert.image) {
                 translate(op.insert, { from: from, to: to }).then((a) => {
                     ops[index].insert = a;
                     if (index == ops.length - 1)

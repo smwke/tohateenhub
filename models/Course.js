@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const CourseSchema = new Schema({
-    name: {
+    title: {
         type: String,
         required: true
     },
@@ -27,10 +27,6 @@ const CourseSchema = new Schema({
     thumbnailKey: {
         type: String,
         default: "thumbnail-1554469053905.jpg"
-    },
-    date: {
-        type: Date,
-        default: Date.now
-    },
+    }
 });
 mongoose.model('courses', CourseSchema);

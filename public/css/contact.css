@@ -4,3 +4,32 @@
   font-weight: 600;
   text-transform: uppercase;
 }
+
+body{
+  background-image: url("/img/bg.jpeg")
+}
+
+.contact-form{
+  border-radius: 20px;
+  background: rgba(32, 58, 88, .7);
+  color: white;
+  margin-top: 1vh;
+  padding: 20px;
+  box-shadow: 0 0 10px 1px rgba(70, 48, 67, .6);
+}
+
+.form-control{
+  border-radius: 10px;
+}
+
+main{
+  margin-top:120px;
+  min-height:84vh;
+}
+
+@media only screen and (max-width : 768px)
+{
+  main{
+    margin-top: 80px;
+  }
+}
