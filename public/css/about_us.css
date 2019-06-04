@@ -74,6 +74,7 @@ main{
 }
 .volunteer-img>img {
   width: 100%;
+  border-radius:50%;
 }
 .volunteer-info>h2 {
   font-size: 14px;
