@@ -1,7 +1,11 @@
 {
   "name": "tohateenhub",
   "version": "1.0.0",
-  "description": "",
+  "description": "site for tohateenhub",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smwke/tohateenhub.git"
+  },
   "main": "app.js",
   "scripts": {
     "start": "node app",
@@ -12,7 +16,7 @@
       "default": "rgba(0, 212, 255,0.05)"
     }
   },
-  "author": "",
+  "author": "Dorin",
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.437.0",

@@ -16,23 +16,23 @@
 				<p class="text-center text-light pb-4">igor.ciurea@gmail.com</p>		
 			</div> 
 
-			<div class="col-md-5">
+			<form action="/send-message" method="POST" class="col-md-5">
 				<div class="form-group">
 					<label class="text-monospace text-light">{{lang "Your name" res}}</label>
-					<input type="text" class="form-control" placeholder="Name Surname">
+					<input type="text" name="senderName" class="form-control" placeholder="Name Surname" required>
 				</div>
 				<div class="form-group">
 						<label class="text-monospace text-light">{{lang "Your email" res}}</label>
-						<input type="text" class="form-control" placeholder="example@mail.com">
+						<input type="email" name="email" class="form-control" placeholder="example@mail.com" required>
 				</div>
 				<div class="form-group">
 						<label class="text-monospace text-light">{{lang "Your message" res}}</label>
-						<textarea class="form-control" rows="5" placeholder="{{lang "Message" res}}"></textarea>
+						<textarea class="form-control" name="message" rows="5" maxlength="500" placeholder="{{lang "Message" res}}" required></textarea >
 				</div>
 				<div class="form-group">
-						<button class="btn btn-primary btn-block font-weight-bold text-monospace">{{lang "Submit" res}}</button>
+						<button type="submit" class="btn btn-primary btn-block font-weight-bold text-monospace">{{lang "Submit" res}}</button>
 				</div>
-			</div>
+			</form>
 
 		</div>
 	</div>

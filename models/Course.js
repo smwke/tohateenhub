@@ -20,10 +20,6 @@ const CourseSchema = new Schema({
     descriptionRu: {
         type: {}
     },
-    backgroundKey: {
-        type: String,
-        default: "thumbnail-1554469053905.jpg"
-    },
     thumbnailKey: {
         type: String,
         default: "thumbnail-1554469053905.jpg"

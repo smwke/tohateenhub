@@ -168,11 +168,7 @@
         </div>
 
         <div class="form-group">
-            <label for="background">Override Project Background image</label> <input name="background" type="file"
-                class="form-control-file" id="background">
-        </div>
-        <div class="form-group">
-            <label for="thumbnail">Override Project thumbnail image</label>
+            <label for="thumbnail">Override Course thumbnail image</label>
             <input name="thumbnail" type="file" class="form-control-file" id="thumbnail">
         </div>
         <input type="text" name="id" value="{{course._id}}" style="display:none">
@@ -239,8 +235,6 @@
         placeholder: 'Описание',
         theme: 'snow'  // or 'bubble'
     });
-
-
 
     const contentsEn = {{{ course.descriptionEn }}}
     quillEn.setContents(contentsEn.ops);

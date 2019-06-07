@@ -64,6 +64,16 @@
                     <span>Courses</span></a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="/admin/courses/registrations">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Course Registrations</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/messages">
+                    <i class="fas fa-envelope"></i>
+                    <span>Messages</span></a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="/">
                     <i class="fas fa-fw fa-table"></i>
 
@@ -73,11 +83,11 @@
         <div class="w-100">
             {{> _errors}}
             {{> _msg}}
-
             {{{body}}}
         </div>
-
     </div>
+
+    <script src="/js/main.js"></script>
 
     <script>
         $("#sidebarToggle").on('click', () => {

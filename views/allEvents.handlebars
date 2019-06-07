@@ -3,16 +3,15 @@
 	<div class="postsContainer">
 		<div class="container" id="eventsContainer">
 			<div class="d-flex">
-				<h1 class="top-header">events</h1>
+				<h1 class="top-header">{{lang "Events" res}}</h1>
 			</div>
-
 			{{#each events}}
 			<div class="row my-4">
 				<div class="col-lg-2">
 					<figure>
 						<a href="/event/{{id}}">
 							<div class="overlay">
-								<h2>read more</h2>
+								<h2>{{lang "Read more" res}}</h2>
 							</div>
 							<img class="news-img" src="/get-image/{{thumbnailKey}}">
 						</a>
@@ -24,14 +23,14 @@
 						<h6>{{getDateDate date}} {{getDateMonth date}}, {{this.startTime}}-{{this.endTime}}</h6>
 					</div>
 					<div class="description">{{lang this.shortDescription ../res}}</div>
-					<a class="readmore" href="/event/{{id}}">read more »</a>
+					<a class="readmore" href="/event/{{id}}">{{lang "Read more" res}} »</a>
 				</div>
 			</div>
 			{{/each}}
 
 		</div>
 		<div class="container">
-			<a href="#" id="loadmMoreButton" class="btn text-white" style="background-color:#4495E1">Load more</a>
+			<a href="#" id="loadmMoreButton" class="btn text-white" style="background-color:#4495E1">{{lang "Load more" res}}</a>
 		</div>
 	</div>
 </div>

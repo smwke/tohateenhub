@@ -64,9 +64,7 @@ at the press of the register button -->
         $.post('/events/register',
             $('#RegisterForm').serialize(),
             function (data, status, xhr) {
-                console.log("got a response!@");
-
-                successAlert("<strong>Success,</strong> Registration has been sent!", 5);
+                successAlert(data,8);
             });
     });
 

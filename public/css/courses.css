@@ -1,3 +1,7 @@
+main .row {
+  padding: 15px 0;
+  background-color: white;
+}
 figure {
   position: relative;
   background-color: black;
@@ -8,9 +12,30 @@ figure>img {
   opacity: .8;
 }
 
+.top-header {
+  color: #00374B;
+  font-size: 25px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+
+
+.header>a {
+  color: #4A4A4A;
+  font-size: 27px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  transition: .15s all;
+}
+.header>a:hover {
+  color: #4495E1;
+}
+
 .description {
   color: #4A4A4A;
-  font-size: 15px;
+  font-size: 13px;
   margin-bottom: 10px;
 }
 

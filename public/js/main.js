@@ -32,3 +32,4 @@ function successAlert(message,timeout) {
     $(alert).remove();
   }, timeout * 1000);
 }
+

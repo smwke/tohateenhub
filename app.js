@@ -112,7 +112,7 @@ module.exports = {
 };
 
 /*      Initialize MongoDB Models       */
-// Load User model (usage in passport)
+// Load User Model (usage in passport)
 require("./models/User");
 
 // Load Event Model
@@ -130,6 +130,15 @@ const Registration = mongoose.model("registrations");
 // Load Course Model
 require("./models/Course");
 const Course = mongoose.model("courses");
+
+// Load Course Registration Model
+require("./models/CourseRegistration");
+const CourseRegistration = mongoose.model("courseRegistrations");
+
+// Load Message Model
+require("./models/Message");
+const Message = mongoose.model("messages");
+
 
 // NodeMailer config
 let transporter = nodemailer.createTransport({
@@ -228,8 +237,14 @@ app.get("/", (req, res) => {
         else {
             News.find({}, (err, news) => {
                 if (err) console.log(er);
-                else
-                    res.render("index", { events: events, news: news });
+                else {
+                    Course.find({}, (err, courses) => {
+                        if (err) console.log(err);
+                        else {
+                            res.render("index", { events: events, news: news, courses: courses });
+                        }
+                    });
+                }
             }).sort({ 'date': -1 }).limit(components_to_load_on_main_page);
         }
     }).sort({ 'date': -1 }).limit(components_to_load_on_main_page);
@@ -431,7 +446,15 @@ app.post("/events/register", (req, res) => {
                     to: req.body.email,
                     subject: "TohaTeen Event Registration",
                     text: `Hello, please confirm your registration of ${req.body.eventName}`,
-                    html: `<h1>Hello, please confirm your registration of <b>${req.body.eventName}</b></h1><a href="http://${siteName}/confirm-event/${hash}">Confirm</a>`
+                    html: `<div style="padding-left:20px;">
+                    <h2>Please confirm your registration of:</h2>
+                    <h1>${req.body.eventName}</h1>
+                    <ul>
+                        <li>Your name: ${req.body.name}</li>
+                        <li>Phone number: ${req.body.phone}</li>
+                    </ul>
+                    <a style="margin-left: 60px;" href="http://${siteName}/confirm-course/${hash}"><button style="font-size: 26px;height:50px;width:130px;">Confirm</button></a>
+                </div>`
                 }
 
                 transporter.sendMail(mailOptions, (err, info) => {
@@ -535,38 +558,113 @@ app.get("/courses", (req, res) => {
     Course.find({}, (err, data) => {
         if (err) console.log(err);
         else {
-            res.render("allCourses", { courses: data });
-        }
-    }).sort({ 'date': -1 }).limit(components_to_load);
-});
-app.get("/course/:id", (req, res) => {
-    Course.findById(req.params.id, (err, data) => {
-        if (err) {
-            console.log(err);
-        }
-        else {
-            if (data) {
-                let course = {
-                    title: data.title,
-                    shortDescription: data.shortDescription,
-                    backgroundKey: data.backgroundKey,
-                    thumbnailKey: data.thumbnailKey,
-                    id: data._id
+            let courses = [];
+            let buffer = {};
+
+            data.forEach((course) => {
+                buffer = {
+                    title: course.title,
+                    thumbnailKey: course.thumbnailKey,
+                    id: course._id.toString()
                 }
+
                 switch (res.getLocale()) {
-                    case "en": { course.description = data.descriptionEn; } break;
-                    case "ro": { course.description = data.descriptionRo; } break;
-                    case "ru": { course.description = data.descriptionRu; } break;
+                    case "en": { buffer.description = course.descriptionEn; } break;
+                    case "ro": { buffer.description = course.descriptionRo; } break;
+                    case "ru": { buffer.description = course.descriptionRu; } break;
                 }
-                res.render("course", { course: course });
-            } else {
-                res.render("course");
-            }
+
+                courses.push(buffer);
+            });
+            res.render("allCourses", { courses: courses, coursesString: JSON.stringify(courses) });
         }
     });
-
 });
-//endregion
+
+app.post("/course/register", (req, res) => {
+    bcrypt.hash(Date.now().toString(), 1, (err, hash) => {
+        if (err) console.log(err);
+        else {
+            hash = hash.replace(/[\/?$]/g, "");
+            // Save registration to MongoDB
+            new CourseRegistration({
+                courseTitle: req.body.courseTitle,
+                parentName: req.body.parentName,
+                childName: req.body.childName,
+                birthDate: req.body.birthDate,
+                email: req.body.email,
+                phone: req.body.phone,
+                courseId: req.body.courseId,
+                token: hash
+            }).save((err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    // setup email data
+                    let mailOptions = {
+                        from: "Dorin",
+                        to: req.body.email,
+                        subject: "TohaTeen Event Registration",
+                        text: `Hello, please confirm your registration of ${req.body.courseTitle}`,
+                        html: `<div style="padding-left:20px;">
+                        <h2>Please confirm your registration of:</h2>
+                        <h1>${req.body.courseTitle}</h1>
+                        <ul>
+                            <li>Parent's name: ${req.body.parentName}</li>
+                            <li>Child's name: ${req.body.childName}</li>
+                            <li>Phone number: ${req.body.phone}</li>
+                        </ul>
+                        <a style="margin-left: 60px;" href="http://${siteName}/confirm-course/${hash}"><button style="font-size: 26px;height:50px;width:130px;">Confirm</button></a>
+                    </div>`
+                    }
+
+                    transporter.sendMail(mailOptions, (err, info) => {
+                        if (err) console.log(err);
+                        else {
+                            res.status(200).json("Please confirm your registration at " + req.body.email);
+                        }
+                    });
+                }
+            })
+        }
+    })
+});
+
+app.get("/confirm-course/:token", (req, res) => {
+    CourseRegistration.findOne({ token: req.params.token }, (err, data) => {
+        if (err) console.log(err);
+        else {
+            if (data) {
+                CourseRegistration.updateOne({ _id: data._id }, { confirmed: true, expireAt: null }, (err, raw) => {
+                    if (err) console.log(err);
+                    else {
+                        req.flash("success_msg", "Registration complete!");
+                        res.redirect("/");
+                    }
+                });
+            } else {
+                req.flash("error_msg", "Registration not found");
+                res.redirect("/");
+            }
+        }
+    })
+})
+
+//#endregion
+
+app.post("/send-message", (req, res) => {
+    new Message({
+        senderName: req.body.senderName,
+        email: req.body.email,
+        message: req.body.message
+    }).save((err) => {
+        if (err) console.log(err);
+        else {
+            req.flash("success_msg", "Message has been sent!");
+            res.redirect("/");
+        }
+    })
+});
 
 // Start server
 app.listen(port, () => {

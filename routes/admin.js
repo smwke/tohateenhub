@@ -35,6 +35,14 @@ const Registration = mongoose.model("registrations");
 require("../models/Course");
 const Course = mongoose.model("courses");
 
+// Load Courses Registrations model
+require("../models/CourseRegistration");
+const CourseRegistration = mongoose.model("courseRegistrations");
+
+// Load Messages model
+require("../models/Message");
+const Message = mongoose.model("messages");
+
 //endregion
 
 // Login Page
@@ -678,12 +686,9 @@ router.post("/course/upload", ensureAuthenticated, (req, res) => {
             res.redirect('/admin/courses');
         } else {
             console.log("Uploaded images!");
-            let bgkey, thumbkey;
-            //Save the project data to mongoDB
-            if (req.files.background) {
-                bgkey = req.files.background[0].key;
-            } else bgkey = "default.jpg";
+            let thumbkey;
 
+            //Save the project data to mongoDB
             if (req.files.thumbnail) {
                 thumbkey = req.files.thumbnail[0].key;
             } else thumbkey = "default.jpg";
@@ -713,11 +718,10 @@ router.post("/course/upload", ensureAuthenticated, (req, res) => {
                 descriptionEn: req.body.descriptionEn,
                 descriptionRo: req.body.descriptionRo,
                 descriptionRu: req.body.descriptionRu,
-                backgroundKey: bgkey,
                 thumbnailKey: thumbkey,
             }).save()
                 .then(data => {
-                    req.flash('success_msg', 'News added!');
+                    req.flash('success_msg', 'Course added!');
                     res.redirect('/admin/courses');
                 });
         }
@@ -771,28 +775,6 @@ router.put('/course/edit', ensureAuthenticated, (req, res) => {
                     [req.body.shortDescriptionEn]: req.body.shortDescriptionRu
                 });
 
-                // If the background image is overriden
-                if (req.files.background) {
-                    newCourse.backgroundKey = req.files.background[0].key;
-                    s3.deleteObjects({
-                        Bucket: "tohateenhub",
-                        Delete: {
-                            Objects: [
-                                {
-                                    Key: ("images//" + result.backgroundKey).toString()
-                                }
-                            ],
-                        }
-                    }, (err, data) => {
-                        if (err) {
-                            console.log(err);
-                            req.flash("error_msg", err.stack);
-                        } else {
-                            req.flash("success_msg", "Background deleted successfully");
-                        }
-                    });
-                }
-
                 // If the thumbnail image is overriden
                 if (req.files.thumbnail) {
                     newCourse.thumbnailKey = req.files.thumbnail[0].key;
@@ -827,7 +809,6 @@ router.put('/course/edit', ensureAuthenticated, (req, res) => {
         });
     });
 })
-
 
 // Delete Course
 router.delete('/course/delete/:id', ensureAuthenticated, (req, res) => {
@@ -865,6 +846,29 @@ router.delete('/course/delete/:id', ensureAuthenticated, (req, res) => {
     });
 });
 
+// Course Registrations list page
+router.get("/courses/registrations",ensureAuthenticated,(req,res)=>{
+    CourseRegistration.find({ confirmed: true }, (err, result) => {
+        if (err) console.log(err);
+        else {
+            res.render("admin/courseRegistrations", {
+                layout: "dashboard",
+                registrations: result
+            });
+        }
+    })
+})
+
+// Course Registration Delete AJAX
+router.delete("/courseRegistrations/delete/:id", ensureAuthenticated, (req, res) => {
+    CourseRegistration.findOneAndDelete({ _id: req.params.id }, (err, result) => {
+        if (err) console.log(err);
+        else {
+            res.status(200).json(result.courseTitle);
+        }
+    });
+});
+
 //endregion
 
 //#region [rgba(255,255,255,0.05)] EVENT REGISTRATIONS CRUD
@@ -888,15 +892,32 @@ router.delete("/registrations/delete/:id", ensureAuthenticated, (req, res) => {
         else {
             res.status(200).json(result.name);
         }
-    });/* This method is deprecated
-    Registration.findByIdAndRemove(req.params.id, (err, result) => {
-        if (err) console.log(err);
-        else {
-            res.status(200).json(result.name);
-        }
-    })*/
+    });
 });
 
 //endregion
+
+router.get("/messages",ensureAuthenticated,(req,res)=>{
+    Message.find({},(err,result)=>{
+        if(err)console.log(err);
+        else{
+            res.render("admin/messages",{
+                layout: "dashboard",
+                messages: result
+            })
+        }
+    });
+});
+
+router.delete("/messages/delete/:id",ensureAuthenticated,(req,res)=>{
+    Message.findOneAndDelete({ _id: req.params.id }, (err, result) => {
+        if (err) console.log(err);
+        else {
+            res.status(200).json(result.senderName);
+        }
+    });
+})
+
+
 
 module.exports = router;

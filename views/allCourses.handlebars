@@ -1,48 +1,143 @@
 <link href="/css/courses.css" rel="stylesheet">
-<div class="container pt-3">
-	<div class="d-flex">
-		<h1 class="top-header">{{lang "Courses" res}}</h1>
+
+<div class="modal fade" id="RegisterModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header text-center">
+				<h4 class="modal-title w-100 font-weight-bold">Sign up</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form id="RegisterForm" class="modal-body mx-3">
+				<div class="md-form mb-5">
+					<i class="fas fa-user prefix grey-text active"></i>
+					<input name="courseTitle" type="text" id="registerForm-courseTitle" class="form-control validate"
+						disabled>
+					<label for="registerForm-courseTitle" class="active">{{lang "Course" res}}</label>
+				</div>
+				<div class="md-form mb-5">
+					<i class="fas fa-user prefix grey-text"></i>
+					<input name="parentName" type="text" id="registerForm-parentName" class="form-control validate" required>
+					<label for="registerForm-parentName">{{lang "Name, surname of the parent" res}}</label>
+				</div>
+				<div class="md-form mb-5">
+					<i class="fas fa-user prefix grey-text"></i>
+					<input name="childName" type="text" id="registerForm-childName" class="form-control validate" required>
+					<label for="registerForm-childName">{{lang "Name, surname of the child" res}}</label>
+				</div>
+				<div class="md-form mb-5">
+					<i class="fas fa-user prefix grey-text"></i>
+					<input name="birthDate" type="date" id="registerForm-birthDate" class="form-control validate" required>
+					<label for="registerForm-birthDate">{{lang "Birth date of the child" res}}</label>
+				</div>
+				<div class="md-form mb-5">
+					<i class="fas fa-envelope prefix grey-text"></i>
+					<input name="email" type="email" id="registerForm-email" class="form-control validate" required>
+					<label data-error="{{lang "please use name@domain" res}}" data-success="good!"
+						for="registerForm-email">{{lang "Contact email" res}}</label>
+				</div>
+
+				<div class="md-form mb-4">
+					<i class="fas fa-phone prefix grey-text"></i>
+					<input name="phone" type="tel" name="number" id="registerForm-phone" class="form-control validate" required>
+					<label data-success="good!" for="registerForm-phone">{{lang "Contact phone number" res}}</label>
+				</div>
+				<input type="text" name="courseId" id="registerForm-courseId" class="d-none">
+			</form>
+			<div class="modal-footer d-flex justify-content-center">
+				<button id="RegisterFormSubmit" form="RegisterForm" type="submit" class="btn btn-deep-orange">{{lang "Sign up" res}}</button>
+			</div>
+		</div>
 	</div>
-	{{#each courses}}
-	{{#ifeq (even @index) true}}
-	<div class="row my-4">
-		<div class="col-lg-4">
-			<figure>
-				<img src="/get-image/{{thumbnailKey}}">
-			</figure>
-		</div>
-		<div class="col-lg-8 text-left my-auto">
-			<div class="header">
-				<a style="font-size:35px;" href="/course/{{_id}}">{{lang title ../res}}</a>
-			</div>
-			<div class="description">{{lang shortDescription ../res}}
-			</div>
-			<a class="learnmore" href="/course/{{_id}}">learn more</a>
-		</div>
-	</div>
-	{{else}}
-	<div class="row my-4">
-		<div class="col-lg-4 order-lg-12">
-			<figure>
-				<img src="/get-image/{{thumbnailKey}}">
-			</figure>
-		</div>
-		<div class="col-lg-8 text-lg-right my-auto">
-			<div class="header">
-				<a style="font-size:35px;" href="/course/{{_id}}">{{lang title ../res}}</a>
-			</div>
-			<div class="description">{{lang shortDescription ../res}}
-			</div>
-			<a class="learnmore" href="/course/{{_id}}">learn more</a>
-		</div>
-	</div>
-	{{/ifeq}}
-	{{/each}}
 </div>
 
+<main>
+	<div class="container" style="padding-top:25px;">
+		<div class="d-flex">
+			<h1 class="top-header">Courses</h1>
+		</div>
+		{{#each courses}}
+		{{#ifeq (even @index) true}}
+		<div class="row my-5">
+			<div class="col-lg-4">
+				<figure>
+					<!--img src="/img/robotics2.jpg"-->
+					<img src="/get-image/{{thumbnailKey}}">
+				</figure>
+			</div>
+			<div class="col-lg-8 text-left my-auto">
+				<div class="header">
+					<a href="#">{{lang title ../res}}</a>
+				</div>
+				<div id="course-{{id}}" class="description mt-1" style="border:0 !important;"></div>
+				<a class="learnmore"
+					onclick="openModalRegisterForm('{{lang title ../res}}','{{id}}')">{{lang "Sign up" ../res}}</a>
+			</div>
+		</div>
+		{{else}}
+		<div class="row my-5">
+			<div class="col-lg-4 order-lg-12">
+				<figure>
+					<!--img src="/img/robotics2.jpg"-->
+					<img src="/get-image/{{thumbnailKey}}">
+				</figure>
+			</div>
+			<div class="col-lg-8 text-lg-right my-auto">
+				<div class="header">
+					<a href="#">{{lang title ../res}}</a>
+				</div>
+				<div id="course-{{id}}" class="description mt-1" style="border:0 !important;"></div>
+				<a class="learnmore"
+					onclick="openModalRegisterForm('{{lang title ../res}}','{{id}}')">{{lang "Sign up" ../res}}</a>
+			</div>
+		</div>
+		{{/ifeq}}
+		{{/each}}
+	</div>
+</main>
+
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script>
 	var lockedNavbar = 1;
 
-	$(".navbar").css("transition", "none");
-	$("#scrolledNavbar").toggleClass("scrolled-nav", true);
+	function openModalRegisterForm(name, id) {
+		$("#registerForm-courseTitle").val(name);
+		$('#registerForm-courseId').val(id);
+		$('#RegisterModal').modal('show');
+	}
+
+	$("#RegisterForm").on("submit",(e)=>{
+		e.preventDefault();
+
+		$('#RegisterModal').modal('hide');
+		// Find disabled inputs, and remove the "disabled" attribute
+		var disabled = $('#RegisterForm').find(':input:disabled').removeAttr('disabled');
+
+		$.post('/course/register',
+			$('#RegisterForm').serialize(),
+			function (data, status, xhr) {
+				//successAlert("<strong>{{lang "Success" res}}</strong> {{lang "Please confirm your registration on email" res}}", 8);
+				successAlert(data,8);
+			});
+		// re-disabled the set of inputs that you previously enabled
+		disabled.attr('disabled', 'disabled');
+	})
+	
+
+	const courses = {{{ coursesString }}};
+	let quills = [];
+
+	courses.forEach((course, i) => {
+		$("#course-" + course.id).html(quillGetHTML(JSON.parse(course.description).ops))
+	})
+
+	function quillGetHTML(inputDelta) {
+		var tempCont = document.createElement("div");
+		(new Quill(tempCont)).setContents(inputDelta);
+		return tempCont.getElementsByClassName("ql-editor")[0].innerHTML;
+	}
+
 </script>

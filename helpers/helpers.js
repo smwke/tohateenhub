@@ -34,9 +34,37 @@ module.exports = {
     
     let month = a.getMonth()<10?"0"+(a.getMonth()+1):a.getMonth()+1;
 
-    return a.getDate() + "." + month + "." + a.getFullYear() + ", " + hours + ":" + minutes + " " + ampm;
+    return a.getDate() + "." + month + "." + a.getFullYear();
 
   },
+  parseAge: function(value){
+    var today = new Date();
+    var birthDate = new Date(value);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+    {
+        age--;
+    }
+    return age;
+  },
+  /*
+  parseDate: function (value) {
+    let a = new Date(value);
+    let hours = a.getHours();
+    let minutes = a.getMinutes();
+    let ampm = hours >= 12 ? 'pm' : 'am';
+
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    
+    let month = a.getMonth()<10?"0"+(a.getMonth()+1):a.getMonth()+1;
+
+    return a.getDate() + "." + month + "." + a.getFullYear() + ", " + hours + ":" + minutes + " " + ampm;
+
+  },*/
   getDateDate: function(value){
     let a = new Date(value);
     date = a.getDate();
