@@ -869,7 +869,7 @@ router.delete("/courseRegistrations/delete/:id", ensureAuthenticated, (req, res)
     });
 });
 
-//endregion
+//#endregion
 
 //#region [rgba(255,255,255,0.05)] EVENT REGISTRATIONS CRUD
 
@@ -895,8 +895,9 @@ router.delete("/registrations/delete/:id", ensureAuthenticated, (req, res) => {
     });
 });
 
-//endregion
+//#endregion
 
+// All Messages route
 router.get("/messages",ensureAuthenticated,(req,res)=>{
     Message.find({},(err,result)=>{
         if(err)console.log(err);
@@ -909,6 +910,7 @@ router.get("/messages",ensureAuthenticated,(req,res)=>{
     });
 });
 
+// Delete Message
 router.delete("/messages/delete/:id",ensureAuthenticated,(req,res)=>{
     Message.findOneAndDelete({ _id: req.params.id }, (err, result) => {
         if (err) console.log(err);

@@ -22,7 +22,7 @@ function successAlert(message,timeout) {
   let alert = document.createElement("div");
   alert.classList = "alert alert-success alert-dismissible position-fixed text-center fade show";
   alert.setAttribute("role", "alert");
-  alert.setAttribute("style", "top:65px;left:50%;transform: translateX(-50%);");
+  alert.setAttribute("style", "top:72px;left:50%;transform: translateX(-50%);");
   alert.innerHTML = `${message}
       <button type = "button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span></button>`;
