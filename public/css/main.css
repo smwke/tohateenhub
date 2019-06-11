@@ -125,7 +125,7 @@ a:hover {
 /* about us section */
 
 .about {
-	padding: 0 13vw;
+	padding: 0 5vw;
 	text-align: center;
 }
 
@@ -559,6 +559,10 @@ banner, */
 }
 
 @media only screen and (min-width: 768px) {
+	.about {
+		padding: 0 13vw;
+		text-align: center;
+	}
 	#bodyWrapper{
 		margin-top: 94px;
 	}

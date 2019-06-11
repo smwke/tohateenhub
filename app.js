@@ -299,7 +299,7 @@ app.get("/get-image/:id", (req, res) => {
 });
 
 // How many events/ news should be loaded from the database upon accessing the full list?
-const components_to_load = 2;
+const components_to_load = 5;
 
 //#region [ rgba(255,255,255,0.05) ] News routes
 // All news list
@@ -410,7 +410,7 @@ app.get("/confirm-event/:token", (req, res) => {
         if (err) console.log(err);
         else {
             if (data) {
-                Registration.updateOne({ _id: data._id }, { confirmed: true, expireAt: null }, (err, raw) => {
+                Registration.updateOne({ _id: data._id }, { confirmed: true, createdAt: null }, (err, raw) => {
                     if (err) console.log(err);
                     else {
                         req.flash("success_msg", "Registration complete!");
@@ -453,7 +453,7 @@ app.post("/events/register", (req, res) => {
                         <li>Your name: ${req.body.name}</li>
                         <li>Phone number: ${req.body.phone}</li>
                     </ul>
-                    <a style="margin-left: 60px;" href="http://${siteName}/confirm-course/${hash}"><button style="font-size: 26px;height:50px;width:130px;">Confirm</button></a>
+                    <a style="margin-left: 60px;" href="http://${siteName}/confirm-event/${hash}"><button style="font-size: 26px;height:50px;width:130px;">Confirm</button></a>
                 </div>`
                 }
 
@@ -635,7 +635,7 @@ app.get("/confirm-course/:token", (req, res) => {
         if (err) console.log(err);
         else {
             if (data) {
-                CourseRegistration.updateOne({ _id: data._id }, { confirmed: true, expireAt: null }, (err, raw) => {
+                CourseRegistration.updateOne({ _id: data._id }, { confirmed: true, createdAt: null }, (err, raw) => {
                     if (err) console.log(err);
                     else {
                         req.flash("success_msg", "Registration complete!");

@@ -42,10 +42,11 @@ const CourseRegistrationSchema = new Schema({
         type:String,
         required: true
     },
-    expireAt:{
-        type: Date,
-        default: Date.now() + 60000*30,
-    }
+    createdAt:{
+        type: Date,   
+        expires: "30m",
+        default: Date.now(),
+    },
 });
 
 mongoose.model("courseRegistrations",CourseRegistrationSchema);

@@ -2,42 +2,43 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const RegistrationSchema = new Schema({
-    name:{
+    name: {
         type: String,
         required: true
     },
-    email:{
+    email: {
         type: String,
         required: true
     },
-    eventName:{
+    eventName: {
         type: String,
         required: true
     },
-    eventId:{
+    eventId: {
         type: String,
         required: true
     },
-    phoneNumber:{
+    phoneNumber: {
         type: String,
         required: true
     },
-    date:{
+    date: {
         type: Date,
         default: Date.now()
     },
-    confirmed:{
+    confirmed: {
         type: Boolean,
         default: false
     },
-    token:{
-        type:String,
+    token: {
+        type: String,
         required: true
     },
-    expireAt:{
+    createdAt: {
         type: Date,
-        default: Date.now() + 60000*30,
-    }
+        expires: "30m",
+        default: Date.now(),
+    },
 });
 
-mongoose.model("registrations",RegistrationSchema);
+mongoose.model("registrations", RegistrationSchema);

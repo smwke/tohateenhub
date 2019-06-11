@@ -49,7 +49,7 @@
 	// Load more button
 	loadbtn.on("click", (e) => {
 		e.preventDefault();
-		fetch(`/get-news/${page}/2`).then((response) => {
+		fetch(`/get-news/${page}/5`).then((response) => {
 			return response.json();
 		}).then((news) => {
 			if (news.length == 0) $("#loadmMoreButton").remove();
