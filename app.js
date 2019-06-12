@@ -671,19 +671,19 @@ app.post("/send-message", (req, res) => {
         if (err) console.log(err);
         else {
             req.flash("success_msg", "Message has been sent!");
-            res.redirect("/");
+            res.redirect("/contacts");
         }
     })
 });
 
-var httpServer = http.createServer(app);
-///var httpsServer = https.createServer(credentials,app);
+//var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials,app);
 
 //httpServer.listen(8080);
-//httpsServer.listen(port);
+httpsServer.listen(port);
 
 
-// Start server
+/* Start server
 httpServer.listen(port, () => {
     console.log("Server started on: " + port);
-});
+});*/

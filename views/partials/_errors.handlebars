@@ -1,9 +1,23 @@
 {{#if error}}
-  <div class="alert alert-danger">{{error}}</div>
+<div class="alert alert-danger">{{error}}</div>
+<script>
+  setTimeout(function () {
+    if ($('.alert-danger').length > 0) {
+      $('.alert-danger').remove();
+    }
+  }, 10000)
+</script>
 {{/if}}
 
 {{#each errors}}
-  <div class="alert alert-danger">{{text}}</div>
+<div class="alert alert-danger">{{text}}</div>
+<script>
+  setTimeout(function () {
+    if ($('.alert-danger').length > 0) {
+      $('.alert-danger').remove();
+    }
+  }, 10000)
+</script>
 {{else}}
 
 {{/each}}

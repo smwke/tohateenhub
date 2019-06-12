@@ -1,7 +1,21 @@
 {{#if success_msg}}
-  <div class="alert alert-success rounded-0">{{success_msg}}</div>
+<div class="alert alert-success rounded-0">{{success_msg}}</div>
+<script>
+  setTimeout(function () {
+    if ($('.alert-success').length > 0) {
+      $('.alert-success').remove();
+    }
+  }, 10000)
+</script>
 {{/if}}
 
 {{#if error_msg}}
-  <div class="alert alert-danger rounded-0">{{error_msg}}</div>
+<div class="alert alert-danger rounded-0">{{error_msg}}</div>
+<script>
+  setTimeout(function () {
+    if ($('.alert-danger').length > 0) {
+      $('.alert-danger').remove();
+    }
+  }, 10000)
+</script>
 {{/if}}

@@ -295,7 +295,6 @@ router.put('/event/edit', ensureAuthenticated, (req, res) => {
 
 // Submit new Event
 router.post('/event/upload', ensureAuthenticated, (req, res) => {
-
     //Upload the images to s3 webserver
     ImageUpload(req, res, (err) => {
         if (err) {
@@ -379,7 +378,6 @@ router.post('/event/upload', ensureAuthenticated, (req, res) => {
 
 // Delete Event
 router.delete('/event/delete/:id', ensureAuthenticated, (req, res) => {
-
     Event.findByIdAndDelete(req.params.id, (err, result) => {
         if (err) {
             console.log(err);

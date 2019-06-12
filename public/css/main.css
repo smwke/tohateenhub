@@ -13,9 +13,13 @@ ul, li {
 	padding: 0;
 }
 
-.row{
-	margin-left:0;
-	margin-right:0;
+.ql-container {
+	font-size: inherit !important;
+}
+
+.row {
+	margin-left: 0;
+	margin-right: 0;
 }
 
 a {
@@ -26,11 +30,9 @@ a:hover {
 	text-decoration: none;
 }
 
-
-#bodyWrapper{
+#bodyWrapper {
 	margin-top: 50px;
 }
-
 
 /* general for banner (there are differences in breakpoints) */
 
@@ -563,10 +565,10 @@ banner, */
 		padding: 0 13vw;
 		text-align: center;
 	}
-	#bodyWrapper{
+	#bodyWrapper {
 		margin-top: 94px;
 	}
-	#bodyWrapper.scrolled{
+	#bodyWrapper.scrolled {
 		margin-top: 65px;
 	}
 	/* navbar */
@@ -646,7 +648,7 @@ banner, */
 		cursor: pointer;
 		line-height: 30px;
 	}
-    .dropdown-menu {
+	.dropdown-menu {
 		background-color: rgba(246, 246, 246, .8);
 	}
 	.dropdown-container {
