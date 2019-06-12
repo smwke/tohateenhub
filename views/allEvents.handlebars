@@ -11,7 +11,7 @@
 					<figure>
 						<a href="/event/{{id}}">
 							<div class="overlay">
-								<h2>{{lang "Read more" res}}</h2>
+								<h2>{{lang "Read more" ../res}}</h2>
 							</div>
 							<img class="news-img" src="/get-image/{{thumbnailKey}}">
 						</a>
@@ -23,7 +23,7 @@
 						<h6>{{getDateDate date}} {{getDateMonth date}}, {{this.startTime}}-{{this.endTime}}</h6>
 					</div>
 					<div class="description">{{lang this.shortDescription ../res}}</div>
-					<a class="readmore" href="/event/{{id}}">{{lang "Read more" res}} »</a>
+					<a class="readmore" href="/event/{{id}}">{{lang "Read more" ../res}} »</a>
 				</div>
 			</div>
 			{{/each}}

@@ -20,7 +20,6 @@ const s3 = new aws.S3({
     endpoint: 'http://rest.s3for.me'
 });
 
-const siteName = "92.115.252.247:4200"
 
 // Localization
 const i18n = require("i18n");
@@ -158,6 +157,21 @@ const admin = require("./routes/admin");
 /*      Server configuration        */
 //Server port
 const port = process.env.PORT || 4200;
+const siteName = "https://92.115.252.247:8443";
+// How many events/ news should be loaded from the database upon accessing the full list?
+const components_to_load = 5;
+
+// HTTPS Configuration */
+var privateKey = fs.readFileSync(__dirname+"/certs/server.key",'utf8');
+var certificate = fs.readFileSync(__dirname+"/certs/server.cert",'utf8');
+
+const http = require("http");
+const https = require("https");
+
+var credentials = {
+    key: privateKey,
+    cert: certificate
+};
 
 //Init app
 const app = express();
@@ -297,9 +311,6 @@ app.get("/get-image/:id", (req, res) => {
     });
 
 });
-
-// How many events/ news should be loaded from the database upon accessing the full list?
-const components_to_load = 5;
 
 //#region [ rgba(255,255,255,0.05) ] News routes
 // All news list
@@ -453,7 +464,7 @@ app.post("/events/register", (req, res) => {
                         <li>Your name: ${req.body.name}</li>
                         <li>Phone number: ${req.body.phone}</li>
                     </ul>
-                    <a style="margin-left: 60px;" href="http://${siteName}/confirm-event/${hash}"><button style="font-size: 26px;height:50px;width:130px;">Confirm</button></a>
+                    <a style="margin-left: 60px;" href="${siteName}/confirm-event/${hash}"><button style="font-size: 26px;height:50px;width:130px;">Confirm</button></a>
                 </div>`
                 }
 
@@ -614,7 +625,7 @@ app.post("/course/register", (req, res) => {
                             <li>Child's name: ${req.body.childName}</li>
                             <li>Phone number: ${req.body.phone}</li>
                         </ul>
-                        <a style="margin-left: 60px;" href="http://${siteName}/confirm-course/${hash}"><button style="font-size: 26px;height:50px;width:130px;">Confirm</button></a>
+                        <a style="margin-left: 60px;" href="${siteName}/confirm-course/${hash}"><button style="font-size: 26px;height:50px;width:130px;">Confirm</button></a>
                     </div>`
                     }
 
@@ -666,7 +677,14 @@ app.post("/send-message", (req, res) => {
     })
 });
 
-// Start server
-app.listen(port, () => {
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials,app);
+
+httpServer.listen(8080);
+httpsServer.listen(8443);
+
+
+/* Start server
+server.listen(port, () => {
     console.log("Server started on: " + port);
-});
+});*/

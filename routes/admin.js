@@ -302,7 +302,6 @@ router.post('/event/upload', ensureAuthenticated, (req, res) => {
             req.flash('error_msg', 'There has been an ' + err);
             res.redirect('/admin/events');
         } else {
-            console.log("Uploaded images!");
             let bgkey, thumbkey, date = Date.now(), startTime = "All day", endTime = "All day";
             //Save the project data to mongoDB
             if (req.files.background) {
