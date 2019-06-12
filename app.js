@@ -36,22 +36,21 @@ const flash = require("connect-flash");
 const mongoose = require("mongoose");
 mongoose.set('useCreateIndex', true)
 // Connect to database
-/*
 mongoose.connect("mongodb://dorin:goodpass123@ds135726.mlab.com:35726/tohateenhub", {
     useNewUrlParser: true
 }, (err) => {
     if (err) throw err;
     console.log("MongoDB connected...");
 });
-*/
 
+/*
 mongoose.connect("mongodb://localhost:27017/tohateenhub", {
     useNewUrlParser: true
 }, (err) => {
     if (err) throw err;
     console.log("MongoDB connected...");
 })
-
+*/
 // Set Storage Engine
 const storage = multers3({
     s3: s3,
@@ -156,8 +155,8 @@ const admin = require("./routes/admin");
 
 /*      Server configuration        */
 //Server port
-const port = process.env.PORT || 4200;
-const siteName = "https://92.115.252.247:8443";
+const port = process.env.PORT || 8443;
+const siteName = "https://tohateenhub.herokuapp.com";
 // How many events/ news should be loaded from the database upon accessing the full list?
 const components_to_load = 5;
 
@@ -678,13 +677,13 @@ app.post("/send-message", (req, res) => {
 });
 
 var httpServer = http.createServer(app);
-var httpsServer = https.createServer(credentials,app);
+///var httpsServer = https.createServer(credentials,app);
 
-httpServer.listen(8080);
-httpsServer.listen(8443);
+//httpServer.listen(8080);
+//httpsServer.listen(port);
 
 
-/* Start server
-server.listen(port, () => {
+// Start server
+httpServer.listen(port, () => {
     console.log("Server started on: " + port);
-});*/
+});
