@@ -20,7 +20,7 @@
 				<div class="col-lg-10">
 					<div class="header">
 						<a href="/event/{{id}}">{{lang this.title ../res}}</a>
-						<h6>{{parseDate date}}, {{this.startTime}}-{{this.endTime}}</h6>
+						<h6>{{getDateDate date}} {{getDateMonth date}}, {{getDateYear date}}; {{this.startTime}}-{{this.endTime}}</h6>
 					</div>
 					<div class="description">{{lang this.shortDescription ../res}}</div>
 					<a class="readmore" href="/event/{{id}}">{{lang "Read more" ../res}} »</a>
@@ -75,7 +75,7 @@
 		<div class="col-lg-10">
 			<div class="header">
 				<a href="/event/${value.id}">${value.title}</a>
-				<h6>${value.date} ${value.month}, ${value.startTime}-${value.endTime}</h6>
+				<h6>${value.date} ${value.month}, ${value.year}; ${value.startTime}-${value.endTime}</h6>
 			</div>
 			<div class="description">${value.shortDescription}</div>
 			<a class="readmore" href="/event/${value.id}">read more »</a>

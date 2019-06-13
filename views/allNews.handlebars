@@ -21,7 +21,7 @@
 				<div class="col-lg-10">
 					<div class="header">
 						<a href="/news/{{id}}">{{lang this.title ../res}}</a>
-						<h6>{{parseDate date}}</h6>
+						<h6>{{getDateDate date}} {{getDateMonth date}}, {{getDateYear date}}</h6>
 					</div>
 					<div class="description">{{lang this.shortDescription ../res}}</div>
 					<a class="readmore" href="/news/{{id}}">{{lang "Read more" ../res}} »</a>
@@ -31,7 +31,8 @@
 
 		</div>
 		<div class="container">
-			<a href="#" id="loadmMoreButton" class="btn text-white" style="background-color:#4495E1">{{lang "Load more" res}}</a>
+			<a href="#" id="loadmMoreButton" class="btn text-white"
+				style="background-color:#4495E1">{{lang "Load more" res}}</a>
 		</div>
 	</div>
 </div>
@@ -49,7 +50,12 @@
 	// Load more button
 	loadbtn.on("click", (e) => {
 		e.preventDefault();
-		fetch(`/get-news/${page}/5`).then((response) => {
+
+		// MAKE SURE THIS IS EQUAL TO THE const components_to_load IN APP.JS
+		const components_to_fetch = 5;
+
+
+		fetch(`/get-news/${page}/${components_to_fetch}`).then((response) => {
 			return response.json();
 		}).then((news) => {
 			if (news.length == 0) $("#loadmMoreButton").remove();
@@ -63,14 +69,14 @@
 					<div class="overlay">
 						<h2>read more</h2>
 					</div>
-					<img class="news-img" src="../img/children.jpg">
+					<img class="news-img" src="/get-image/${value.thumbnailKey}">
 				</a>
 			</figure>
 		</div>
 		<div class="col-lg-10">
 			<div class="header">
 				<a href="/news/${value.id}">${value.title}</a>
-				<h6>${value.date} ${value.month}, ${value.startTime}-${value.endTime}</h6>
+				<h6>${value.date} ${value.month}, ${value.year}</h6>
 			</div>
 			<div class="description">${value.shortDescription}</div>
 			<a class="readmore" href="/news/${value.id}">read more »</a>

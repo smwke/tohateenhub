@@ -359,6 +359,7 @@ app.get("/get-news/:page/:limit", (req, res) => {
                     buffer.shortDescription = res.__(event.shortDescription);
                     buffer.date = a.getDate();
                     buffer.month = months[a.getMonth()];
+                    buffer.year = a.getFullYear();
                     buffer.id = event._id;
                     buffer.thumbnailKey = event.thumbnailKey;
 
@@ -516,6 +517,7 @@ app.get("/get-events/:page/:limit", (req, res) => {
                     buffer.shortDescription = res.__(event.shortDescription);
                     buffer.date = a.getDate();
                     buffer.month = months[a.getMonth()];
+                    buffer.year = a.getFullYear();
                     buffer.startTime = event.startTime;
                     buffer.endTime = event.endTime;
                     buffer.id = event._id;

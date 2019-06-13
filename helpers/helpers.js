@@ -88,6 +88,9 @@ module.exports = {
       "DEC"
     ];
     return months[a.getMonth()];
-    
+  },
+  getDateYear: function(value){
+    let a = new Date(value);
+    return a.getFullYear();
   }
 }
