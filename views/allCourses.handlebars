@@ -12,7 +12,7 @@
 			</div>
 			<form id="RegisterForm" class="modal-body mx-3">
 				<div class="md-form mb-5">
-					<i class="fas fa-user prefix grey-text active"></i>
+					<i class="fas fa-graduation-cap prefix grey-text active"></i>
 					<input name="courseTitle" type="text" id="registerForm-courseTitle" class="form-control validate"
 						disabled>
 					<label for="registerForm-courseTitle" class="active">{{lang "Course" res}}</label>
@@ -23,26 +23,26 @@
 					<label for="registerForm-parentName">{{lang "Name, surname of the parent" res}}</label>
 				</div>
 				<div class="md-form mb-5">
-					<i class="fas fa-user prefix grey-text"></i>
+					<i class="fas fa-user-graduate prefix grey-text"></i>
 					<input name="childName" type="text" id="registerForm-childName" class="form-control validate" required>
 					<label for="registerForm-childName">{{lang "Name, surname of the child" res}}</label>
 				</div>
 				<div class="md-form mb-5">
-					<i class="fas fa-user prefix grey-text"></i>
+					<i class="fas fa-calendar-day prefix grey-text"></i>
 					<input name="birthDate" type="date" id="registerForm-birthDate" class="form-control validate" required>
 					<label for="registerForm-birthDate">{{lang "Birth date of the child" res}}</label>
 				</div>
 				<div class="md-form mb-5">
 					<i class="fas fa-envelope prefix grey-text"></i>
 					<input name="email" type="email" id="registerForm-email" class="form-control validate" required>
-					<label data-error="{{lang "please use name@domain" res}}" data-success="good!"
+					<label data-error="{{lang "please use name@domain" res}}"
 						for="registerForm-email">{{lang "Contact email" res}}</label>
 				</div>
 
 				<div class="md-form mb-4">
 					<i class="fas fa-phone prefix grey-text"></i>
 					<input name="phone" type="tel" name="number" id="registerForm-phone" class="form-control validate" required>
-					<label data-success="good!" for="registerForm-phone">{{lang "Contact phone number" res}}</label>
+					<label for="registerForm-phone">{{lang "Contact phone number" res}}</label>
 				</div>
 				<input type="text" name="courseId" id="registerForm-courseId" class="d-none">
 			</form>
