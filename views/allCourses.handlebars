@@ -60,7 +60,7 @@
 		</div>
 		{{#each courses}}
 		{{#ifeq (even @index) true}}
-		<div class="row my-5">
+		<div class="row mb-5">
 			<div class="col-lg-4">
 				<figure>
 					<!--img src="/img/robotics2.jpg"-->
@@ -71,7 +71,7 @@
 				<div class="header">
 					<a href="#">{{lang title ../res}}</a>
 				</div>
-				<div id="course-{{id}}" class="description mt-1" style="border:0 !important;"></div>
+				<div id="course-{{id}}" class="description" style="border:0 !important;"></div>
 				<a class="learnmore"
 					onclick="openModalRegisterForm('{{lang title ../res}}','{{id}}')">{{lang "Sign up" ../res}}</a>
 			</div>

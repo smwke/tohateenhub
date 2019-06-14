@@ -182,7 +182,7 @@ a:hover {
 
 .hovereffect .overlay:before {
 	position: absolute;
-	border: 1px solid #fff;
+	/*border: 1px solid #fff;*/
 	content: '';
 	opacity: 0;
 	filter: alpha(opacity=0);
@@ -235,6 +235,10 @@ a:hover {
 	filter: alpha(opacity=30);
 	-webkit-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
+}
+
+.hovereffect:hover .overlay:before {
+	background: rgba(0, 0, 0, 0.5);
 }
 
 /* donate */
