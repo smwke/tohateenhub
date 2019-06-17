@@ -68,22 +68,13 @@ at the press of the register button -->
             });
     });
 
-
-
     var windowHeight = $(window).height();
     var titleHeight = $(".proj-title").outerHeight();
 
     $('.parallax-window').parallax({ imageSrc: "/get-image/{{news.backgroundKey}}" });
 
     $(window).on("scroll", () => {
-        if (document.body.scrollTop+50 >= windowHeight*0.3-titleHeight) {
-            $(".proj-title").toggleClass("fixedS", true);
-            $(".bg-proj").toggleClass("fixedS", true);
-        } else {
-            $(".proj-title").toggleClass("fixedS", false);
-            $(".bg-proj").toggleClass("fixedS", false);
-            //$(".bg-proj").css("align-items","center");
-        }
+        $(".proj-title").toggleClass("fixedS", (document.body.scrollTop+50 >= windowHeight*0.3-titleHeight));
     });
 
 

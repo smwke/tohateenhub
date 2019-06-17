@@ -8,8 +8,9 @@
     transition: all 0.3s;
 }
 
-.bg-proj.fixedS {
-    align-items: flex-end;
+.bg-proj>.proj-title{
+    position:-webkit-sticky;
+    position: sticky;
 }
 
 .jumbotron {
@@ -45,7 +46,6 @@
     width: 100%;
     margin-bottom: 0;
     transition: text-shadow 0.1s, background-color 0.2s;
-    position: fixed;
     top: 27vh;
     color: white;
     /*text-shadow:
@@ -62,7 +62,6 @@
     /*background-color: white;
     color:black;*/
     background-color: rgba(0, 0, 0, 0.7);
-    position: initial;
     text-shadow: none;
 }
 
