@@ -34,6 +34,39 @@ a:hover {
 	margin-top: 50px;
 }
 
+/* Custom containers */
+
+@media (min-width: 768px) {
+	.container-small {
+		width: 475px;
+	}
+	.container-large {
+		width: 970px;
+	}
+}
+
+@media (min-width: 992px) {
+	.container-small {
+		max-width: 675px;
+	}
+	.container-large {
+		width: 1170px;
+	}
+}
+
+@media (min-width: 1200px) {
+	.container-small {
+		width: 875px;
+	}
+	.container-large {
+		width: 1500px;
+	}
+}
+
+.container-small, .container-large {
+	max-width: 100%;
+}
+
 /* general for banner (there are differences in breakpoints) */
 
 /* styles for banner and its components */
@@ -462,7 +495,7 @@ footer .media_icon {
 		height: 100%;
 	}
 	.donate p {
-		font-size: 2vh;
+		font-size: 16px;
 		margin: 3.5vh 0;
 	}
 	.donate a {

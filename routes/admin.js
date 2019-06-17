@@ -160,7 +160,7 @@ router.get('/events', ensureAuthenticated, (req, res) => {
                 events: result
             });
         }
-    });
+    }).sort({ 'date': -1 });
 });
 
 // New Event form page
@@ -426,7 +426,7 @@ router.get('/news', ensureAuthenticated, (req, res) => {
                 news: result
             });
         }
-    });
+    }).sort({ 'date': -1 });
 });
 
 // New News form page

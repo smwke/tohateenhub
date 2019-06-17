@@ -48,14 +48,9 @@ at the press of the register button -->
 </div>
 
 <div class="bg-proj parallax-window">
-    <img src="/get-image/{{event.backgroundKey}}" style="display:none;width:100%;visibility:hidden;" />
-    <!--div style="flex:1">
-    </div-->
-    <!--div class="d-flex bg-thumb">
-        <img class="card-img-top mt-auto" style="max-height:250px;height:100%;width:auto"
-            src="/get-image/{{event.thumbnailKey}}" alt="Card image cap">
-    </div-->
-    <h1 class="text-uppercase proj-title text-center px-1">{{lang event.title res}}</h1>
+    <div class="bg-wrapper">
+        <h1 class="text-uppercase sticky proj-title text-center px-1">{{lang event.title res}}</h1>
+    </div>
 </div>
 <script>
     $("#RegisterFormSubmit").on("click", (e) => {
@@ -64,28 +59,29 @@ at the press of the register button -->
         $.post('/events/register',
             $('#RegisterForm').serialize(),
             function (data, status, xhr) {
-                successAlert(data,8);
+                successAlert(data, 8);
             });
     });
 
     var windowHeight = $(window).height();
     var titleHeight = $(".proj-title").outerHeight();
 
-    $('.parallax-window').parallax({ imageSrc: "/get-image/{{news.backgroundKey}}" });
+    $('.parallax-window').parallax({ imageSrc: "/get-image/{{event.backgroundKey}}" });
 
     $(window).on("scroll", () => {
-        $(".proj-title").toggleClass("fixedS", (document.body.scrollTop+50 >= windowHeight*0.3-titleHeight));
+        $(".proj-title").toggleClass("fixedS", (document.body.scrollTop + 50 >= windowHeight * 0.3 - titleHeight));
     });
 
 
 </script>
 <div class="container-fluid bg-white">
-    <div class="container" id="projectDescContainer">
+    <div class="container container-small" id="projectDescContainer">
         <div class="jumbotron" style="height:fit-content;">
             <div id="EventDescription" style="border:0 !important;"></div>
 
-            <div class="d-flex justify-content-center w-100">
-                <a data-toggle="modal" data-target="#RegisterModal" class="btn btn-secondary btn-lg">{{lang "Sign up" res}}</a>
+            <div class="d-flex mt-4 justify-content-center w-100">
+                <a data-toggle="modal" data-target="#RegisterModal"
+                    class="btn btn-secondary btn-lg">{{lang "Sign up" res}}</a>
             </div>
 
             <hr class="mt-2 mb-4">

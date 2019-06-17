@@ -1,32 +1,38 @@
+body{
+    font-size: 1rem;
+    font-weight: 100;
+}
+
 .bg-proj {
     height: 45vh;
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
     transition: all 0.3s;
 }
 
-.bg-proj>.proj-title{
-    position:-webkit-sticky;
+.sticky {
+    position: -webkit-sticky;
+    position: -moz-sticky;
+    position: -ms-sticky;
+    position: -o-sticky;
     position: sticky;
+}
+
+.bg-wrapper {
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
 }
 
 .jumbotron {
     box-shadow: none;
     padding-top: 25px;
     margin: 0;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .bg-thumb {
-
     height: 25vmin;
     border-radius: 2%;
-
-    /*margin-right: 40%;*/
-    /*z-index: 1;*/
-
 }
 
 .ql-editor {
@@ -38,29 +44,19 @@
 }
 
 .proj-title {
-    font-size: 3.3vmax;
+    font-size: 3.2vmax;
     font-weight: 600;
     background-color: rgba(0, 0, 0, 0.5);
-    padding-top:7px;
-    padding-bottom:7px;
+    padding-top: 7px;
+    padding-bottom: 7px;
     width: 100%;
     margin-bottom: 0;
-    transition: text-shadow 0.1s, background-color 0.2s;
-    top: 27vh;
+    transition: background-color 0.2s;
+    top: 26vh;
     color: white;
-    /*text-shadow:
-        -1px -1px 0 #000,
-        1px -1px 0 #000,
-        -1px 1px 0 #000,
-        1px 1px 0 #000;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;*/
 }
 
-
 .proj-title.fixedS {
-    /*background-color: white;
-    color:black;*/
     background-color: rgba(0, 0, 0, 0.7);
     text-shadow: none;
 }
@@ -69,7 +65,6 @@
     .bg-proj {
         margin-top: 50px;
     }
-
     .jumbotron {
         padding-top: 20px;
     }
@@ -79,12 +74,12 @@
     #projectDescContainer {
         padding: 0;
     }
-
     .proj-title {
         font-size: 7.5vmin;
     }
-
-
+    body{
+        font-size: 1rem;
+    }
 }
 
 .bg-nav {

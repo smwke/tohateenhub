@@ -678,13 +678,10 @@ app.post("/send-message", (req, res) => {
     })
 });
 
-var httpServer = http.createServer(app);
-//var httpsServer = https.createServer(credentials,app);
-
-//httpsServer.listen(port);
-
+//var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials,app);
 
 //Start server
-httpServer.listen(port, () => {
+httpsServer.listen(port, () => {
     console.log("Server started on: " + port);
 });
