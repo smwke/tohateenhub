@@ -5,18 +5,18 @@
   text-transform: uppercase;
 }
 
-body {
-  background: rgb(69, 94, 207);
-  background: radial-gradient(circle, rgba(69, 94, 207, 1) 0%, rgba(70, 159, 252, 1) 100%);
-}
-
 .contact-form {
   border-radius: 20px;
-  background: rgba(32, 58, 88, .7);
+  /*background: rgba(32, 58, 88, .7);*/
+  background: linear-gradient(45deg, rgba(69, 94, 207, 1) 0%, rgba(70, 159, 252, 1) 100%);
   color: white;
   margin-top: 1vh;
   padding: 20px;
   box-shadow: 0 0 10px 1px rgba(70, 48, 67, .6);
+}
+
+.text-light {
+  color: #f8f9fa!important;
 }
 
 .form-control {
@@ -28,8 +28,8 @@ main {
   min-height: 84vh;
 }
 
-#contactsDiv{
-  padding-bottom:40px;
+#contactsDiv {
+  padding-bottom: 40px;
 }
 
 @media only screen and (max-width: 768px) {

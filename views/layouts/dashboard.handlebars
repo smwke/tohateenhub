@@ -34,10 +34,15 @@
 
     <!-- Sidebar -->
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
-        <a class="navbar-brand mr-1" href="/admin/">Dashboard</a>
         <button class="btn btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
             <i class="fas fa-bars"></i>
         </button>
+        <a class="navbar-brand mr-1" href="/admin/">Dashboard</a>
+        {{#if user}}
+        <a class="btn btn-sm text-white" href="/admin/logout">
+            <i class="fas fa-sign-out-alt"></i>Logout
+        </a>
+        {{/if}}
     </nav>
 
     <div class="d-flex">
@@ -74,11 +79,16 @@
                     <span>Messages</span></a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="/admin/volunteer-registrations">
+                    <i class="fas fa-male"></i>
+                    <span>Volunteer Registrations</span></a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="/">
                     <i class="fas fa-fw fa-table"></i>
-
                     <span>Back to home</span></a>
             </li>
+            
         </ul>
         <div class="w-100">
             {{> _errors}}
@@ -94,11 +104,6 @@
             $('.sidebar').toggleClass("toggled");
         });
     </script>
-    <!-- End of Sidebar -->
-
-
-
-    <!-- End of page -->
 
     <link rel="stylesheet" href="/css/global.css">
     <script src="/js/mdb.min.js"></script>

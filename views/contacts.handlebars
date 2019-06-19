@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/css/contact.css">
+
 <main id="contactsDiv">
 	<div class="container contact-form">
 		<h1 class="text-center text-monospace">-LET'S GET IN TOUCH.</h1>
@@ -7,14 +8,17 @@
 		<div class="row">
 
 			<div class="col-md-6">
-				<p class="text-center text-monospace text-light font-weight-bold lead mb-1 mt-4"><img class="align-self-center mr-2" src="/img/location.png">Our Address</p>
+				<p class="text-center text-monospace text-light font-weight-bold lead mb-1 mt-4"><img
+						class="align-self-center mr-2" src="/img/location.png">Our Address</p>
 				<p class="text-center text-light pb-4">Pacii 11 Street, Tohatin, Chisinau</p>
-				<p class="text-center text-monospace text-light font-weight-bold lead mb-1"><img class="align-self-center mr-2" src="/img/phone.png">Let's Talk</p>
+				<p class="text-center text-monospace text-light font-weight-bold lead mb-1"><img
+						class="align-self-center mr-2" src="/img/phone.png">Let's Talk</p>
 				<p class="text-center text-light mb-0">+ 373 69 531 061</p>
 				<p class="text-center text-light pb-4">+ 373 69 787 929</p>
-				<p class="text-center text-monospace text-light font-weight-bold lead mb-1"><img class="align-self-center mr-2" src="/img/mail.png">General Support</p>
-				<p class="text-center text-light pb-4">igor.ciurea@gmail.com</p>		
-			</div> 
+				<p class="text-center text-monospace text-light font-weight-bold lead mb-1"><img
+						class="align-self-center mr-2" src="/img/mail.png">General Support</p>
+				<p class="text-center text-light pb-4">igor.ciurea@gmail.com</p>
+			</div>
 
 			<form action="/send-message" method="POST" class="col-md-5">
 				<div class="form-group">
@@ -22,15 +26,17 @@
 					<input type="text" name="senderName" class="form-control" placeholder="Name Surname" required>
 				</div>
 				<div class="form-group">
-						<label class="text-monospace text-light">{{lang "Your email" res}}</label>
-						<input type="email" name="email" class="form-control" placeholder="example@mail.com" required>
+					<label class="text-monospace text-light">{{lang "Your email" res}}</label>
+					<input type="email" name="email" class="form-control" placeholder="example@mail.com" required>
 				</div>
 				<div class="form-group">
-						<label class="text-monospace text-light">{{lang "Your message" res}}</label>
-						<textarea class="form-control" name="message" rows="5" maxlength="500" placeholder="{{lang "Message" res}}" required></textarea >
+					<label class="text-monospace text-light">{{lang "Your message" res}}</label>
+					<textarea class="form-control" name="message" rows="5" maxlength="500"
+						placeholder="{{lang "Message" res}}" required></textarea>
 				</div>
 				<div class="form-group">
-						<button type="submit" class="btn btn-success btn-block font-weight-bold text-monospace">{{lang "Submit" res}}</button>
+					<button type="submit"
+						class="btn btn-success btn-block font-weight-bold text-monospace">{{lang "Submit" res}}</button>
 				</div>
 			</form>
 
@@ -39,5 +45,5 @@
 </main>
 
 <script>
-    var lockedNavbar = 1;
+	var lockedNavbar = 1;
 </script>

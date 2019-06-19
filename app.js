@@ -109,7 +109,7 @@ module.exports = {
     s3: s3
 };
 
-/*      Initialize MongoDB Models       */
+//#region [rgba(255,255,255,0.05)] MongoDB Models
 // Load User Model (usage in passport)
 require("./models/User");
 
@@ -137,6 +137,10 @@ const CourseRegistration = mongoose.model("courseRegistrations");
 require("./models/Message");
 const Message = mongoose.model("messages");
 
+// Load Volunteer Model
+require("./models/Volunteer");
+const Volunteer = mongoose.model("volunteers");
+//#endregion
 
 // NodeMailer config
 let transporter = nodemailer.createTransport({
@@ -161,8 +165,8 @@ const siteName = "https://tohateenhub.herokuapp.com";
 const components_to_load = 5;
 
 // HTTPS Configuration */
-var privateKey = fs.readFileSync(__dirname+"/certs/server.key",'utf8');
-var certificate = fs.readFileSync(__dirname+"/certs/server.cert",'utf8');
+var privateKey = fs.readFileSync(__dirname + "/certs/server.key", 'utf8');
+var certificate = fs.readFileSync(__dirname + "/certs/server.cert", 'utf8');
 
 const http = require("http");
 const https = require("https");
@@ -678,8 +682,27 @@ app.post("/send-message", (req, res) => {
     })
 });
 
+
+//#region [ rgba(255,255,255,0.05) ] Volunteer routes
+app.post("/about-us/register-volunteer", (req, res) => {
+    new Volunteer({
+        name: req.body.name,
+        birthDate: req.body.birthDate,
+        email: req.body.email,
+        phone: req.body.phone,
+        description: req.body.description
+    }).save(null, (err) => {
+        if (err) {
+            res.status(400).json("Error, bad request");
+        } else {
+            res.status(200).json("Success, your registration will be reviewed!");
+        }
+    });
+});
+//#endregion
+
 var httpServer = http.createServer(app);
-//var httpsServer = https.createServer(credentials,app);
+//var httpsServer = https.createServer(credentials, app);
 
 //Start server
 httpServer.listen(port, () => {

@@ -5,7 +5,7 @@
         <div class="card h-100" style="background-image: url(/get-image/{{backgroundKey}});background-size:cover;">
             <h5 class="card-header h5 dark-bg text-white">{{parseDate date}}</h5>
             <div class="card-body d-flex flex-column">
-                <div class="flex-grow-1 p-2 rgba-white-light rounded">
+                <div class="flex-grow-1 p-2 rounded" style="background-color: rgba(255,255,255,0.7);">
                     <h5 class="card-title">{{lang title ../res}}</h5>
                     <p class="card-text">{{lang subTitle ../res}}</p>
                 </div>
@@ -19,7 +19,6 @@
             </div>
         </div>
     </div>
-
     {{/each}}
 </div>
 

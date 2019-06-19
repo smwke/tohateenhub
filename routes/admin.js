@@ -43,6 +43,10 @@ const CourseRegistration = mongoose.model("courseRegistrations");
 require("../models/Message");
 const Message = mongoose.model("messages");
 
+// Load Volunteer model
+require("../models/Volunteer");
+const Volunteer = mongoose.model("volunteers");
+
 //endregion
 
 // Login Page
@@ -894,6 +898,8 @@ router.delete("/registrations/delete/:id", ensureAuthenticated, (req, res) => {
 
 //#endregion
 
+//#region [rgba(255,255,255,0.05)] MESSAGES CRUD
+
 // All Messages route
 router.get("/messages",ensureAuthenticated,(req,res)=>{
     Message.find({},(err,result)=>{
@@ -915,8 +921,36 @@ router.delete("/messages/delete/:id",ensureAuthenticated,(req,res)=>{
             res.status(200).json(result.senderName);
         }
     });
-})
+});
 
+//#endregion
+
+//#region [rgba(255,255,255,0.05)] VOLUNTEER REGISTRATIONS CRUD
+
+// All Volunteer Registrations route
+router.get("/volunteer-registrations",ensureAuthenticated,(req,res)=>{
+    Volunteer.find({}, (err,result)=>{
+        if(err)console.log(err);
+        else{
+            res.render("admin/volunteers",{
+                layout: "dashboard",
+                registrations: result
+            });
+        }
+    });
+});
+
+// Delete Volunteer Registration
+router.delete("/volunteer-registrations/delete/:id",ensureAuthenticated,(req,res)=>{
+    Volunteer.findOneAndDelete({_id:req.params.id},(err,result)=>{
+        if(err) console.log(err);
+        else{
+            res.status(200).json(result.name);
+        }
+    });
+});
+
+//#endregion
 
 
 module.exports = router;
