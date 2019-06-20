@@ -5,13 +5,13 @@ $(window).on("load", () => {
 
 if (typeof lockedNavbar == 'undefined') {
   $(window).on("scroll", () => {
-    if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
+    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
       $("#scrolledNavbar").toggleClass("scrolled-nav", true);
     } else {
       $("#scrolledNavbar").toggleClass("scrolled-nav", false);
     }
   })
-  $("#scrolledNavbar").toggleClass("scrolled-nav", (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40));
+  $("#scrolledNavbar").toggleClass("scrolled-nav", (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500));
 } else {
   $("#bodyWrapper").toggleClass("scrolled", true);
   $("#scrolledNavbar").toggleClass("scrolled-nav", true);

@@ -97,7 +97,7 @@ main{
   transition: .3s;
 }
 .vol-apply>a:hover {
-  color: white;
+  color: white !important;
   background-color: #4495E1;
 }
 
