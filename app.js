@@ -160,7 +160,7 @@ const admin = require("./routes/admin");
 /*      Server configuration        */
 //Server port
 const port = process.env.PORT || 8443;
-const siteName = "https://tohateenhub.herokuapp.com";
+const siteName = process.env.SITENAME || "https://tohateenhub.herokuapp.com";
 // How many events/ news should be loaded from the database upon accessing the full list?
 const components_to_load = 5;
 
