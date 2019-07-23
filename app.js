@@ -687,10 +687,10 @@ const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
 //Start server
-httpServer.listen(80, () => {
-    console.log("Server started on: " + 80);
+httpServer.listen(port, () => {
+    console.log("Server started on: " + port);
 });
 
-httpsServer.listen(443, ()=>{
-    console.log("HTTPS Server started on:"+ (443));
+httpsServer.listen(port-20, ()=>{
+    console.log("HTTPS Server started on:"+ (port+20));
 })
