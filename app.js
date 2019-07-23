@@ -150,8 +150,6 @@ const siteName = process.env.SITENAME || "https://tohateenhub.herokuapp.com";
 // How many events/ news should be loaded from the database upon accessing the full list?
 const components_to_load = 5;
 
-const http = require("http");
-
 //Init app
 const app = express();
 
@@ -677,10 +675,22 @@ app.post("/about-us/register-volunteer", (req, res) => {
 });
 //#endregion
 
-var httpServer = http.createServer(app);
-//var httpsServer = https.createServer(credentials, app);
+const credentials = {
+    key: fs.readFileSync("certs/selfsigned.key"),
+    cert: fs.readFileSync("certs/selfsigned.crt")
+}
+
+const http = require("http");
+const https = require("https");
+
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
 
 //Start server
-httpServer.listen(port, () => {
-    console.log("Server started on: " + port);
+httpServer.listen(80, () => {
+    console.log("Server started on: " + 80);
 });
+
+httpsServer.listen(443, ()=>{
+    console.log("HTTPS Server started on:"+ (443));
+})
