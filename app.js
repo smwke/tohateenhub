@@ -39,18 +39,11 @@ mongoose.set('useCreateIndex', true)
 mongoose.connect("mongodb://dorin:goodpass123@ds135726.mlab.com:35726/tohateenhub", {
     useNewUrlParser: true
 }, (err) => {
-    if (err) throw err;
-    console.log("MongoDB connected...");
+    if (err) console.log(err);
+    else
+        console.log("MongoDB connected...");
 });
 
-/*
-mongoose.connect("mongodb://localhost:27017/tohateenhub", {
-    useNewUrlParser: true
-}, (err) => {
-    if (err) throw err;
-    console.log("MongoDB connected...");
-})
-*/
 // Set Storage Engine
 const storage = multers3({
     s3: s3,
@@ -60,13 +53,6 @@ const storage = multers3({
     }
 });
 
-/*
-const storage = multer.diskStorage({
-    filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); //use Date.now() for unique file keys
-    },
-    destination: "uploads/",
-})*/
 
 // Init Multer upload
 const ImageUpload = multer({
@@ -159,22 +145,12 @@ const admin = require("./routes/admin");
 
 /*      Server configuration        */
 //Server port
-const port = process.env.PORT || 8443;
+const port = process.env.PORT || 51342;
 const siteName = process.env.SITENAME || "https://tohateenhub.herokuapp.com";
 // How many events/ news should be loaded from the database upon accessing the full list?
 const components_to_load = 5;
 
-// HTTPS Configuration */
-var privateKey = fs.readFileSync(__dirname + "/certs/server.key", 'utf8');
-var certificate = fs.readFileSync(__dirname + "/certs/server.cert", 'utf8');
-
 const http = require("http");
-const https = require("https");
-
-var credentials = {
-    key: privateKey,
-    cert: certificate
-};
 
 //Init app
 const app = express();
