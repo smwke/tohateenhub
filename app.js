@@ -692,6 +692,6 @@ httpServer.listen(port,() => {
     console.log("Server started on: " + port);
 });
 
-httpsServer.listen(8443,()=>{
-    console.log("HTTPS Server started on:"+ 443);
+httpsServer.listen(https_port,()=>{
+    console.log("HTTPS Server started on:"+ https_port);
 })
