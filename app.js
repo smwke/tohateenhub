@@ -145,8 +145,8 @@ const admin = require("./routes/admin");
 
 /*      Server configuration        */
 //Server port
-const port = process.env.PORT || 51342;
-const siteName = process.env.SITENAME || "https://tohateenhub.herokuapp.com";
+const port = process.env.PORT || 80;
+const siteName = process.env.SITENAME || "http://tohateen.md";
 // How many events/ news should be loaded from the database upon accessing the full list?
 const components_to_load = 5;
 
@@ -676,8 +676,8 @@ app.post("/about-us/register-volunteer", (req, res) => {
 //#endregion
 
 const credentials = {
-    key: fs.readFileSync("certs/selfsigned.key"),
-    cert: fs.readFileSync("certs/selfsigned.crt")
+    key: fs.readFileSync("certs/server.key"),
+    cert: fs.readFileSync("certs/server.crt")
 }
 
 const http = require("http");
@@ -687,10 +687,10 @@ const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
 //Start server
-httpServer.listen(port, () => {
-    console.log("Server started on: " + port);
+httpServer.listen(80,"195.178.106.24,",() => {
+    console.log("Server started on: " + 80);
 });
 
-httpsServer.listen(port-20, ()=>{
-    console.log("HTTPS Server started on:"+ (port+20));
+httpsServer.listen(443,"195.178.106.24",()=>{
+    console.log("HTTPS Server started on:"+ 443);
 })
