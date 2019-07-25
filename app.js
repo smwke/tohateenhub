@@ -131,12 +131,12 @@ const Volunteer = mongoose.model("volunteers");
 
 // NodeMailer config
 let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
+    host: 'mail.tohateen.md',
     port: 465,
     secure: true,
     auth: {
-        user: 'cascavaldorin@gmail.com',
-        pass: 'ogppjvkmpxnrgdju'
+        user: '_mainaccount@tohateen.md',
+        pass: 'z?YU&d4eM6L4'
     }
 });
 
@@ -214,7 +214,6 @@ app.use((req, res, next) => {
     res.setLocale(res.locals.localization);
     next();
 });
-
 
 /*      Site Routes     */
 // use admin routes
@@ -580,9 +579,9 @@ app.post("/course/register", (req, res) => {
                 } else {
                     // setup email data
                     let mailOptions = {
-                        from: "Dorin",
+                        from: "Tohateen",
                         to: req.body.email,
-                        subject: "TohaTeen Event Registration",
+                        subject: "TohaTeen Course Registration",
                         text: `Hello, please confirm your registration of ${req.body.courseTitle}`,
                         html: `<div style="padding-left:20px;">
                         <h2>Please confirm your registration of:</h2>
