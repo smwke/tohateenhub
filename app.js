@@ -145,8 +145,9 @@ const admin = require("./routes/admin");
 
 /*      Server configuration        */
 //Server port
-const port = process.env.PORT || 80;
-const siteName = process.env.SITENAME || "http://tohateen.md";
+const port = process.env.PORT || 8080;
+const https_port = process.env.HTTPS_PORT || 8443;
+const siteName = process.env.SITENAME || "https://tohateen.md";
 // How many events/ news should be loaded from the database upon accessing the full list?
 const components_to_load = 5;
 
@@ -687,8 +688,8 @@ const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
 //Start server
-httpServer.listen(8080,() => {
-    console.log("Server started on: " + 80);
+httpServer.listen(port,() => {
+    console.log("Server started on: " + port);
 });
 
 httpsServer.listen(8443,()=>{
