@@ -35,8 +35,9 @@ const flash = require("connect-flash");
 // MongoDB database manager
 const mongoose = require("mongoose");
 mongoose.set('useCreateIndex', true)
+
 // Connect to database
-mongoose.connect("mongodb://dorin:goodpass123@ds135726.mlab.com:35726/tohateenhub", {
+mongoose.connect("mongodb+srv://dorin:De5F1hFjOSj96ZPQ@smwke-awgiy.mongodb.net/tohateenhub?retryWrites=true&w=majority", {
     useNewUrlParser: true
 }, (err) => {
     if (err) console.log(err);
