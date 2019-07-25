@@ -142,7 +142,6 @@ let transporter = nodemailer.createTransport({
 /*      Load routes     */
 const admin = require("./routes/admin");
 
-
 /*      Server configuration        */
 //Server port
 const port = process.env.PORT || 8080;
@@ -262,22 +261,9 @@ app.get("/setLang/:lang", (req, res) => {
 
 // Get image
 app.get("/get-image/:id", (req, res) => {
-    /*
-    let pathdir = path.resolve(process.cwd(), "./uploads");
-    fs.readFile(pathdir + `\\${req.params.id}`, 'utf8', function readFileCallback(err, data) {
-        if (err) console.log(err);
-        else if (data) {
-            res.writeHead(200, { 'Content-Type': 'image/jpeg' });
-            res.write(data.Body, 'binary');
-            res.end(null, 'binary');
-        }
-    });
-    */
-
     s3.getObject({ Bucket: "tohateenhub/images/", Key: req.params.id }, (err, data) => {
         if (err instanceof multer.MulterError) {
             console.log(err);
-
         }
         else {
             if (data) {

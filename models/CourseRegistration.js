@@ -2,15 +2,15 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const CourseRegistrationSchema = new Schema({
-    courseTitle:{
+    courseTitle: {
         type: String,
         required: true
     },
-    parentName:{
+    parentName: {
         type: String,
         required: true
     },
-    childName:{
+    childName: {
         type: String,
         required: true
     },
@@ -18,35 +18,35 @@ const CourseRegistrationSchema = new Schema({
         type: Date,
         required: true
     },
-    email:{
+    email: {
         type: String,
         required: true
     },
-    phone:{
+    phone: {
         type: String,
         required: true
     },
-    courseId:{
+    courseId: {
         type: String,
         required: true
     },
-    date:{
+    date: {
         type: Date,
         default: Date.now()
     },
-    confirmed:{
+    confirmed: {
         type: Boolean,
         default: false
     },
-    token:{
-        type:String,
+    token: {
+        type: String,
         required: true
     },
-    createdAt:{
-        type: Date,   
+    createdAt: {
+        type: Date,
         expires: "30m",
         default: Date.now(),
     },
 });
 
-mongoose.model("courseRegistrations",CourseRegistrationSchema);
+mongoose.model("courseRegistrations", CourseRegistrationSchema);
