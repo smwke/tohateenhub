@@ -131,11 +131,20 @@ const Volunteer = mongoose.model("volunteers");
 // NodeMailer config
 let transporter = nodemailer.createTransport({
     host: 'mail.tohateen.md',
+    name: "TohaTeen",
     port: 465,
     secure: true,
     auth: {
-        user: '_mainaccount@tohateen.md',
-        pass: 'z?YU&d4eM6L4'
+        user: 'noreply@tohateen.md',
+        pass: 'BJ3LpCKYCqkp'
+    }
+});
+
+transporter.verify(function (error, success) {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log("Server is ready to take our messages");
     }
 });
 
@@ -417,7 +426,7 @@ app.post("/events/register", (req, res) => {
             }).save().then(data => {
                 // setup email data
                 let mailOptions = {
-                    from: "Dorin",
+                    from: "noreply@tohateen.md",
                     to: req.body.email,
                     subject: "TohaTeen Event Registration",
                     text: `Hello, please confirm your registration of ${req.body.eventName}`,
@@ -578,7 +587,7 @@ app.post("/course/register", (req, res) => {
                 } else {
                     // setup email data
                     let mailOptions = {
-                        from: "Tohateen",
+                        from: "noreply@tohateen.md",
                         to: req.body.email,
                         subject: "TohaTeen Course Registration",
                         text: `Hello, please confirm your registration of ${req.body.courseTitle}`,
@@ -673,10 +682,10 @@ const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
 //Start server
-httpServer.listen(port,() => {
+httpServer.listen(port, () => {
     console.log("Server started on: " + port);
 });
 
-httpsServer.listen(https_port,()=>{
-    console.log("HTTPS Server started on:"+ https_port);
+httpsServer.listen(https_port, () => {
+    console.log("HTTPS Server started on:" + https_port);
 })
