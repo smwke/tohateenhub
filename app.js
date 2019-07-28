@@ -7,7 +7,7 @@ const methodOverride = require("method-override");
 const nodemailer = require('nodemailer');
 const bcrypt = require("bcryptjs");
 
-const fs = require("fs");
+const fs = require("graceful-fs");
 
 const aws = require('aws-sdk');
 const multer = require('multer');
