@@ -57,7 +57,10 @@ const storage = multers3({
 // Init Multer upload
 const ImageUpload = multer({
     storage: storage,
-    limits: { fileSize: 5000000 },
+    limits: {
+        fileSize: 5000000,
+        fieldSize: 25 * 1024 * 1024
+    },
     fileFilter: function (req, file, cb) {
         checkFileType(file, cb);
     }
